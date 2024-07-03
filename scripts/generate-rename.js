@@ -25,7 +25,7 @@ workspaces.forEach((it) => {
     `📝 Generate the ${pak.name}@${pak.version} version file: ${file}`
   );
   const content = `// This file is generated automatically. Please do not edit it manually. If necessary, you can run the 'scripts/bundle-icons.js' script to generate it again.\n
-export * from 'react-native-chat-sdk';
+export * from 'react-native-agora-chat';
 `;
   fs.writeFileSync(file, content, 'utf-8');
 });

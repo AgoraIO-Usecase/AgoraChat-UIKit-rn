@@ -2838,11 +2838,6 @@
   resolved "https://registry.npmmirror.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.6.0.tgz#385082d57d694f3fd5ae386f8b8ce24b0969c5f9"
   integrity sha512-a/GYwnBTxj1yKWB9m/qy8GzjowSocML8NbLT81wdMh0JzZYXCLze51BR2cb8JNDgRPzA9xe7KpD3j9qQOSOjag==
 
-"@react-native-clipboard/clipboard@^1.11.2":
-  version "1.11.2"
-  resolved "https://registry.npmmirror.com/@react-native-clipboard/clipboard/-/clipboard-1.11.2.tgz#e826d0336b34e67294aaffa6878308900bc7d197"
-  integrity sha512-bHyZVW62TuleiZsXNHS1Pv16fWc0fh8O9WvBzl4h2fykqZRW9a+Pv/RGTH56E3X2PqzHP38K5go8zmCZUoIsoQ==
-
 "@react-native-clipboard/clipboard@^1.12.1":
   version "1.12.1"
   resolved "https://registry.npmmirror.com/@react-native-clipboard/clipboard/-/clipboard-1.12.1.tgz#a23f9defb732077afa860d0598baa95f5ee9f54b"
@@ -12102,11 +12097,6 @@ react-native-builder-bob@^0.20.4:
     yargs "^17.5.1"
   optionalDependencies:
     jetifier "^2.0.0"
-
-react-native-chat-sdk@1.5.0-beta.0:
-  version "1.5.0-beta.0"
-  resolved "https://registry.npmjs.org/react-native-chat-sdk/-/react-native-chat-sdk-1.5.0-beta.0.tgz#e07286f46b8ac44da6c2d72f1dc0d87ffe220e70"
-  integrity sha512-7MqUehnt2F0eP64cyMBkQnstwjx/yb2M8OAvmHQVxXKU/7amMhIOlXEUrWJ8c4i9ohVCTJfHRo2sVrfn4HVbGA==
 
 react-native-codegen@^0.71.5:
   version "0.71.5"

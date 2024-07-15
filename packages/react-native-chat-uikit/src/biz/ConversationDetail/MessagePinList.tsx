@@ -14,7 +14,7 @@ import { usePaletteContext } from '../../theme';
 import { FlatListFactory } from '../../ui/FlatList';
 import { PressableHighlight } from '../../ui/Pressable';
 import { SingleLineText } from '../../ui/Text';
-import { formatTsForConvList } from '../../utils';
+import { formatTsForConvDetail } from '../../utils';
 import { useDataPriority } from '../hooks';
 import { useFlatList } from '../List';
 
@@ -86,14 +86,6 @@ export function MessagePinListItem(props: MessagePinListItemProps) {
   const { getMsgInfo, getContactInfo } = useDataPriority({});
   const { colors } = usePaletteContext();
   const { getColor } = useColors({
-    bg: {
-      light: colors.neutral[95],
-      dark: colors.neutral[2],
-    },
-    fg: {
-      light: colors.neutral[1],
-      dark: colors.neutral[98],
-    },
     btn: {
       light: colors.neutralSpecial[5],
       dark: colors.neutralSpecial[6],
@@ -117,7 +109,7 @@ export function MessagePinListItem(props: MessagePinListItemProps) {
   return (
     <View
       style={{
-        backgroundColor: getColor('bg'),
+        backgroundColor: getColor('bg2'),
         marginHorizontal: 12,
         marginBottom: 8,
         borderRadius: 8,
@@ -184,7 +176,7 @@ export function MessagePinListItem(props: MessagePinListItemProps) {
             textType={'small'}
             style={{ color: getColor('time') }}
           >
-            {formatTsForConvList(pinInfo?.pinTime ?? msg.serverTime)}
+            {formatTsForConvDetail(pinInfo?.pinTime ?? msg.serverTime)}
           </SingleLineText>
         </View>
         <View style={{ flex: 1 }} />
@@ -249,12 +241,22 @@ export function useMessagePinList(props: MessagePinListProps) {
     []
   );
 
+  const sortData = React.useCallback(() => {
+    dataRef.current = dataRef.current.sort((a, b) => {
+      if (!a.pinInfo || !b.pinInfo) {
+        return 0;
+      }
+      return b.pinInfo?.pinTime - a.pinInfo?.pinTime;
+    });
+  }, [dataRef]);
+
   const refreshToUI = React.useCallback(
     (list: MessagePinListItemProps[]) => {
+      sortData();
       dataRef.current = removeDuplicateData(list);
       setData([...dataRef.current]);
     },
-    [dataRef, removeDuplicateData, setData]
+    [dataRef, removeDuplicateData, setData, sortData]
   );
 
   const addItemToUI = React.useCallback(

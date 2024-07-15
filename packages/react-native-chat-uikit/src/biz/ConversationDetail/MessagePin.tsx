@@ -116,13 +116,13 @@ export class MessagePin2 extends React.PureComponent<
         light: this.colors?.neutral[95],
         dark: this.colors?.neutral[2],
       },
-      bg3: {
-        light: this.colors?.neutral[9],
-        dark: this.colors?.neutral[3],
-      },
       fg: {
         light: this.colors?.neutral[1],
         dark: this.colors?.neutral[98],
+      },
+      bg4: {
+        light: this.colors?.neutral[9],
+        dark: this.colors?.neutral[3],
       },
       pin: {
         light: this.colors?.neutral[3],
@@ -263,7 +263,7 @@ export class MessagePin2 extends React.PureComponent<
                 borderRadius: 12,
                 // backgroundColor: this.uc.getColor(
                 //   this.style!,
-                //   msgPinHeightRef.current <= gMsgPinHeight ? 'bg3' : ''
+                //   msgPinHeightRef.current <= gMsgPinHeight ? 'bg4' : ''
                 // ),
                 width: Dimensions.get('window').width - 24 - 16,
                 bottom: -28,
@@ -325,7 +325,7 @@ export class MessagePin2 extends React.PureComponent<
                 width: 36,
                 height: msgPinHeightRef.current <= gMsgPinHeight ? 0 : 6,
                 borderRadius: 2.5,
-                backgroundColor: this.uc.getColor(this.style!, 'bg3'),
+                backgroundColor: this.uc.getColor(this.style!, 'bg4'),
               }}
             />
           </Animated.View>

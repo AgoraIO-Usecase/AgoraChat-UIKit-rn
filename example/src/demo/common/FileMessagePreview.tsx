@@ -2,21 +2,24 @@ import * as React from 'react';
 import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { gMessageAttributeFileProgress, useChatContext } from '../../chat';
-import type { MessageManagerListener } from '../../chat/messageManager.types';
-import { ErrorCode, UIKitError } from '../../error';
-import { useI18nContext } from '../../i18n';
 import {
+  BackButton,
   ChatDownloadStatus,
   ChatFileMessageBody,
   ChatMessage,
   ChatMessageType,
-} from '../../rename.chat';
-import { Services } from '../../services';
-import { CmnButton } from '../../ui/Button';
-import { Text } from '../../ui/Text';
-import { BackButton } from '../Back';
-import type { PropsWithBack, PropsWithChildren } from '../types';
+  CmnButton,
+  ErrorCode,
+  gMessageAttributeFileProgress,
+  MessageManagerListener,
+  PropsWithBack,
+  PropsWithChildren,
+  Services,
+  Text,
+  UIKitError,
+  useChatContext,
+  useI18nContext,
+} from '../../rename.uikit';
 
 /**
  * File Message Preview Component properties.
@@ -65,12 +68,21 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
     localMsgId: propsLocalMsgId,
     onBack,
     onOpenFile: propsOnOpenFile,
+    onProgress: propsOnProgress,
   } = props;
   const im = useChatContext();
   const { top } = useSafeAreaInsets();
   const [progress, setProgress] = React.useState(0);
   const { tr } = useI18nContext();
   const localPath = React.useRef<string | undefined>(undefined);
+
+  const onProgress = React.useCallback(
+    (p: number) => {
+      setProgress(p);
+      propsOnProgress?.(p);
+    },
+    [propsOnProgress]
+  );
 
   const download = React.useCallback(
     async (msg: ChatMessage) => {
@@ -84,17 +96,17 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
       localPath.current = body.localPath;
       const isExisted = await Services.dcs.isExistedFile(body.localPath);
       if (isExisted !== true) {
-        setProgress(0);
+        onProgress(0);
         if (msg.isChatThread === true) {
           im.messageManager.downloadAttachmentForThread(msg);
         } else {
           im.messageManager.downloadAttachment(msg);
         }
       } else {
-        setProgress(100);
+        onProgress(100);
       }
     },
-    [im.messageManager]
+    [im.messageManager, onProgress]
   );
 
   const onGetMessage = React.useCallback(
@@ -111,6 +123,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
   );
 
   const onOpenFile = React.useCallback(async () => {
+    console.log('test:zuoyu:onOpenFile:', localPath.current);
     propsOnOpenFile?.(localPath.current ?? '');
   }, [propsOnOpenFile]);
 
@@ -132,7 +145,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
         ) {
           const body = msg.body as ChatFileMessageBody;
           if (body.fileStatus === ChatDownloadStatus.SUCCESS) {
-            setProgress(100);
+            onProgress(100);
           }
         }
       },
@@ -144,7 +157,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
         ) {
           const progress = msg.attributes?.[gMessageAttributeFileProgress];
           if (progress) {
-            setProgress(progress);
+            onProgress(progress);
           }
         }
       },
@@ -156,7 +169,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
         ) {
           const body = msg.body as ChatFileMessageBody;
           if (body.fileStatus === ChatDownloadStatus.SUCCESS) {
-            setProgress(100);
+            onProgress(100);
           }
         }
       },
@@ -168,7 +181,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
         ) {
           const progress = msg.attributes?.[gMessageAttributeFileProgress];
           if (progress) {
-            setProgress(progress);
+            onProgress(progress);
           }
         }
       },
@@ -177,7 +190,7 @@ export function FileMessagePreview(props: FileMessagePreviewProps) {
     return () => {
       im.messageManager.removeListener('FileMessagePreview');
     };
-  }, [im.messageManager, propsLocalMsgId, propsMsgId]);
+  }, [im.messageManager, propsLocalMsgId, propsMsgId, onProgress]);
 
   if (children) {
     return <View style={[{ flexGrow: 1 }, containerStyle]}>{children}</View>;

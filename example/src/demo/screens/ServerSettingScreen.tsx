@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   AsyncStorageBasic,
@@ -25,7 +24,7 @@ import {
   usePaletteContext,
   useThemeContext,
 } from '../../rename.uikit';
-import { main_bg } from '../common/assets';
+import { main_bg, main_bg_dark } from '../common/assets';
 import {
   appKey as gAppKey,
   enableDNSConfig as gEnableDNSConfig,
@@ -33,6 +32,7 @@ import {
   imServer as gImServer,
 } from '../common/const';
 import { RestApi } from '../common/rest.api';
+import { SafeAreaViewFragment } from '../common/SafeAreaViewFragment';
 import { useStackScreenRoute } from '../hooks';
 import type { RootScreenParamsList } from '../routes';
 
@@ -178,14 +178,9 @@ export function ServerSettingScreen(props: Props) {
         // alignItems: 'center',
         flex: 1,
       }}
-      source={main_bg}
+      source={style === 'light' ? main_bg : main_bg_dark}
     >
-      <SafeAreaView
-        style={{
-          // backgroundColor: getColor('bg'),
-          flex: 1,
-        }}
-      >
+      <SafeAreaViewFragment>
         <TopNavigationBar
           containerStyle={{ backgroundColor: undefined }}
           Left={
@@ -374,7 +369,7 @@ export function ServerSettingScreen(props: Props) {
             </View>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-      </SafeAreaView>
+      </SafeAreaViewFragment>
     </ImageBackground>
   );
 }

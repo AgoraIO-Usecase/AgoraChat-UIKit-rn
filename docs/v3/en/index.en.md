@@ -33,8 +33,8 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 ├── node_modules
 ├── package.json
 ├── packages
-│   ├── react-native-chat-callkit
-│   └── react-native-chat-uikit
+│   ├── react-native-agora-chat-callkit
+│   └── react-native-agora-chat-uikit
 ├── patches
 ├── res
 ├── scripts
@@ -54,8 +54,8 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 - node_modules: list of project dependencies managed by the `yarn` tool.
 - package.json: project configuration file. It is the core configuration of this repository. The `package.json` files in other subfolders are responsible for managing sub-projects.
 - packages:
-  - react-native-chat-callkit: `callkit` SDK.
-  - react-native-chat-uikit: `uikit` SDK.
+  - react-native-agora-chat-callkit: `callkit` SDK.
+  - react-native-agora-chat-uikit: `uikit` SDK.
 - patches: Patches for fixing urgent issues.
 - res: Resource folder.
 - scripts: Script folder.
@@ -65,10 +65,10 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 
 ## Package
 
-The `packages` folder include `react-native-chat-callkit` and `react-native-chat-uikit` packages. There may be additional packages in the future according to requirements.
+The `packages` folder include `react-native-agora-chat-callkit` and `react-native-agora-chat-uikit` packages. There may be additional packages in the future according to requirements.
 
-- `react-native-chat-callkit`: Primarily assists users in integrating audio and video call functionalities.
-- `react-native-chat-uikit`: Primarily assists users in integrating `react-native-chat-sdk` functionalities. If you are interested, you can click the links in the reference section for further details.
+- `react-native-agora-chat-callkit`: Primarily assists users in integrating audio and video call functionalities.
+- `react-native-agora-chat-uikit`: Primarily assists users in integrating `react-native-chat-sdk` functionalities. If you are interested, you can click the links in the reference section for further details.
 
 [Callkit SDK Documentation Entry](./callkit.en.md)  
 [UIkit SDK Documentation Entry](./uikit.en.md)

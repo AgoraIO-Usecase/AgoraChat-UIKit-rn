@@ -22,13 +22,13 @@ Add dependencies:
 
 ```sh
 # react-native project
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 
 # expo project
-yarn expo install react-native-chat-uikit
+yarn expo install react-native-agora-chat-uikit
 ```
 
-Add dependencies for UIKit dependencies. As `react-native-chat-uikit` uses several third-party native libraries, you need to add them to the app.
+Add dependencies for UIKit dependencies. As `react-native-agora-chat-uikit` uses several third-party native libraries, you need to add them to the app.
 
 Add the following dependencies to `package.json`:
 
@@ -47,8 +47,8 @@ Add the following dependencies to `package.json`:
     "react-native-agora": "^4.2.6",
     "react-native-audio-recorder-player": "^3.5.3",
     "react-native-chat-sdk": "1.3.1",
-    "react-native-chat-callkit": "1.0.4",
-    "react-native-chat-uikit": "2.1.0",
+    "react-native-agora-chat-callkit": "1.0.4",
+    "react-native-agora-chat-uikit": "2.1.0",
     "react-native-create-thumbnail": "^1.6.4",
     "react-native-device-info": "^10.6.0",
     "react-native-document-picker": "^9.0.1",

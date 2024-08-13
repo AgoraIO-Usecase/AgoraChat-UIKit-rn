@@ -28,7 +28,7 @@ date-fns@^2.30.0 \
 pinyin-pro@^3.18.3 \
 pure-uuid@^1.6.3 \
 react-native-agora@^4.2.6 \
-react-native-chat-uikit@2.2.1 \
+react-native-agora-chat-uikit@2.2.1 \
 react-native-chat-sdk@1.5.1 \
 react-native-audio-recorder-player@^3.5.3 \
 @easemob/react-native-create-thumbnail@^1.6.6 \
@@ -105,7 +105,7 @@ import {
   ConversationDetail,
   TextInput,
   useChatContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 const appKey = '<your app key>';
 const userId = '<current login id>';

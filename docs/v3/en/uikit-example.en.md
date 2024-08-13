@@ -55,7 +55,7 @@ An example is shown below:
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   // ...
   return (
@@ -339,7 +339,7 @@ import {
   useColors,
   usePaletteContext,
   uuid,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -410,8 +410,8 @@ An example is as follows:
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   const onUsersHandler = React.useCallback(
     async (data: Map<string, DataModel>) => {
@@ -493,8 +493,8 @@ Also, the user can use the `updateDataList` method to update the avatar and nick
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   const im = useChatContext();
   const updatedRef = React.useRef<boolean>(false);

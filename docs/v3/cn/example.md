@@ -63,8 +63,8 @@ cd ios && pod install
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   // ...
   return (
@@ -462,8 +462,8 @@ export function ConversationDetailScreen(props: Props) {
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   const onUsersHandler = React.useCallback(
     async (data: Map<string, DataModel>) => {
@@ -545,8 +545,8 @@ export function App() {
 
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
-import { Container as UIKitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
+import { Container as UIKitContainer } from 'react-native-agora-chat-uikit';
 export function App() {
   const im = useChatContext();
   const updatedRef = React.useRef<boolean>(false);

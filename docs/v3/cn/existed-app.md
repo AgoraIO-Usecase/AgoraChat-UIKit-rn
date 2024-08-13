@@ -22,13 +22,13 @@
 
 ```sh
 # react-native 项目
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 
 # expo 项目
-yarn expo install react-native-chat-uikit
+yarn expo install react-native-agora-chat-uikit
 ```
 
-添加依赖的依赖。 由于 `react-native-chat-uikit` 使用了很多三方库，并且这些三方库是 native 库，所以，需要添加应用中。
+添加依赖的依赖。 由于 `react-native-agora-chat-uikit` 使用了很多三方库，并且这些三方库是 native 库，所以，需要添加应用中。
 
 在 `package.json`中，添加如下依赖：
 
@@ -47,8 +47,8 @@ yarn expo install react-native-chat-uikit
     "react-native-agora": "^4.2.6",
     "react-native-audio-recorder-player": "^3.5.3",
     "react-native-chat-sdk": "1.3.1",
-    "react-native-chat-callkit": "1.0.4",
-    "react-native-chat-uikit": "2.1.0",
+    "react-native-agora-chat-callkit": "1.0.4",
+    "react-native-agora-chat-uikit": "2.1.0",
     "react-native-create-thumbnail": "^1.6.4",
     "react-native-device-info": "^10.6.0",
     "react-native-document-picker": "^9.0.1",

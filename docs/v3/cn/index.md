@@ -68,7 +68,7 @@
 在 `packages` 文件夹下，主要包括 `react-native-agora-chat-callkit` 和 `react-native-agora-chat-uikit` 包。后续可能根据需要会有更多的包。
 
 - `react-native-agora-chat-callkit`: 主要方便用户集成音视频通话功能。
-- `react-native-agora-chat-uikit`: 主要方便用户集成 `react-native-chat-sdk` 功能。 如果感兴趣可以在参考引用部分点击对应链接查看。
+- `react-native-agora-chat-uikit`: 主要方便用户集成 `react-native-agora-chat` 功能。 如果感兴趣可以在参考引用部分点击对应链接查看。
 
 [callkit sdk 说明入口](./callkit.md)  
 [uikit sdk 说明入口](./uikit.md)

@@ -16,7 +16,7 @@
 
 该组件库主要支持单群聊的音视频通话。
 
-该库主要依赖 `react-native-chat-sdk` 和 `react-native-agora` 两个库实现音视频通话。
+该库主要依赖 `react-native-agora-chat` 和 `react-native-agora` 两个库实现音视频通话。
 
 ## 项目配置
 

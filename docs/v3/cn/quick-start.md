@@ -29,7 +29,7 @@ pinyin-pro@^3.18.3 \
 pure-uuid@^1.6.3 \
 react-native-agora@^4.2.6 \
 react-native-agora-chat-uikit@2.2.1 \
-react-native-chat-sdk@1.5.1 \
+react-native-agora-chat@1.5.1 \
 react-native-audio-recorder-player@^3.5.3 \
 @easemob/react-native-create-thumbnail@^1.6.6 \
 react-native-device-info@^10.6.0 \

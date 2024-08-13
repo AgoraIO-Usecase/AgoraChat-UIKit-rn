@@ -323,7 +323,7 @@ import {
   ChatCustomMessageBody,
   ChatMessageChatType,
   ChatMessageType,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import {
   ConversationDetail,
   ConversationDetailModelType,

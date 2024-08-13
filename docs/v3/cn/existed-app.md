@@ -46,7 +46,7 @@ yarn expo install react-native-agora-chat-uikit
     "react-native": "0.72.7",
     "react-native-agora": "^4.2.6",
     "react-native-audio-recorder-player": "^3.5.3",
-    "react-native-chat-sdk": "1.3.1",
+    "react-native-agora-chat": "1.3.1",
     "react-native-agora-chat-callkit": "1.0.4",
     "react-native-agora-chat-uikit": "2.1.0",
     "react-native-create-thumbnail": "^1.6.4",

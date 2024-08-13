@@ -68,7 +68,7 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 The `packages` folder include `react-native-agora-chat-callkit` and `react-native-agora-chat-uikit` packages. There may be additional packages in the future according to requirements.
 
 - `react-native-agora-chat-callkit`: Primarily assists users in integrating audio and video call functionalities.
-- `react-native-agora-chat-uikit`: Primarily assists users in integrating `react-native-chat-sdk` functionalities. If you are interested, you can click the links in the reference section for further details.
+- `react-native-agora-chat-uikit`: Primarily assists users in integrating `react-native-agora-chat` functionalities. If you are interested, you can click the links in the reference section for further details.
 
 [Callkit SDK Documentation Entry](./callkit.en.md)  
 [UIkit SDK Documentation Entry](./uikit.en.md)

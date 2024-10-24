@@ -275,7 +275,7 @@ PODS:
     - GoogleUtilities/MethodSwizzler
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - HyphenateChat (4.5.0)
+  - HyphenateChat (4.6.1)
   - libevent (2.1.12)
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
@@ -539,10 +539,10 @@ PODS:
     - React-Core
   - react-native-chat-callkit (1.0.4):
     - React-Core
-  - react-native-chat-sdk (1.3.0-alpha.0):
-    - HyphenateChat (= 4.5.0)
+  - react-native-chat-sdk (1.5.0-beta.0):
+    - HyphenateChat (= 4.6.1)
     - React-Core
-  - react-native-chat-uikit (2.0.0-alpha.0):
+  - react-native-chat-uikit (2.3.0):
     - React-Core
   - react-native-create-thumbnail (1.6.6):
     - RCT-Folly (= 2021.07.22.00)
@@ -787,11 +787,11 @@ DEPENDENCIES:
   - glog (from `../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - GoogleUtilities
   - OpenSSL-Universal (= 1.1.1100)
-  - Permission-Camera (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Camera`)
-  - Permission-MediaLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/MediaLibrary`)
-  - Permission-Microphone (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Microphone`)
-  - Permission-Notifications (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Notifications`)
-  - Permission-PhotoLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/PhotoLibrary`)
+  - Permission-Camera (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Camera`)
+  - Permission-MediaLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/MediaLibrary`)
+  - Permission-Microphone (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Microphone`)
+  - Permission-Notifications (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Notifications`)
+  - Permission-PhotoLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/PhotoLibrary`)
   - RCT-Folly (from `../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../../node_modules/react-native/Libraries/TypeSafety`)
@@ -812,7 +812,7 @@ DEPENDENCIES:
   - "react-native-blur (from `../../node_modules/@react-native-community/blur`)"
   - "react-native-cameraroll (from `../../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-chat-callkit (from `../../packages/react-native-chat-callkit`)
-  - react-native-chat-sdk (from `../../node_modules/react-native-agora-chat`)
+  - react-native-chat-sdk (from `../../node_modules/react-native-chat-sdk`)
   - react-native-chat-uikit (from `../../packages/react-native-chat-uikit`)
   - "react-native-create-thumbnail (from `../../node_modules/@easemob/react-native-create-thumbnail`)"
   - react-native-document-picker (from `../../node_modules/react-native-document-picker`)
@@ -940,15 +940,15 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../../node_modules/react-native/third-party-podspecs/glog.podspec"
   Permission-Camera:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Camera"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Camera"
   Permission-MediaLibrary:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/MediaLibrary"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/MediaLibrary"
   Permission-Microphone:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Microphone"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Microphone"
   Permission-Notifications:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Notifications"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Notifications"
   Permission-PhotoLibrary:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/PhotoLibrary"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/PhotoLibrary"
   RCT-Folly:
     :podspec: "../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -986,7 +986,7 @@ EXTERNAL SOURCES:
   react-native-chat-callkit:
     :path: "../../packages/react-native-chat-callkit"
   react-native-chat-sdk:
-    :path: "../../node_modules/react-native-agora-chat"
+    :path: "../../node_modules/react-native-chat-sdk"
   react-native-chat-uikit:
     :path: "../../packages/react-native-chat-uikit"
   react-native-create-thumbnail:
@@ -1113,7 +1113,7 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  HyphenateChat: bf4cfa65a83ffa210803fdc91263b4891fb510ee
+  HyphenateChat: 006902faa37c847b0a6693bd3876873848c06c26
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
@@ -1141,9 +1141,9 @@ SPEC CHECKSUMS:
   react-native-agora: 7026292738f2de759f532938db629c7acda377af
   react-native-blur: cfdad7b3c01d725ab62a8a729f42ea463998afa2
   react-native-cameraroll: 755bcc628148a90a7c9cf3f817a252be3a601bc5
-  react-native-chat-callkit: e5853627eef7055242f8278a6af7b104eb8b573b
-  react-native-chat-sdk: 18065000895bba6cb157e170005d71457524fd90
-  react-native-chat-uikit: bdeabedf72e10794ea1ff2882338722f3c2b0125
+  react-native-chat-callkit: a1b5e4885d58e4ac5153aade90b6f6fbb32d333b
+  react-native-chat-sdk: 2ab93752a02916334208642778a6e908fdf50485
+  react-native-chat-uikit: 60768b225b861afe92af34264da58c578b185f7a
   react-native-create-thumbnail: e4fc6953a754bcfa3a03d74ec8687850134b1b93
   react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
   react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a

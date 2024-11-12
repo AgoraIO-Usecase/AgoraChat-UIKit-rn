@@ -15,6 +15,9 @@
       - [react-native-safe-area-context Dependency Issue](#react-native-safe-area-context-dependency-issue)
       - [Issues with `expo-updates`](#issues-with-expo-updates)
       - [Create expo project and integrate uikit problem](#create-expo-project-and-integrate-uikit-problem)
+      - [flipper compile question](#flipper-compile-question)
+      - [ScrollView from react-native-gesture-handler](#scrollview-from-react-native-gesture-handler)
+      - [yarn vs npm in react-native ?](#yarn-vs-npm-in-react-native-)
 
 # Question List
 
@@ -103,3 +106,25 @@ Main solutions include:
 The react-native project created with expo cannot compile and run `uikit` normally.
 
 Reference: The `expo` project created by default does not have `native` configuration. You need to use `npx expo prebuild` to create `ios` and `android` folders and configurations. In this way, `uikit` can be compiled and run normally.
+
+#### flipper compile question
+
+Flipper Compilation Issue
+In macOS 14.6.1 with Xcode 15.4, compiling react-native 0.71.11 with flipper 0.182.0 may result in the following issue:
+
+The simplest solution is to add the header file #include <functional> in FlipperTransportTypes.h.
+
+Reference: Debugging React Native apps with Flipper is deprecated in React Native 0.73. We will eventually remove out-of-the box support for JS debugging via Flipper.
+
+#### ScrollView from react-native-gesture-handler
+
+ERROR Error: NativeViewGestureHandler must be used as a descendant of GestureHandlerRootView. Otherwise the gestures will not be recognized. See https://docs.swmansion.com/react-native-gesture-handler/docs/installation for more details.
+
+#### yarn vs npm in react-native ?
+
+For `react-native` developers, `yarn` tool is usually used for management. The main basis is as follows:
+
+1. Use the command recommended by the official website to create an application project. The project management configuration uses `yarn` by default. You can verify it by creating a project `npx @react-native-community/cli init xxx-app`
+2. Check the help document of the cli recommended by the official website to create an application `npx @react-native-community/cli init --help `
+3. Use the official recommended command to create a library project. The project management configuration uses `yarn` by default. You can verify it by creating a project `npx create-react-native-library@0.34.3 --react-native-version 0.72.17 react-native-xxx-lib`
+4. After creating a project, some scripts are completed through `yarn`, which may automatically execute actions or behaviors, while `npm` cannot trigger automatic execution.

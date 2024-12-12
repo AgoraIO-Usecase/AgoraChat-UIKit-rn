@@ -25,7 +25,7 @@ import {
   // useWindowDimensions,
   View,
 } from 'react-native';
-import { ChatGroupOptions, ChatGroupStyle } from 'react-native-chat-sdk';
+import { ChatGroupOptions, ChatGroupStyle } from 'react-native-agora-chat';
 import {
   autoFocus,
   Blank,

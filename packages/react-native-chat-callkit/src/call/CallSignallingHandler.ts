@@ -5,7 +5,7 @@ import {
   ChatMessageChatType,
   ChatMessageEventListener,
   ChatMessageStatusCallback,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 import { CallErrorCode, CallType } from '../enums';
 import { timestamp } from '../utils/utils';

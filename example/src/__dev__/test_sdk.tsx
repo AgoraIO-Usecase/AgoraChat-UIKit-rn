@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ChatClient, ChatOptions } from 'react-native-chat-sdk';
+import { ChatClient, ChatOptions } from 'react-native-agora-chat';
 
 export default function TestSdk() {
   const [result] = React.useState<number | undefined>();

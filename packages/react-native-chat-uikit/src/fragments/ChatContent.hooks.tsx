@@ -14,7 +14,7 @@ import {
   ChatTextMessageBody,
   ChatVideoMessageBody,
   ChatVoiceMessageBody,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 import type { ActionMenuItem } from '../components/ActionMenu';
 import type { BottomSheetItem } from '../components/BottomSheet';

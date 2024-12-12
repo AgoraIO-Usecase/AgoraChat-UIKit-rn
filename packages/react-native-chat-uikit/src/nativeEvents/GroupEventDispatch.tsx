@@ -3,7 +3,7 @@ import {
   ChatClient,
   ChatGroup,
   ChatGroupEventListener,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 export const GroupChatSdkEvent = 'GroupChatSdkEvent';
 export type GroupChatSdkEventType =

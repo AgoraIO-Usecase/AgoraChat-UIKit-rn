@@ -45,7 +45,7 @@ For callkit, you also need to add dependencies.
 {
   "dependencies": {
     "react-native-agora": "^4.2.0",
-    "react-native-chat-sdk": "^1.1.2",
+    "react-native-agora-chat": "1.3.0-1",
     "react-native-device-info": "^10.6.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-pager-view": "6.1.2",

@@ -1,7 +1,7 @@
 import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
 import { DeviceEventEmitter, View } from 'react-native';
-import type { ChatGroupEventListener } from 'react-native-chat-sdk';
+import type { ChatGroupEventListener } from 'react-native-agora-chat';
 import {
   autoFocus,
   Blank,
@@ -316,7 +316,7 @@ export default function GroupListScreen({ navigation }: Props): JSX.Element {
           requestGroupInfo(params.groupId);
         }
       },
-      onUserRemoved: (params: {
+      onMemberRemoved: (params: {
         groupId: string;
         groupName?: string;
       }): void => {
@@ -337,10 +337,7 @@ export default function GroupListScreen({ navigation }: Props): JSX.Element {
           requestGroupInfo(params.groupId);
         }
       },
-      onGroupDestroyed: (params: {
-        groupId: string;
-        groupName?: string;
-      }): void => {
+      onDestroyed: (params: { groupId: string; groupName?: string }): void => {
         if (duplicateCheck(params.groupId)) {
           return;
         }

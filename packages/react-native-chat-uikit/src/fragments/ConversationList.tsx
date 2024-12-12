@@ -12,7 +12,7 @@ import {
   ChatMessageDirection,
   ChatMessageType,
   ChatTextMessageBody,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 import Badge from '../components/Badge';
 import Blank from '../components/Blank';

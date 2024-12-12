@@ -2,6 +2,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import {
+  ChatConversationType,
+  ChatMessage,
+  ChatMessageStatus,
+  ChatMessageType,
+} from 'react-native-agora-chat';
+import {
   AudioEncoderAndroidType,
   type AudioSet,
   AudioSourceAndroidType,
@@ -9,12 +15,6 @@ import {
   AVEncodingOption,
   AVModeIOSOption,
 } from 'react-native-audio-recorder-player';
-import {
-  ChatConversationType,
-  ChatMessage,
-  ChatMessageStatus,
-  ChatMessageType,
-} from 'react-native-chat-sdk';
 import {
   ChatFragment,
   ChatFragmentRef,

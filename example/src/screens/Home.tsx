@@ -7,7 +7,7 @@ import {
   ChatMessage,
   ChatMessageChatType,
   ChatMessageStatus,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import {
   ContactChatSdkEvent,
   ContactChatSdkEventType,

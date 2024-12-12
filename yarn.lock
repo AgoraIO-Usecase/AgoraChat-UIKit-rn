@@ -11776,6 +11776,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmmirror.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-agora-chat@1.3.0-1:
+  version "1.3.0-1"
+  resolved "https://registry.yarnpkg.com/react-native-agora-chat/-/react-native-agora-chat-1.3.0-1.tgz#5b7fa2528d3a612850477e05c4706a68294b477d"
+  integrity sha512-cR5mVwJJsGdGFDCaxfxrzl9CZrKCXD0AF+ZF4o2muAGAs6F6FqL3hycftJn7PQuA6aP0I6wspMoApGjR2qkGCg==
+
 react-native-agora@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npmmirror.com/react-native-agora/-/react-native-agora-4.2.0.tgz#2e452091ade7379dd06ae3de5f8ebeea75398144"
@@ -11820,11 +11825,6 @@ react-native-builder-bob@^0.20.4:
     yargs "^17.5.1"
   optionalDependencies:
     jetifier "^2.0.0"
-
-react-native-chat-sdk@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/react-native-chat-sdk/-/react-native-chat-sdk-1.1.2.tgz#e5162ff3c8054b8366c8f9dddda51a61feea2a88"
-  integrity sha512-0gRQWWWpKZy1dAo/YV0gcTxBHOr8FyHYr+1idcsAEPCWao63/wnUDQ0QJiobBQXfFLkFleW+/MGzsIruEUXJxA==
 
 react-native-codegen@^0.71.5:
   version "0.71.5"

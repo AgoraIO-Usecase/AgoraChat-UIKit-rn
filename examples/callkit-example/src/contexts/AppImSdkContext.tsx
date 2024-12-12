@@ -1,4 +1,4 @@
-import type { ChatClient } from 'react-native-chat-sdk';
+import type { ChatClient } from 'react-native-agora-chat';
 import {
   UIKitChatSdkContext,
   useChatSdkContext,

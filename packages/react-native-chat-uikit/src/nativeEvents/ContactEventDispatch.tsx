@@ -1,5 +1,5 @@
 import { DeviceEventEmitter } from 'react-native';
-import { ChatClient, ChatContactEventListener } from 'react-native-chat-sdk';
+import { ChatClient, ChatContactEventListener } from 'react-native-agora-chat';
 
 export const ContactChatSdkEvent = 'ContactChatSdkEvent';
 export type ContactChatSdkEventType =

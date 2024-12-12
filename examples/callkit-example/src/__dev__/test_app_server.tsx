@@ -1,8 +1,8 @@
 import type { CallManagerImpl } from 'packages/react-native-chat-callkit/src/call/CallManagerImpl';
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import { ChatClient } from 'react-native-agora-chat';
 import { useCallkitSdkContext } from 'react-native-chat-callkit';
-import { ChatClient } from 'react-native-chat-sdk';
 import { Button } from 'react-native-chat-uikit';
 
 let gid: string = '';

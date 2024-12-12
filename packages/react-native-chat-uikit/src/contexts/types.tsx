@@ -1,4 +1,4 @@
-import type { ChatClient, ChatMessageChatType } from 'react-native-chat-sdk';
+import type { ChatClient, ChatMessageChatType } from 'react-native-agora-chat';
 
 import type {
   ButtonStateColor,

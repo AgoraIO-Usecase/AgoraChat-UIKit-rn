@@ -6,8 +6,12 @@ import FirebaseMessage from '@react-native-firebase/messaging';
 import en from 'date-fns/locale/en-US';
 import * as React from 'react';
 import { Text } from 'react-native';
+import {
+  ChatClient,
+  ChatOptions,
+  ChatPushConfig,
+} from 'react-native-agora-chat';
 import * as Audio from 'react-native-audio-recorder-player';
-import { ChatClient, ChatOptions, ChatPushConfig } from 'react-native-chat-sdk';
 import * as DocumentPicker from 'react-native-document-picker';
 import * as FileAccess from 'react-native-file-access';
 import * as ImagePicker from 'react-native-image-picker';

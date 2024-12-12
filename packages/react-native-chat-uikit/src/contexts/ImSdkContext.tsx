@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ChatClient } from 'react-native-chat-sdk';
+import type { ChatClient } from 'react-native-agora-chat';
 
 import { Services } from '../services';
 import type { ChatSdkContextType } from './types';

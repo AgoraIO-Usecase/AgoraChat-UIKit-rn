@@ -16,7 +16,7 @@ import {
   ChatDownloadStatus,
   ChatMessage,
   ChatMessageType,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import FastImage from 'react-native-fast-image';
 
 import { DefaultAvatar } from '../components/DefaultAvatars';

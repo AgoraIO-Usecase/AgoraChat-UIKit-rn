@@ -1,6 +1,9 @@
 import * as React from 'react';
 import type { TextInput as RNTextInput } from 'react-native';
-import type { ChatConversationType, ChatMessage } from 'react-native-chat-sdk';
+import type {
+  ChatConversationType,
+  ChatMessage,
+} from 'react-native-agora-chat';
 
 import {
   ChatSdkChatContextProvider,

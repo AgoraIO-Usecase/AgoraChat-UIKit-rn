@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ChatConversationType } from 'react-native-chat-sdk';
 import {
   createStyleSheet,
   DataEventType,
@@ -121,7 +120,7 @@ export default function MySettingScreen({ navigation }: Props): JSX.Element {
   const removeAllMessage = React.useCallback(async () => {
     const currentId = getCurrentId();
     client.chatManager
-      .deleteAllMessages(currentId, ChatConversationType.PeerChat)
+      .deleteConversation(currentId, true)
       .then()
       .catch((error) => {
         console.warn('test:removeAllMessage:', error);

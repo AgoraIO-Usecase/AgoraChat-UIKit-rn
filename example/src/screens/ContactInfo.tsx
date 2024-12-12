@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { DeviceEventEmitter, Pressable, Text, View } from 'react-native';
-import { ChatConversationType } from 'react-native-chat-sdk';
+import { ChatConversationType } from 'react-native-agora-chat';
 import {
   createStyleSheet,
   DataEventType,

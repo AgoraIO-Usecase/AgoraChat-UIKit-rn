@@ -2,7 +2,7 @@ import {
   ChatClient,
   ChatMultiDeviceEvent,
   ChatMultiDeviceEventListener,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 export const MultiDevicesChatSdkEvent = 'MultiDevicesChatSdkEvent';
 export type MultiDevicesChatSdkEventType =

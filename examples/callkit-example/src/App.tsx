@@ -17,12 +17,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { registerRootComponent } from 'expo';
 import * as React from 'react';
 import { Linking, Platform, View } from 'react-native';
+import { ChatClient, ChatPushConfig } from 'react-native-agora-chat';
 import * as Audio from 'react-native-audio-recorder-player';
 import {
   CallUser,
   GlobalContainer as CallkitContainer,
 } from 'react-native-chat-callkit';
-import { ChatClient, ChatPushConfig } from 'react-native-chat-sdk';
 import {
   createStringSetEn2,
   DarkTheme,

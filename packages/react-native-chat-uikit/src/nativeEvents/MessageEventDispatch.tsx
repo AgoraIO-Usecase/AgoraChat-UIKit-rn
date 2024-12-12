@@ -6,7 +6,7 @@ import {
   ChatMessageEventListener,
   ChatMessageReactionEvent,
   ChatMessageThreadEvent,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 
 export const MessageChatSdkEvent = 'MessageChatSdkEvent';
 export type MessageChatSdkEventType =

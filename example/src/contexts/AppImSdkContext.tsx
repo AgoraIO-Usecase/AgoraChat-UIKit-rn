@@ -4,7 +4,7 @@ import {
   ChatCustomMessageBody,
   ChatMessageType,
   ChatSearchDirection,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import {
   UIKitChatSdkContext,
   useChatSdkContext,

@@ -13,14 +13,6 @@ import {
   View,
 } from 'react-native';
 import {
-  AudioEncoderAndroidType,
-  type AudioSet,
-  AudioSourceAndroidType,
-  AVEncoderAudioQualityIOSType,
-  AVEncodingOption,
-  AVModeIOSOption,
-} from 'react-native-audio-recorder-player';
-import {
   ChatConversationType,
   ChatDownloadStatus,
   ChatError,
@@ -33,7 +25,15 @@ import {
   ChatMessageType,
   ChatSearchDirection,
   ChatVideoMessageBody,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
+import {
+  AudioEncoderAndroidType,
+  type AudioSet,
+  AudioSourceAndroidType,
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  AVModeIOSOption,
+} from 'react-native-audio-recorder-player';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moji from 'twemoji';
 

@@ -1,7 +1,7 @@
 import type {
   ChatConversationType,
   ChatMessageType,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import type {
   DialogContextType,
   ExtraDataType,

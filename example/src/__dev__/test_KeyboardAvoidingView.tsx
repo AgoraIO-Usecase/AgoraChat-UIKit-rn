@@ -10,7 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import type { ChatMessageChatType } from 'react-native-chat-sdk';
+import type { ChatMessageChatType } from 'react-native-agora-chat';
 import {
   Button,
   createStyleSheet,

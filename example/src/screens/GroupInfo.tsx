@@ -4,7 +4,7 @@ import { DeviceEventEmitter, Pressable, Text, View } from 'react-native';
 import {
   ChatConversationType,
   ChatGroupPermissionType,
-} from 'react-native-chat-sdk';
+} from 'react-native-agora-chat';
 import {
   createStyleSheet,
   DataEventType,

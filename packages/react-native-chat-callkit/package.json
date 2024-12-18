@@ -89,7 +89,7 @@
     "react-native-tab-view": "^3.5.1",
     "release-it": "^15.0.0",
     "typescript": "^4.5.2",
-    "react-native-agora-chat": "1.3.0-alpha.0"
+    "react-native-agora-chat": "1.3.0-1"
   },
   "dependencies": {
     "@rneui/base": "^4.0.0-rc.7",

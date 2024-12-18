@@ -359,3 +359,9 @@ env.ts
 version.ts
 google-services.json
 GoogleService-Info.plist
+config.local.ts
+.VSCodeCounter
+rename.chat.ts
+rename.uikit.ts
+rename.callkit.ts
+rename.room.ts

@@ -1,3 +1,4 @@
+import { CallErrorCode, CallType } from '../enums';
 import {
   ChatClient,
   ChatError,
@@ -5,9 +6,7 @@ import {
   ChatMessageChatType,
   ChatMessageEventListener,
   ChatMessageStatusCallback,
-} from 'react-native-chat-sdk';
-
-import { CallErrorCode, CallType } from '../enums';
+} from '../rename.chat';
 import { timestamp } from '../utils/utils';
 import * as K from './CallConst';
 import { calllog } from './CallConst';
@@ -107,10 +106,15 @@ export interface CallSignallingListener {
  */
 export class CallSignallingHandler implements ChatMessageEventListener {
   private _listener?: CallSignallingListener | undefined;
+  private _inviteContentHandler: ((callType: CallType) => string) | undefined;
 
-  public init(params: { listener: CallSignallingListener }): void {
+  public init(params: {
+    listener: CallSignallingListener;
+    inviteContentHandler?: (callType: CallType) => string;
+  }): void {
     calllog.log('CallSignallingHandler:init:');
     this._listener = params.listener;
+    this._inviteContentHandler = params.inviteContentHandler;
   }
 
   public unInit(): void {
@@ -171,7 +175,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
   protected send(
     callId: string,
     msg: ChatMessage,
-    onResult: (params: { callId: string; error?: any }) => void
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void
   ): void {
     ChatClient.getInstance()
       .chatManager.sendMessage(msg, {
@@ -183,10 +191,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
               code: CallErrorCode.ExceptionState,
               description: 'Failed to send signaling.',
             }),
+            msg: msg,
           });
         },
         onSuccess: (_: ChatMessage): void => {
-          onResult({ callId, error: undefined });
+          onResult({ callId, error: undefined, msg });
         },
       } as ChatMessageStatusCallback)
       .then()
@@ -196,6 +205,9 @@ export class CallSignallingHandler implements ChatMessageEventListener {
   }
 
   protected inviteContent(callType: CallType): string {
+    if (this._inviteContentHandler) {
+      return this._inviteContentHandler(callType);
+    }
     let ret = '';
     if (callType === CallType.Audio1v1) {
       ret = 'voice';
@@ -237,7 +249,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
     inviterDeviceToken: string;
     callId: string;
     ext?: any;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendInvite:', params);
     const msg = ChatMessage.createTextMessage(
@@ -264,7 +280,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
     inviterId: string;
     inviterDeviceToken: string;
     inviteeDeviceToken: string;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendAlert:', params);
     const msg = ChatMessage.createCmdMessage(
@@ -292,7 +312,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
     inviterDeviceToken: string;
     inviteeDeviceToken: string;
     isValid: boolean;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendAlertConfirm:', params);
     const msg = ChatMessage.createCmdMessage(
@@ -319,7 +343,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
     callId: string;
     inviteeId: string;
     inviterDeviceToken: string;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendInviteCancel:', params);
     const msg = ChatMessage.createCmdMessage(
@@ -349,7 +377,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
       | typeof K.KeyBusyResult
       | typeof K.KeyAcceptResult
       | typeof K.KeyRefuseResult;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendInviteReply:', params);
     const msg = ChatMessage.createCmdMessage(
@@ -381,7 +413,11 @@ export class CallSignallingHandler implements ChatMessageEventListener {
       | typeof K.KeyBusyResult
       | typeof K.KeyAcceptResult
       | typeof K.KeyRefuseResult;
-    onResult: (params: { callId: string; error?: any }) => void;
+    onResult: (params: {
+      callId: string;
+      error?: any;
+      msg?: ChatMessage;
+    }) => void;
   }): void {
     calllog.log('CallSignallingHandler:sendInviteReplyConfirm:', params);
     const msg = ChatMessage.createCmdMessage(

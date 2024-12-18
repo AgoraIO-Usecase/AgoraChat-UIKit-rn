@@ -6,11 +6,11 @@ const prettier = require('prettier');
 
 const root = path.resolve(__dirname, '..');
 
-const pattern1 = /_3x/g;
+const pattern1 = /_3x|__3x/g;
 const pattern2 = /U_/g;
 const pattern3 = /\.png/g;
-const faceDir = path.join(root, 'assets', 'icons', 'moji');
-const indexDir = path.join(root, 'assets');
+const faceDir = path.join(root, 'src', 'assets', 'icons', 'moji');
+const indexDir = path.join(root, 'src', 'assets');
 
 const generateFaces = (_faceDir) => {
   const result = [];
@@ -39,7 +39,7 @@ const generateFaces = (_faceDir) => {
   const r = result.map((value) => {
     return value.toString();
   });
-  console.log('test:1:', r);
+  console.log('js:r:', r);
 
   const exportString = `
 // This file is generated automatically. Please do not edit it manually. If necessary, you can run the 'scripts/bundle-icons.js' script to generate it again.\n

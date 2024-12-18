@@ -1,3 +1,4 @@
+import { createThumbnail } from '@easemob/react-native-create-thumbnail';
 import React from 'react';
 import { Platform } from 'react-native';
 import type AudioRecorderPlayer from 'react-native-audio-recorder-player';
@@ -5,7 +6,9 @@ import type {
   PlayBackType,
   RecordBackType,
 } from 'react-native-audio-recorder-player';
+import { Dirs } from 'react-native-file-access';
 
+import { uilog } from '../const';
 import type { Nullable, PartialNullable } from '../types';
 import { generateFileName, getFileExtension, getFileType } from '../utils/file';
 import type {
@@ -35,11 +38,15 @@ export class MediaServiceImplement implements MediaService {
     this.createRootDir(rootDirName);
   }
 
-  protected createRootDir(rootDirName: string): void {
+  protected createRootDir(rootDirName: string, DocumentDir?: string): void {
+    const _rootDir = Platform.select({
+      ios: this.option.fsModule.Dirs.LibraryDir,
+      default: this.option.fsModule.Dirs.DocumentDir,
+    });
+    const docDir = DocumentDir ?? _rootDir;
+    this.rootDir = `${docDir}/${rootDirName}`;
+    uilog.log('rootDir:', this.rootDir);
     const create = () => {
-      const docDir = this.option.fsModule.Dirs.DocumentDir;
-      this.rootDir = `${docDir}/${rootDirName}`;
-      console.log('test:rootDir:', this.rootDir);
       this.option.fsModule.FileSystem.exists(this.rootDir)
         .then((result) => {
           if (result === false) {
@@ -47,29 +54,10 @@ export class MediaServiceImplement implements MediaService {
           }
         })
         .catch((error) => {
-          console.warn(error);
+          uilog.warn(error);
         });
     };
-    this.option.permission
-      .hasMediaLibraryPermission()
-      .then((result) => {
-        console.log(result);
-        if (result === false) {
-          this.option.permission
-            .requestMediaLibraryPermission()
-            .then((_) => {
-              create();
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          create();
-        }
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
+    create();
   }
 
   public getRootDir(): string {
@@ -83,7 +71,23 @@ export class MediaServiceImplement implements MediaService {
     } else {
       dir += '/' + subDir;
     }
+    uilog.log('createDir', dir);
     return this.option.fsModule.FileSystem.mkdir(dir);
+  }
+
+  public async deleteDir(subDir: string): Promise<void> {
+    let dir = this.rootDir;
+    if (subDir.startsWith('/')) {
+      dir += subDir;
+    } else {
+      dir += '/' + subDir;
+    }
+    uilog.log('deleteDir', dir);
+    return this.option.fsModule.FileSystem.unlink(dir);
+  }
+
+  public async deleteCustomDir(dir: string): Promise<void> {
+    return this.option.fsModule.FileSystem.unlink(dir);
   }
 
   public async isDir(subDir: string): Promise<boolean> {
@@ -110,17 +114,11 @@ export class MediaServiceImplement implements MediaService {
     return this.option.fsModule.FileSystem.exists(file);
   }
 
+  public getDirs(): typeof Dirs {
+    return this.option.fsModule.Dirs;
+  }
+
   async startRecordAudio(options: RecordAudioOptions): Promise<boolean> {
-    const hasPermission =
-      await this.option.permission.hasCameraAndMicPermission();
-    if (!hasPermission) {
-      const granted =
-        await this.option.permission.requestCameraAndMicPermission();
-      if (!granted) {
-        options?.onFailed?.(new Error('Failed to obtain permission.'));
-        return false;
-      }
-    }
     try {
       const recorder = this.audioPlayer;
       recorder.addRecordBackListener((e: RecordBackType) => {
@@ -130,7 +128,6 @@ export class MediaServiceImplement implements MediaService {
         }
       });
       const uri = await recorder.startRecorder(options.url, options.audio);
-      console.log('test:startRecorder:uri:', uri);
       options.onFinished?.({ result: true, path: uri });
       this.record = {
         pos: 0,
@@ -155,16 +152,6 @@ export class MediaServiceImplement implements MediaService {
     return this.record;
   }
   async playAudio(options: PlayAudioOptions): Promise<boolean> {
-    const hasPermission =
-      await this.option.permission.hasMediaLibraryPermission();
-    if (!hasPermission) {
-      const granted =
-        await this.option.permission.requestMediaLibraryPermission();
-      if (!granted) {
-        options?.onFailed?.(new Error('Failed to obtain permission.'));
-        return false;
-      }
-    }
     try {
       const recorder = this.audioPlayer;
       recorder.addPlayBackListener((value: PlayBackType) => {
@@ -177,7 +164,7 @@ export class MediaServiceImplement implements MediaService {
       options.onFile?.(r);
       return true;
     } catch (error) {
-      console.warn('playAudio:', error);
+      uilog.warn('playAudio:', error);
       return false;
     }
   }
@@ -212,16 +199,6 @@ export class MediaServiceImplement implements MediaService {
      * NOTE: options.selectionLimit {@link https://github.com/react-native-image-picker/react-native-image-picker#options}
      * We do not support 0 (any number of files)
      **/
-    const hasPermission =
-      await this.option.permission.hasMediaLibraryPermission();
-    if (!hasPermission) {
-      const granted =
-        await this.option.permission.requestMediaLibraryPermission();
-      if (!granted) {
-        options?.onFailed?.(new Error('Failed to obtain permission.'));
-        return [];
-      }
-    }
 
     let selectionLimit = 1;
     if (options !== undefined) {
@@ -260,17 +237,6 @@ export class MediaServiceImplement implements MediaService {
   async openCamera(
     options?: OpenCameraOptions | undefined
   ): Promise<Nullable<FileType>> {
-    const hasPermission =
-      await this.option.permission.hasCameraAndMicPermission();
-    if (!hasPermission) {
-      const granted =
-        await this.option.permission.requestCameraAndMicPermission();
-      if (!granted) {
-        options?.onFailed?.(new Error('Failed to obtain permission.'));
-        return null;
-      }
-    }
-
     const imagePicker = this.option.imagePickerModule;
     const response = await imagePicker.launchCamera({
       presentationStyle: 'fullScreen',
@@ -305,16 +271,13 @@ export class MediaServiceImplement implements MediaService {
   async openDocument(
     options?: OpenResult | undefined
   ): Promise<Nullable<FileType>> {
-    const hasPermission =
-      await this.option.permission.hasMediaLibraryPermission();
-    if (!hasPermission) {
-      const granted =
-        await this.option.permission.requestMediaLibraryPermission();
-      if (!granted) throw new Error('Permission not granted');
-    }
     try {
+      // !!! mode: 'open' Failed to send file in open mode. Native problem.
       const { uri, size, name, type } =
-        await this.option.documentPickerModule.pickSingle();
+        await this.option.documentPickerModule.pickSingle({
+          mode: 'open',
+          // type: ['public.folder'],
+        });
       return this.resultReduction({ uri, size, name, type });
     } catch (e) {
       if (
@@ -347,6 +310,10 @@ export class MediaServiceImplement implements MediaService {
   }): Promise<string> {
     await this.option.fsModule.FileSystem.cp(localPath, targetPath);
     return targetPath;
+  }
+  async saveToAlbum(localPath: string): Promise<string> {
+    // return this.option.mediaLibraryModule.saveToCameraRoll(localPath);
+    return this.option.mediaLibraryModule.save(localPath, { type: 'auto' });
   }
   async save(options: SaveFileOptions): Promise<Nullable<string>> {
     const basePath =
@@ -418,19 +385,18 @@ export class MediaServiceImplement implements MediaService {
   }
   async getVideoThumbnail(
     options: VideoThumbnailOptions
-  ): Promise<Nullable<{ path: string }>> {
+  ): Promise<string | undefined> {
     try {
-      const CreateThumbnail = this.option.videoThumbnail;
-      const { path } = await CreateThumbnail.createThumbnail({
-        url: options.url,
-        format: 'jpeg',
-        timeStamp: options.timeMills,
+      // const CreateThumbnail = this.option.videoThumbnail;
+      const { path } = await createThumbnail({
+        videoUrl: options.url,
+        timestamp: 0,
         cacheName: MediaServiceImplement._hash(options.url),
       });
-      return { path };
+      return path;
     } catch (e) {
-      console.warn(e);
-      return null;
+      uilog.warn(e);
+      return undefined;
     }
   }
 }

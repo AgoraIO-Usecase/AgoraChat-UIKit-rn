@@ -1,0 +1,166 @@
+import * as React from 'react';
+import { ListRenderItemInfo, View } from 'react-native';
+
+import { useColors } from '../../hook';
+import { Alert } from '../../ui/Alert';
+import { FlatListFactory } from '../../ui/FlatList';
+import { StatusAvatar } from '../Avatar';
+import { BottomSheetNameMenu } from '../BottomSheetMenu';
+import {
+  EmptyPlaceholder,
+  ErrorPlaceholder,
+  LoadingPlaceholder,
+} from '../Placeholder';
+import { SearchStyle } from '../SearchStyle';
+import {
+  TopNavigationBar,
+  TopNavigationBarRight,
+  TopNavigationBarTitle,
+} from '../TopNavigationBar';
+import { useConversationList } from './ConversationList.hooks';
+import type { ConversationListItemProps, ConversationListProps } from './types';
+
+const FlatList = FlatListFactory<ConversationListItemProps>();
+
+/**
+ * The conversation list component mainly consists of four parts, including navigation component, search style component, individual list item component, and list component. Supports displaying bottom menu components and warning components. The navigation bar component can be set to display or not, customize the style, or even replace it as a whole. The search style component supports whether to display and customize styles, and the individual list item component supports whether to display, add or replace any multiple components. List components support more property settings.
+ */
+export function ConversationList(props: ConversationListProps) {
+  const {
+    containerStyle,
+    navigationBarVisible,
+    customNavigationBar,
+    searchStyleVisible,
+    customSearch,
+    onClickedSearch,
+  } = props;
+  const {
+    data,
+    refreshing,
+    onRefresh,
+    ref,
+    onMore,
+    viewabilityConfig,
+    onViewableItemsChanged,
+    listState,
+    menuRef,
+    onRequestCloseMenu,
+    alertRef,
+    avatarUrl,
+    tr,
+    onShowConversationListMoreActions,
+    ListItemRender,
+    propsFlatListProps,
+    onClickedAvatar,
+    userId,
+    onReload,
+  } = useConversationList(props);
+  const {
+    style,
+    contentContainerStyle,
+    refreshing: propsRefreshing,
+    onRefresh: propsOnFresh,
+    onEndReached: propsOnEndReached,
+    viewabilityConfig: propsViewabilityConfig,
+    onViewableItemsChanged: propsOnViewableItemsChanged,
+    ...others
+  } = propsFlatListProps ?? {};
+  const { getColor } = useColors();
+
+  return (
+    <View
+      style={[
+        {
+          backgroundColor: getColor('bg'),
+          flexGrow: 1,
+        },
+        containerStyle,
+      ]}
+    >
+      {navigationBarVisible !== false ? (
+        customNavigationBar ? (
+          <>{customNavigationBar}</>
+        ) : (
+          <TopNavigationBar
+            Left={
+              <StatusAvatar
+                url={avatarUrl}
+                size={32}
+                onClicked={onClickedAvatar}
+                userId={userId}
+              />
+            }
+            Right={TopNavigationBarRight}
+            RightProps={{
+              onClicked: onShowConversationListMoreActions,
+              iconName: 'plus_in_circle',
+            }}
+            Title={TopNavigationBarTitle({
+              text: tr('_uikit_navi_title_chat'),
+            })}
+          />
+        )
+      ) : null}
+      {searchStyleVisible !== false ? (
+        customSearch ? (
+          <>{customSearch}</>
+        ) : (
+          <SearchStyle
+            title={tr('search')}
+            onPress={() => {
+              if (listState === 'normal') {
+                onClickedSearch?.();
+              }
+            }}
+          />
+        )
+      ) : null}
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <FlatList
+          ref={ref}
+          style={[{ flexGrow: 1 }, style]}
+          contentContainerStyle={[{ flexGrow: 1 }, contentContainerStyle]}
+          data={data}
+          refreshing={propsRefreshing ?? refreshing}
+          onRefresh={propsOnFresh ?? onRefresh}
+          renderItem={(info: ListRenderItemInfo<ConversationListItemProps>) => {
+            const { item } = info;
+            return <ListItemRender {...item} />;
+          }}
+          keyExtractor={(item: ConversationListItemProps) => {
+            return item.id;
+          }}
+          onEndReached={propsOnEndReached ?? onMore}
+          viewabilityConfig={propsViewabilityConfig ?? viewabilityConfig}
+          onViewableItemsChanged={
+            propsOnViewableItemsChanged ?? onViewableItemsChanged
+          }
+          ListEmptyComponent={EmptyPlaceholder}
+          ListErrorComponent={
+            listState === 'error' ? (
+              <ErrorPlaceholder
+                onClicked={() => {
+                  onReload?.();
+                }}
+              />
+            ) : null
+          }
+          ListLoadingComponent={
+            listState === 'loading' ? <LoadingPlaceholder /> : null
+          }
+          {...others}
+        />
+      </View>
+
+      <BottomSheetNameMenu
+        ref={menuRef}
+        onRequestModalClose={onRequestCloseMenu}
+      />
+      <Alert ref={alertRef} />
+    </View>
+  );
+}

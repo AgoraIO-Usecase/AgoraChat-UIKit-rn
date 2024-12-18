@@ -1,4 +1,5 @@
 import type { CallType } from '../enums';
+import type { ChatMessage } from '../rename.chat';
 import type { CallError } from './CallError';
 
 /**
@@ -31,4 +32,10 @@ export interface CallListener {
    * - error: An error occurred during a call or signaling process. {@link CallError}
    */
   onCallOccurError?: (params: { channelId: string; error: CallError }) => void;
+
+  /**
+   * Callback notification when the signalling message is sent.
+   * @param msg The message to be sent.
+   */
+  onSignallingMessage?: (msg: ChatMessage) => void;
 }

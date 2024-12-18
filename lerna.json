@@ -4,6 +4,8 @@
   "packages": [
     "packages/*",
     "examples/callkit-example",
+    "examples/uikit-example",
+    "examples/room-example",
     "example"
   ]
 }

@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
 
-import { formatElapsed } from '../../../../packages/react-native-chat-callkit/src/utils/utils';
+import { formatElapsed } from '../rename.callkit';
+import { Text1Button } from '../rename.uikit';
 
 export default function TestUtils(): JSX.Element {
   return (
     <View style={{ top: 100 }}>
-      <Button
+      <Text1Button
         onPress={() => {
           const ret = formatElapsed(11125000);
           console.log('test:ret:', ret);
         }}
-      >
-        formatElapsed
-      </Button>
+        text={'formatElapsed'}
+      />
     </View>
   );
 }

@@ -10,8 +10,8 @@ const root = path.resolve(__dirname, '..');
 const matchBigger = /_2x/;
 const matchMax = /_3x/;
 const ignorePatterns = /\.DS_Store|index\.ts/;
-const iconDir = path.join(root, 'assets', 'icons');
-const indexDir = path.join(root, 'assets');
+const iconDir = path.join(root, 'src', 'assets', 'icons');
+const indexDir = path.join(root, 'src', 'assets');
 const icons = {};
 
 // const arr = [{xx:['', '.png' '', '2x', '3x']}, ...];
@@ -82,9 +82,16 @@ arr.forEach((obj) => {
   } else {
     throw new Error('impossible');
   }
-  icons[
-    key
-  ] = `$$start(size: string) => { if (size === '3x') { return require('./icons/${rel}/${key}${d3}${ext}'); } else if (size === '2x') { return require('./icons/${rel}/${key}${d2}${ext}'); } else { return require('./icons/${rel}/${key}${d1}${ext}'); }}$$end`;
+  console.log('test:', key, rel, ext, d1, d2, d3);
+  if (rel === '') {
+    icons[
+      key
+    ] = `$$start(size: string) => { if (size === '3x') { return require('./icons/${key}${d3}${ext}'); } else if (size === '2x') { return require('./icons/${key}${d2}${ext}'); } else { return require('./icons/${key}${d1}${ext}'); }}$$end`;
+  } else {
+    icons[
+      key
+    ] = `$$start(size: string) => { if (size === '3x') { return require('./icons/${rel}/${key}${d3}${ext}'); } else if (size === '2x') { return require('./icons/${rel}/${key}${d2}${ext}'); } else { return require('./icons/${rel}/${key}${d1}${ext}'); }}$$end`;
+  }
 });
 
 const serializedIcons = JSON.stringify(icons, null, 4).replace(

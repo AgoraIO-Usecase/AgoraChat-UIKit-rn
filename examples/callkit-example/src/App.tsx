@@ -1,11 +1,6 @@
-/* eslint-disable react/no-unstable-nested-components */
 import './utils/globals';
 
-import { CameraRoll as MediaLibrary } from '@react-native-camera-roll/camera-roll';
-import Clipboard from '@react-native-clipboard/clipboard';
-import FirebaseMessage from '@react-native-firebase/messaging';
 import {
-  DarkTheme as NDarkTheme,
   DefaultTheme as NDefaultTheme,
   NavigationAction,
   NavigationContainer,
@@ -15,48 +10,34 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { registerRootComponent } from 'expo';
 import * as React from 'react';
-import { Linking, Platform, View } from 'react-native';
-import * as Audio from 'react-native-audio-recorder-player';
-import {
-  CallUser,
-  GlobalContainer as CallkitContainer,
-} from 'react-native-chat-callkit';
-import { ChatClient, ChatPushConfig } from 'react-native-chat-sdk';
-import {
-  createStringSetEn2,
-  DarkTheme,
-  getScaleFactor,
-  GlobalContainer as UikitContainer,
-  LightTheme,
-  Loading,
-  Services,
-  updateScaleFactor,
-} from 'react-native-chat-uikit';
-import CreateThumbnail from 'react-native-create-thumbnail';
-import * as DocumentPicker from 'react-native-document-picker';
-import * as FileAccess from 'react-native-file-access';
-import * as ImagePicker from 'react-native-image-picker';
-import * as Permissions from 'react-native-permissions';
-import VideoComponent from 'react-native-video';
+import { DeviceEventEmitter, Linking, Platform, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Dev from './__dev__';
-import { AppChatSdkContext } from './contexts/AppImSdkContext';
-import { ModalPlaceholder } from './events';
-import { sendEvent } from './events/sendEvent';
-import { AppStringSet } from './I18n/AppCStringSet.en';
+import { createStringSetCn } from './I18n/StringSet.cn';
+import { createStringSetEn } from './I18n/StringSet.en';
+import {
+  CallUser,
+  ChatClient,
+  ChatPushConfig,
+  GlobalContainer as CallkitContainer,
+} from './rename.callkit';
+import {
+  Container as UikitContainer,
+  createDefaultStringSet,
+  LanguageCode,
+  LoadingIcon,
+  Services,
+  StringSet,
+  useLightTheme,
+  usePresetPalette,
+} from './rename.uikit';
 import type { RootParamsList, RootParamsName } from './routes';
 import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
 import { SplashScreen } from './screens/Splash';
 import { TestScreen } from './screens/Test';
-import { createAppScaleFactor } from './styles/createAppScaleFactor';
 import { AppServerClient } from './utils/AppServer';
-import {
-  checkFCMPermission,
-  requestFCMPermission,
-  // requestFcmToken,
-  setBackgroundMessageHandler,
-} from './utils/fcm';
 import { requestAndroidVideo } from './utils/permission';
 
 if (Platform.OS === 'web') {
@@ -92,32 +73,12 @@ console.log('TEST:', __TEST__);
 // }
 
 export default function App() {
-  updateScaleFactor(createAppScaleFactor());
-
-  const isLightTheme = LightTheme.scheme === 'light';
-
-  const permission = Services.createPermissionService({
-    permissions: Permissions,
-    firebaseMessage: FirebaseMessage,
-  });
-
-  const media = Services.createMediaService({
-    videoModule: VideoComponent,
-    videoThumbnail: CreateThumbnail,
-    imagePickerModule: ImagePicker,
-    documentPickerModule: DocumentPicker,
-    mediaLibraryModule: MediaLibrary,
-    fsModule: FileAccess,
-    audioModule: Audio,
-    permission: permission,
-  });
-
-  const storage = Services.createLocalStorageService();
-
+  const palette = usePresetPalette();
+  const light = useLightTheme(palette);
   const [isReady, setIsReady] = React.useState(__DEV__ ? true : true);
   const [initialState, setInitialState] = React.useState();
   const [initialRouteName] = React.useState('Splash' as RootParamsName);
-  const sf = getScaleFactor();
+
   const autoLogin = React.useRef(true);
   const RootRef = useNavigationContainerRef<RootParamsList>();
   const isOnInitialized = React.useRef(false);
@@ -131,13 +92,15 @@ export default function App() {
 
         if (Platform.OS !== 'web' && initialUrl == null) {
           // Only restore state if there's no deep link and we're not on web
-          const savedStateString = await storage.getItem(__KEY__);
-          const state = savedStateString
-            ? JSON.parse(savedStateString)
-            : undefined;
+          if (Services.ls) {
+            const savedStateString = await Services.ls.getItem(__KEY__);
+            const state = savedStateString
+              ? JSON.parse(savedStateString)
+              : undefined;
 
-          if (state !== undefined) {
-            setInitialState(state);
+            if (state !== undefined) {
+              setInitialState(state);
+            }
           }
         }
       } finally {
@@ -148,7 +111,7 @@ export default function App() {
     if (!isReady) {
       restoreState();
     }
-  }, [isReady, storage]);
+  }, [isReady]);
   console.log('test:App:isReady:', isReady);
 
   const onInitApp = React.useCallback(async () => {
@@ -162,41 +125,18 @@ export default function App() {
       AppServerClient.mapUrl = 'http://a41.easemob.com/agora/channel/mapper';
     }
 
-    if ((await checkFCMPermission()) === false) {
-      const ret = await requestFCMPermission();
-      if (ret === false) {
-        console.warn('Firebase Cloud Message Permission request failed.');
-        return;
-      }
-    }
     if ((await requestAndroidVideo()) === false) {
       console.warn('Video and Audio Permission request failed.');
       return;
     }
 
-    setBackgroundMessageHandler();
-    // try {
-    //   const fcmToken = await requestFcmToken();
-    //   console.log('test:requestFcmToken:', fcmSenderId, fcmToken);
-    //   ChatClient.getInstance().updatePushConfig(
-    //     new ChatPushConfig({
-    //       deviceId: fcmSenderId,
-    //       deviceToken: fcmToken,
-    //     })
-    //   );
-    // } catch (error) {
-    //   console.warn('test:requestFcmToken:error', error);
-    // }
+    DeviceEventEmitter.emit('on_initialized', {
+      autoLogin: autoLogin.current,
+      navigation: RootRef,
+    });
 
     console.log('test:onInitApp:');
-    sendEvent({
-      eventType: 'DataEvent',
-      action: 'on_initialized',
-      params: { autoLogin: autoLogin.current, navigation: RootRef },
-      eventBizType: 'others',
-      senderId: 'App',
-    });
-  }, [RootRef, isOnInitialized, isOnReady]);
+  }, [RootRef]);
 
   if (!isReady) {
     return null;
@@ -224,7 +164,7 @@ export default function App() {
   return (
     <React.StrictMode>
       <UikitContainer
-        option={{
+        options={{
           appKey: appKey,
           autoLogin: autoLogin.current,
           debugModel: true,
@@ -240,35 +180,28 @@ export default function App() {
           isOnInitialized.current = true;
           onInitApp();
         }}
-        theme={isLightTheme ? LightTheme : DarkTheme}
-        localization={createStringSetEn2(new AppStringSet())}
-        sdk={
-          new AppChatSdkContext({
-            client: ChatClient.getInstance(),
-          })
-        }
-        header={{
-          defaultTitleAlign: 'center',
-          defaultStatusBarTranslucent: true,
-          defaultHeight: sf(44),
-          defaultTopInset: sf(44),
+        theme={light}
+        onInitLanguageSet={() => {
+          const ret = (
+            language: LanguageCode,
+            _defaultSet: StringSet
+          ): StringSet => {
+            const d = createDefaultStringSet(language);
+            if (language === 'zh-Hans') {
+              return {
+                ...d,
+                ...createStringSetCn(),
+              };
+            } else if (language === 'en') {
+              return {
+                ...d,
+                ...createStringSetEn(),
+              };
+            }
+            return d;
+          };
+          return ret;
         }}
-        services={{
-          clipboard: Services.createClipboardService({
-            clipboard: Clipboard,
-          }),
-          notification: Services.createNotificationService({
-            firebaseMessage: FirebaseMessage,
-            permission: permission,
-          }),
-          media: media,
-          permission: permission,
-          storage: storage,
-          dir: Services.createDirCacheService({
-            media: media,
-          }),
-        }}
-        ModalComponent={() => <ModalPlaceholder />}
       >
         <CallkitContainer
           option={{
@@ -354,75 +287,77 @@ export default function App() {
           {__TEST__ === true ? (
             Dev()
           ) : (
-            <NavigationContainer
-              ref={RootRef}
-              initialState={initialState}
-              theme={isLightTheme ? NDefaultTheme : NDarkTheme}
-              onStateChange={(state: NavigationState | undefined) => {
-                const rr: string[] & string[][] = [];
-                formatNavigationState(state, rr);
-                console.log(
-                  'test:onStateChange:',
-                  JSON.stringify(rr, undefined, '  ')
-                );
-                // console.log('test:onStateChange:o:', JSON.stringify(state));
-                storage.setItem(__KEY__, JSON.stringify(state));
-              }}
-              onUnhandledAction={(action: NavigationAction) => {
-                console.log('test:onUnhandledAction:', action);
-              }}
-              onReady={() => {
-                console.log('test:NavigationContainer:onReady:');
-                isOnReady.current = true;
-                onInitApp();
-              }}
-              fallback={
-                <View
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 1,
-                  }}
-                >
-                  <Loading color="rgba(15, 70, 230, 1)" size={sf(45)} />
-                </View>
-              }
-            >
-              <Root.Navigator initialRouteName={initialRouteName}>
-                <Root.Screen
-                  name="Splash"
-                  options={{
-                    headerShown: false,
-                  }}
-                  component={SplashScreen}
-                />
-                <Root.Screen
-                  name="Login"
-                  options={{
-                    headerShown: false,
-                  }}
-                  component={LoginScreen}
-                />
-                <Root.Screen
-                  name="Home"
-                  options={() => {
-                    return {
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <NavigationContainer
+                ref={RootRef}
+                initialState={initialState}
+                theme={NDefaultTheme}
+                onStateChange={(state: NavigationState | undefined) => {
+                  const rr: string[] & string[][] = [];
+                  formatNavigationState(state, rr);
+                  console.log(
+                    'test:onStateChange:',
+                    JSON.stringify(rr, undefined, '  ')
+                  );
+                  // console.log('test:onStateChange:o:', JSON.stringify(state));
+                  Services.ls.setItem(__KEY__, JSON.stringify(state));
+                }}
+                onUnhandledAction={(action: NavigationAction) => {
+                  console.log('test:onUnhandledAction:', action);
+                }}
+                onReady={() => {
+                  console.log('test:NavigationContainer:onReady:');
+                  isOnReady.current = true;
+                  onInitApp();
+                }}
+                fallback={
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flex: 1,
+                    }}
+                  >
+                    <LoadingIcon style={{ height: 45, width: 45 }} />
+                  </View>
+                }
+              >
+                <Root.Navigator initialRouteName={initialRouteName}>
+                  <Root.Screen
+                    name="Splash"
+                    options={{
                       headerShown: false,
-                    };
-                  }}
-                  component={HomeScreen}
-                />
-                <Root.Screen
-                  name="Test"
-                  options={() => {
-                    return {
-                      headerShown: true,
-                    };
-                  }}
-                  component={TestScreen}
-                />
-              </Root.Navigator>
-            </NavigationContainer>
+                    }}
+                    component={SplashScreen}
+                  />
+                  <Root.Screen
+                    name="Login"
+                    options={{
+                      headerShown: false,
+                    }}
+                    component={LoginScreen}
+                  />
+                  <Root.Screen
+                    name="Home"
+                    options={() => {
+                      return {
+                        headerShown: false,
+                      };
+                    }}
+                    component={HomeScreen}
+                  />
+                  <Root.Screen
+                    name="Test"
+                    options={() => {
+                      return {
+                        headerShown: true,
+                      };
+                    }}
+                    component={TestScreen}
+                  />
+                </Root.Navigator>
+              </NavigationContainer>
+            </GestureHandlerRootView>
           )}
         </CallkitContainer>
       </UikitContainer>

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
 
-import type { User } from '../../../../packages/react-native-chat-callkit/src/types';
-import { AudioTabs } from '../../../../packages/react-native-chat-callkit/src/view/components/AudioTabs';
+import { type User } from '../rename.callkit';
+import { Text1Button } from '../rename.uikit';
 
 let count = 0;
 export function Test() {
@@ -20,7 +19,7 @@ export function Test() {
   // }
   return (
     <View style={{ flex: 1, top: 100 }}>
-      <Button
+      <Text1Button
         onPress={() => {
           users.push({
             userId: `id_{${count}}`,
@@ -32,11 +31,9 @@ export function Test() {
           setValue(count);
           console.log('test:1:', count, users.length);
         }}
-      >
-        update
-      </Button>
-      {/* <Text>{value}</Text> */}
-      <AudioTabs users={users} />
+        text={'update'}
+      />
+      {/* <AudioTabs users={users} /> */}
     </View>
   );
   // return <AudioTabs users={users} />;

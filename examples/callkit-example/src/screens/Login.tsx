@@ -5,38 +5,27 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {
-  autoFocus,
-  createStyleSheet,
-  getScaleFactor,
-  LoadingButton,
-  LocalIcon,
-  TextInput,
-  useChatSdkContext,
-  useHeaderContext,
-} from 'react-native-chat-uikit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useAppI18nContext } from '../contexts/AppI18nContext';
-import { sendEvent, type sendEventProps } from '../events/sendEvent';
+import { login_icon_2x, loginFail_2x } from '../const';
 import { useStyleSheet } from '../hooks/useStyleSheet';
+import {
+  ErrorCode,
+  Icon,
+  Text1Button,
+  TextInput,
+  useChatContext,
+  useI18nContext,
+} from '../rename.uikit';
 import type { RootScreenParamsList } from '../routes';
+import { sf } from '../utils/utils';
 
 type Props = NativeStackScreenProps<RootScreenParamsList>;
-
-const sendEventFromSigIn = (
-  params: Omit<sendEventProps, 'senderId' | 'timestamp' | 'eventBizType'>
-) => {
-  sendEvent({
-    ...params,
-    senderId: 'Login',
-    eventBizType: 'others',
-  } as sendEventProps);
-};
 
 export default function LoginScreen({ route, navigation }: Props): JSX.Element {
   console.log('test:LoginScreen:route:', route);
@@ -45,11 +34,8 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
   const accountType = params.accountType as 'agora' | 'easemob';
   const gid = params.id;
   const gps = params.pass;
-  const sf = getScaleFactor();
   const enableKeyboardAvoid = true;
-  const { defaultStatusBarTranslucent: statusBarTranslucent } =
-    useHeaderContext();
-  const { login } = useAppI18nContext();
+  const { tr } = useI18nContext();
   const [id, setId] = React.useState(gid);
   const [tip, setTip] = React.useState('');
   const [password, setPassword] = React.useState(gps);
@@ -59,7 +45,7 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
   const [buttonState, setButtonState] = React.useState<'loading' | 'stop'>(
     'stop'
   );
-  const { client, login: loginAction } = useChatSdkContext();
+  const im = useChatContext();
   console.log('test:LoginScreen:', params);
 
   React.useEffect(() => {
@@ -75,32 +61,22 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
       return;
     }
     setButtonState('loading');
-    loginAction({
-      id: id,
-      pass: password,
-      type: accountType,
-      onResult: (result) => {
-        if (result.result === true) {
+    im.login({
+      userId: id,
+      userToken: password,
+      usePassword: accountType === 'agora' ? false : true,
+      result: (res) => {
+        if (res.isOk) {
           console.log('test:login:success');
           setButtonState('stop');
-          sendEventFromSigIn({
-            eventType: 'DataEvent',
-            action: 'on_logined',
-            params: {},
-          });
           navigation.dispatch(StackActions.push('Home', { params: {} }));
         } else {
-          console.warn('test:login:fail:', result.error);
+          console.warn('test:login:fail:', res.error);
           setButtonState('stop');
-          if (result.error.code === 200) {
-            sendEventFromSigIn({
-              eventType: 'DataEvent',
-              action: 'on_logined',
-              params: {},
-            });
+          if (res.error?.code === ErrorCode.login_error) {
             navigation.dispatch(StackActions.push('Home', { params: {} }));
           } else {
-            setTip(result.error.description);
+            setTip(res.error?.desc ?? '');
             // toast.showToast('Login Failed');
           }
         }
@@ -127,7 +103,7 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
 
     const res = load();
     return () => unload(res);
-  }, [addListeners, client]);
+  }, [addListeners]);
 
   return (
     <SafeAreaView
@@ -143,9 +119,7 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
         }}
         enabled={enableKeyboardAvoid}
         behavior={Platform.select({ ios: 'padding', default: 'height' })}
-        keyboardVerticalOffset={
-          enableKeyboardAvoid && statusBarTranslucent ? sf(80) : 0
-        }
+        keyboardVerticalOffset={enableKeyboardAvoid ? 80 : 0}
         pointerEvents="box-none"
       >
         <TouchableWithoutFeedback
@@ -156,22 +130,23 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
           <View>
             <View style={styles.space} />
             <View>
-              <LocalIcon
-                name="login_icon"
-                size={sf(250)}
-                style={{ borderRadius: 0 }}
+              <Icon
+                name={login_icon_2x}
+                style={{ borderRadius: 0, width: 250, height: 250 }}
               />
             </View>
             <View
               style={[styles.errorTip, { opacity: tip.length > 0 ? 1 : 0 }]}
             >
-              <LocalIcon name="loginFail" size={sf(14)} />
+              <Icon
+                name={loginFail_2x}
+                style={{ borderRadius: 0, width: 14, height: 14 }}
+              />
               <Text style={styles.comment}>{tip}</Text>
             </View>
             <TextInput
-              autoFocus={autoFocus()}
               multiline={false}
-              placeholder={login.id}
+              placeholder={tr('id')}
               clearButtonMode="while-editing"
               onChangeText={(text) => setId(text)}
               style={styles.item}
@@ -179,9 +154,8 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
             />
             <View style={{ height: sf(18) }} />
             <TextInput
-              autoFocus={autoFocus()}
               multiline={false}
-              placeholder={login.pass}
+              placeholder={tr('pass')}
               textContentType="password"
               visible-password={false}
               secureTextEntry
@@ -190,14 +164,15 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
               value={password}
             />
             <View style={{ height: sf(18) }} />
-            <LoadingButton
+            <Text1Button
               disabled={disabled}
-              content={login.button}
+              text={tr('button')}
               style={styles.button}
-              state={buttonState}
-              onChangeState={(state) => {
-                console.log('test:state:', state);
-                execLogin(state);
+              onPress={() => {
+                if (buttonState === 'loading') {
+                  return;
+                }
+                execLogin(buttonState);
               }}
             />
             <View style={styles.space} />
@@ -208,7 +183,7 @@ export default function LoginScreen({ route, navigation }: Props): JSX.Element {
   );
 }
 
-const styles = createStyleSheet({
+const styles = StyleSheet.create({
   space: {
     flexGrow: 1,
     flexShrink: 1,

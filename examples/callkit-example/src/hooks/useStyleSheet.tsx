@@ -1,15 +1,14 @@
-import {
-  createStyleSheetP,
-  type ThemeContextType,
-  useThemeContext,
-} from 'react-native-chat-uikit';
+import { useColors, usePaletteContext } from '../rename.uikit';
 
 export const useStyleSheet = (): { safe: any } => {
-  const styles = createStyleSheetP((theme: ThemeContextType) => {
-    const { colors } = theme;
-    return {
-      safe: { flex: 1, backgroundColor: colors.background },
-    };
-  }, useThemeContext());
-  return styles;
+  const { colors } = usePaletteContext();
+  const { getColor } = useColors({
+    bg: {
+      light: colors.neutral[98],
+      dark: colors.neutral[1],
+    },
+  });
+  return {
+    safe: { flex: 1, backgroundColor: getColor('bg') },
+  };
 };

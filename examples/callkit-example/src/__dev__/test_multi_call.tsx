@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import {
-  CallState,
-  InviteeListProps,
-  MultiCall,
-} from 'react-native-chat-callkit';
-import { Button } from 'react-native-chat-uikit';
 
 import { SelectListMemo } from '../components/SelectList';
+import { CallState, InviteeListProps, MultiCall } from '../rename.callkit';
+import { Text1Button } from '../rename.uikit';
 
 const ContactList = (props: InviteeListProps): JSX.Element => {
   console.log('test:contactList:');
@@ -28,14 +24,13 @@ const ContactList = (props: InviteeListProps): JSX.Element => {
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Button
+        <Text1Button
           style={{ height: 40, width: 60 }}
           onPress={() => {
             onClose(addedIdsRef.current);
           }}
-        >
-          done
-        </Button>
+          text={'done'}
+        />
         <View style={{ width: 10 }} />
         <View>
           <Text>{content()}</Text>

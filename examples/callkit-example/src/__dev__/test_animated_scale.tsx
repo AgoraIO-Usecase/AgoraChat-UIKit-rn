@@ -7,7 +7,8 @@ import {
   Pressable,
   View,
 } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
+
+import { Text1Button } from '../rename.uikit';
 
 type Props = {};
 type State = {
@@ -59,22 +60,20 @@ export default class TestAnimatedScale extends React.Component<Props, State> {
           console.log('test:nativeEvent:', event.nativeEvent);
         }}
       >
-        <Button
+        <Text1Button
           style={{ height: 40, width: 80 }}
           onPress={() => {
             this.animateLoading(true).start();
           }}
-        >
-          to small
-        </Button>
-        <Button
+          text={'to small'}
+        />
+        <Text1Button
           style={{ height: 40, width: 80 }}
           onPress={() => {
             this.animateLoading(false).start();
           }}
-        >
-          to big
-        </Button>
+          text={'to big'}
+        />
         <Pressable
           onPress={() => {
             this.animateLoading(false).start();

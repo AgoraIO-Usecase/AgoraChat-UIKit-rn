@@ -4,22 +4,26 @@ import {
   Alert,
   DeviceEventEmitter,
   ListRenderItemInfo,
+  Platform,
   StyleSheet,
   Text,
+  ToastAndroid,
   View,
 } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+
+import { ContactList } from '../components/SelectList';
 import {
   CallError,
   CallListener,
   CallType,
   CallUser,
+  formatElapsed,
+  MultiCall,
+  SingleCall,
   useCallkitSdkContext,
-} from 'react-native-chat-callkit';
-import { Button, RadioButton } from 'react-native-chat-uikit';
-import { FlatList } from 'react-native-gesture-handler';
-
-import { useAppChatSdkContext } from '../contexts/AppImSdkContext';
-import { sendEvent, sendEventProps } from '../events/sendEvent';
+} from '../rename.callkit';
+import { CheckButton, Text1Button, useChatContext } from '../rename.uikit';
 import type { RootParamsList } from '../routes';
 
 let gid: string = '';
@@ -36,16 +40,6 @@ try {
 } catch (e) {
   console.warn('test:', e);
 }
-
-const sendHomeEvent = (
-  params: Omit<sendEventProps, 'senderId' | 'timestamp' | 'eventBizType'>
-) => {
-  sendEvent({
-    ...params,
-    senderId: 'Home',
-    eventBizType: 'others',
-  } as sendEventProps);
-};
 
 type DataType = {
   userId: string;
@@ -75,131 +69,82 @@ const FlatListRenderItem = (
         }}
       >
         <Text style={{ fontSize: 18 }}>{item.userId}</Text>
-        <RadioButton onChecked={item.onChecked} />
+        <CheckButton
+          onClicked={() => item.onChecked?.(!item.isSelected)}
+          checked={item.isSelected ?? false}
+        />
       </View>
     </View>
   );
 };
 type ContactListRef = {
-  showCall: (params: {
-    callType: CallType;
-    currentId: string;
-    inviterId: string;
-  }) => void;
-  hideCall: () => void;
+  // showCall: (params: {
+  //   callType: CallType;
+  //   currentId: string;
+  //   inviterId: string;
+  // }) => void;
+  // hideCall: () => void;
+  getData: () => DataType[];
 };
 type ContactListProps = {
   propsRef?: React.RefObject<ContactListRef>;
 };
-const ContactList = React.memo((props: ContactListProps) => {
+const ContactListMemo = React.memo((props: ContactListProps) => {
   console.log('test:ContactList:', props);
-  const { currentId } = useAppChatSdkContext();
   const { propsRef } = props;
-  const { client } = useAppChatSdkContext();
+  const im = useChatContext();
   const data = React.useMemo(() => [] as DataType[], []);
   const [_data, setData] = React.useState(data);
 
   if (propsRef?.current) {
-    propsRef.current.showCall = (params: {
-      callType: CallType;
-      currentId: string;
-      inviterId: string;
-    }) => {
-      console.log('test:showCall:', params);
-      const inviteeIds = [] as string[];
-      const invitees = [] as CallUser[];
-      for (const i of _data) {
-        if (i.isSelected === true) {
-          inviteeIds.push(i.userId);
-          invitees.push({
-            userId: i.userId,
-            userName: `${i.userId}_name`,
-            userAvatarUrl:
-              'https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-glyph/64/1_paw_dog_cat_paws_pets_animal-14-128.png',
-          } as CallUser);
-        }
-      }
-      if (params.currentId === params.inviterId && inviteeIds.length === 0) {
-        Alert.alert(`error: please add invitee.`);
-        return;
-      }
-      // const isInviter = params.inviterId === params.currentId;
-      sendHomeEvent({
-        eventType: 'VoiceStateEvent',
-        action:
-          params.callType === CallType.Audio1v1 ||
-          params.callType === CallType.Video1v1
-            ? 'show_single_call'
-            : 'show_multi_call',
-        params: {
-          appKey: client.options?.appKey ?? '',
-          agoraAppId: agoraAppId,
-          inviterId: params.inviterId,
-          // inviterName:
-          //   params.isInviter === true
-          //     ? `${currentId}_name`
-          //     : `${params.inviterId!}_name`,
-          // inviterAvatar:
-          //   params.isInviter === true
-          //     ? 'https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-glyph/64/1_paw_dog_cat_paws_pets_animal-14-128.png'
-          //     : 'https://cdn3.iconfinder.com/data/icons/food-3-11/128/food_Bone-Dog-Doggy-128.png',
-          // invitees:
-          //   params.isInviter === true
-          //     ? invitees
-          //     : [
-          //         {
-          //           userId: currentId,
-          //           userName: `${currentId}_name`,
-          //           userAvatarUrl:
-          //             'https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-glyph/64/1_paw_dog_cat_paws_pets_animal-14-128.png',
-          //         } as CallUser,
-          //       ],
-          currentId: currentId,
-          inviteeIds:
-            params.inviterId === params.currentId ? inviteeIds : [currentId],
-          callType: params.callType,
-        },
-      });
-    };
-    propsRef.current.hideCall = () => {
-      sendHomeEvent({
-        eventType: 'VoiceStateEvent',
-        action: 'hide_call',
-        params: {},
-      });
+    propsRef.current.getData = () => {
+      return data;
     };
   }
 
   const init = React.useCallback(() => {
     console.log('test:ContactList:init:');
-    client.contactManager
-      .getAllContactsFromServer()
-      .then((result) => {
-        console.log('test:ContactList:init:result:', result);
-        data.length = 0;
-        for (const i of result) {
-          const user = {
-            userId: i,
-            userName: i,
-            onChecked: (checked: boolean) => {
-              user.isSelected = checked;
-              return true;
-            },
-          } as DataType;
-          data.push(user);
+    im.getAllContacts({
+      onResult: (res) => {
+        if (res.isOk && res.value) {
+          console.log('test:ContactList:init:result:', res);
+          data.length = 0;
+          for (const i of res.value) {
+            const user = {
+              userId: i.userId,
+              userName: i.userName,
+              onChecked: (checked: boolean) => {
+                user.isSelected = checked;
+                setData([...data]);
+                return true;
+              },
+            } as DataType;
+            data.push(user);
+          }
+          setData([...data]);
         }
-        setData([...data]);
-      })
-      .catch((error) => {
-        console.log('test:', error);
-      });
-  }, [client.contactManager, data]);
+      },
+    });
+  }, [data, im]);
   React.useEffect(() => {
     init();
     // initApi();
   }, [init]);
   return (
-    <FlatList data={_data} extraData={_data} renderItem={FlatListRenderItem} />
+    <>
+      <FlatList
+        data={_data}
+        extraData={_data}
+        renderItem={FlatListRenderItem}
+      />
+      {/* <_Call
+        callType={callType}
+        currentId={currentId}
+        inviterId={inviterId}
+        visible={visible}
+        onRequestClose={onRequestClose}
+      /> */}
+    </>
   );
 });
 
@@ -308,9 +253,93 @@ export default function HomeScreen({
 }: NativeStackScreenProps<RootParamsList, 'Home'>): JSX.Element {
   console.log('test:HomeScreen:');
   const contactListRef = React.useRef<ContactListRef>({} as any);
-  const { currentId, logout: logoutAction } = useAppChatSdkContext();
   const { call } = useCallkitSdkContext();
   const [enableLog, setEnableLog] = React.useState(false);
+  const im = useChatContext();
+
+  const { showMultiCall, showSingleCall } = useCallApi();
+  const [visible, setVisible] = React.useState(false);
+  const [inviterId, setInviterId] = React.useState('');
+  const [currentId, setCurrentId] = React.useState('');
+  const [callType, setCallType] = React.useState<CallType>(CallType.Audio1v1);
+
+  const onRequestClose = React.useCallback(() => {
+    setVisible(false);
+  }, []);
+
+  const _Call = (props: {
+    callType: CallType;
+    currentId: string;
+    inviterId: string;
+    visible: boolean;
+    onRequestClose: () => void;
+  }) => {
+    console.log('test:_Call:', props);
+    const { callType, currentId, inviterId, visible, onRequestClose } = props;
+    const inviteeIds = [] as string[];
+    const invitees = [] as CallUser[];
+    const _data = contactListRef.current.getData();
+    for (const i of _data) {
+      if (i.isSelected === true) {
+        inviteeIds.push(i.userId);
+        invitees.push({
+          userId: i.userId,
+          userName: `${i.userId}_name`,
+          userAvatarUrl:
+            'https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-glyph/64/1_paw_dog_cat_paws_pets_animal-14-128.png',
+        } as CallUser);
+      }
+    }
+    if (visible !== true) {
+      return null;
+    }
+    if (currentId === inviterId && inviteeIds.length === 0) {
+      Alert.alert(`error: please add invitee.`);
+      return null;
+    }
+    if (callType === CallType.Audio1v1 || callType === CallType.Video1v1) {
+      return showSingleCall({
+        appKey: im.client.options?.appKey ?? '',
+        agoraAppId: agoraAppId,
+        inviterId: inviterId,
+        currentId: currentId,
+        inviteeIds: inviterId === currentId ? inviteeIds : [currentId],
+        callType: callType,
+        onRequestClose: onRequestClose,
+      });
+    } else if (
+      callType === CallType.AudioMulti ||
+      callType === CallType.VideoMulti
+    ) {
+      return showMultiCall({
+        appKey: im.client.options?.appKey ?? '',
+        agoraAppId: agoraAppId,
+        inviterId: inviterId,
+        currentId: currentId,
+        inviteeIds: inviterId === currentId ? inviteeIds : [currentId],
+        callType: callType,
+        // invitees: invitees,
+        onRequestClose: onRequestClose,
+      });
+    } else {
+      return null;
+    }
+  };
+
+  const showCall = React.useCallback(
+    (params: { callType: CallType; currentId: string; inviterId: string }) => {
+      console.log('test:showCall:', params);
+      const { callType, currentId, inviterId } = params;
+      setInviterId(inviterId);
+      setCurrentId(currentId);
+      setCallType(callType);
+      setVisible(true);
+    },
+    []
+  );
+  // const hideCall = () => {
+  //   setVisible(false);
+  // };
 
   const addListener = React.useCallback(() => {
     const listener = {
@@ -321,9 +350,9 @@ export default function HomeScreen({
         extension?: any;
       }) => {
         console.log('onCallReceived:', params);
-        contactListRef.current.showCall({
+        showCall({
           callType: params.callType,
-          currentId: currentId,
+          currentId: im.userId ?? '',
           inviterId: params.inviterId,
         });
       },
@@ -335,7 +364,7 @@ export default function HomeScreen({
     return () => {
       call.removeListener(listener);
     };
-  }, [call, currentId]);
+  }, [call, im.userId, showCall]);
 
   React.useEffect(() => {
     const sub = addListener();
@@ -348,26 +377,25 @@ export default function HomeScreen({
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ marginHorizontal: 20 }}>
-          <Text>{currentId}</Text>
+          <Text>{im.userId}</Text>
         </View>
-        <Button
+        <Text1Button
           style={{ height: 40, width: 100 }}
           onPress={() => {
-            logoutAction({
-              onResult: ({ result, error }) => {
-                if (error) {
-                  console.warn('test:error:', error, result);
-                  throw new Error('Failed to log out. Procedure');
+            im.logout({
+              result: (res) => {
+                if (res.isOk) {
+                  navigation.navigate('Login', {
+                    params: { id: gid, pass: gps, accountType: gt },
+                  });
+                } else {
+                  console.warn('test:error:', res.error);
                 }
-                navigation.navigate('Login', {
-                  params: { id: gid, pass: gps, accountType: gt },
-                });
               },
             });
           }}
-        >
-          logout
-        </Button>
+          text={'logout'}
+        />
       </View>
     );
   };
@@ -382,70 +410,64 @@ export default function HomeScreen({
           flexWrap: 'wrap',
         }}
       >
-        <Button
+        <Text1Button
           style={style.button}
           onPress={() => {
-            contactListRef.current.showCall({
+            showCall({
               callType: CallType.Video1v1,
-              currentId: currentId,
-              inviterId: currentId,
+              currentId: im.userId ?? '',
+              inviterId: im.userId ?? '',
             });
           }}
-        >
-          singleV
-        </Button>
-        <Button
+          text={'singleV'}
+        />
+        <Text1Button
           style={style.button}
           onPress={() => {
-            contactListRef.current.showCall({
+            showCall({
               callType: CallType.Audio1v1,
-              currentId: currentId,
-              inviterId: currentId,
+              currentId: im.userId ?? '',
+              inviterId: im.userId ?? '',
             });
           }}
-        >
-          singleA
-        </Button>
-        <Button
+          text={'singleA'}
+        />
+        <Text1Button
           style={style.button}
           onPress={() => {
-            contactListRef.current.showCall({
+            showCall({
               callType: CallType.VideoMulti,
-              currentId: currentId,
-              inviterId: currentId,
+              currentId: im.userId ?? '',
+              inviterId: im.userId ?? '',
             });
           }}
-        >
-          multiV
-        </Button>
-        <Button
+          text={'multiV'}
+        />
+        <Text1Button
           style={style.button}
           onPress={() => {
-            contactListRef.current.showCall({
+            showCall({
               callType: CallType.AudioMulti,
-              currentId: currentId,
-              inviterId: currentId,
+              currentId: im.userId ?? '',
+              inviterId: im.userId ?? '',
             });
           }}
-        >
-          multiA
-        </Button>
-        <Button
+          text={'multiA'}
+        />
+        <Text1Button
           style={style.button}
           onPress={() => {
             navigation.push('Test', { params: {} });
           }}
-        >
-          navi
-        </Button>
-        <Button
+          text={'navi'}
+        />
+        <Text1Button
           style={style.button}
           onPress={() => {
             setEnableLog(!enableLog);
           }}
-        >
-          log
-        </Button>
+          text={'log'}
+        />
       </View>
     );
   };
@@ -459,7 +481,7 @@ export default function HomeScreen({
           // backgroundColor: 'red',
         }}
       >
-        <ContactList propsRef={contactListRef} />
+        <ContactListMemo propsRef={contactListRef} />
       </View>
     );
   };
@@ -477,12 +499,21 @@ export default function HomeScreen({
     ) : null;
   };
   return (
-    <View style={{ top: 44, flex: 1 }}>
-      {info()}
-      {tools()}
-      {list()}
-      {log()}
-    </View>
+    <>
+      <View style={{ top: 44, flex: 1 }}>
+        {info()}
+        {tools()}
+        {list()}
+        {log()}
+      </View>
+      <_Call
+        callType={callType}
+        currentId={currentId}
+        inviterId={inviterId}
+        visible={visible}
+        onRequestClose={onRequestClose}
+      />
+    </>
   );
 }
 
@@ -494,3 +525,175 @@ const style = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+function useCallApi() {
+  const showSingleCall = React.useCallback(
+    (params: {
+      appKey: string;
+      agoraAppId: string;
+      inviterId: string;
+      currentId: string;
+      inviteeIds: string[];
+      callType: CallType;
+      inviterName?: string;
+      inviterAvatar?: string;
+      invitees?: CallUser[];
+      onRequestClose: () => void;
+    }) => {
+      const {
+        inviteeIds,
+        currentId,
+        inviterId,
+        callType,
+        invitees,
+        inviterAvatar,
+        inviterName,
+        onRequestClose,
+      } = params;
+      return (
+        <SingleCall
+          inviterId={inviterId}
+          inviterName={inviterName}
+          inviterAvatar={inviterAvatar}
+          currentId={currentId}
+          inviteeId={inviteeIds[0] ?? ''}
+          inviteeName={invitees?.[0]?.userName}
+          inviteeAvatar={invitees?.[0]?.userAvatarUrl}
+          callType={callType === CallType.Audio1v1 ? 'audio' : 'video'}
+          onClose={(elapsed, reason) => {
+            console.log('test:stateEvent.onClose', elapsed, reason);
+            onRequestClose();
+            if (Platform.OS === 'android') {
+              if (reason) {
+                ToastAndroid.show(
+                  `tip: reason: ${JSON.stringify(reason)}`,
+                  ToastAndroid.SHORT
+                );
+              } else {
+                ToastAndroid.show(
+                  `tip: Call End: ${formatElapsed(elapsed)}`,
+                  ToastAndroid.SHORT
+                );
+              }
+            } else {
+              if (reason) {
+                Alert.alert(`tip: reason: ${JSON.stringify(reason)}`);
+              } else {
+                Alert.alert(`tip: Call End: ${formatElapsed(elapsed)}`);
+              }
+            }
+          }}
+          onHangUp={() => {
+            console.log('test:stateEvent.onHangUp');
+            onRequestClose();
+          }}
+          onCancel={() => {
+            console.log('test:stateEvent.onCancel');
+            onRequestClose();
+          }}
+          onRefuse={() => {
+            console.log('test:stateEvent.onRefuse');
+            onRequestClose();
+          }}
+          onError={(error) => {
+            console.log('test:stateEvent.onError', error);
+            onRequestClose();
+            if (Platform.OS === 'android') {
+              ToastAndroid.show(`error: ${JSON.stringify(error)}`, 3);
+            } else {
+              Alert.alert(`error: ${JSON.stringify(error)}`);
+            }
+          }}
+        />
+      );
+    },
+    []
+  );
+  const showMultiCall = React.useCallback(
+    (params: {
+      appKey: string;
+      agoraAppId: string;
+      inviterId: string;
+      currentId: string;
+      inviteeIds: string[];
+      callType: CallType;
+      inviterName?: string;
+      inviterAvatar?: string;
+      invitees?: CallUser[];
+      onRequestClose: () => void;
+    }) => {
+      const {
+        inviteeIds,
+        inviterId,
+        invitees,
+        inviterAvatar,
+        inviterName,
+        currentId,
+        callType,
+        onRequestClose,
+      } = params;
+      return (
+        <MultiCall
+          inviterId={inviterId}
+          inviterName={inviterName}
+          inviterAvatar={inviterAvatar}
+          currentId={currentId}
+          callType={callType === CallType.AudioMulti ? 'audio' : 'video'}
+          inviteeIds={inviteeIds}
+          inviteeList={{ InviteeList: ContactList }}
+          invitees={invitees}
+          onClose={(elapsed, reason) => {
+            console.log('test:stateEvent.onClose', elapsed, reason);
+            onRequestClose();
+            if (Platform.OS === 'android') {
+              if (reason) {
+                ToastAndroid.show(
+                  `tip: reason: ${JSON.stringify(reason)}`,
+                  ToastAndroid.SHORT
+                );
+              } else {
+                ToastAndroid.show(
+                  `tip: Call End: ${formatElapsed(elapsed)}`,
+                  ToastAndroid.SHORT
+                );
+              }
+            } else {
+              if (reason) {
+                Alert.alert(`tip: reason: ${JSON.stringify(reason)}`);
+              } else {
+                Alert.alert(`tip: Call End: ${formatElapsed(elapsed)}`);
+              }
+            }
+          }}
+          onHangUp={() => {
+            console.log('test:stateEvent.onHangUp');
+            onRequestClose();
+          }}
+          onCancel={() => {
+            console.log('test:stateEvent.onCancel');
+            onRequestClose();
+          }}
+          onRefuse={() => {
+            console.log('test:stateEvent.onRefuse');
+            onRequestClose();
+          }}
+          onError={(error) => {
+            console.log('test:stateEvent.onError', error);
+            onRequestClose();
+            if (Platform.OS === 'android') {
+              ToastAndroid.show(`error: ${JSON.stringify(error)}`, 3);
+            } else {
+              Alert.alert(`error: ${JSON.stringify(error)}`);
+            }
+          }}
+        />
+      );
+    },
+    []
+  );
+
+  return {
+    showSingleCall,
+    showMultiCall,
+  };
+}

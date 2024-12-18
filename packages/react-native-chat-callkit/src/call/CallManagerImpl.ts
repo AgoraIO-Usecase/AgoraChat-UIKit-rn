@@ -18,7 +18,6 @@ import {
   UserOfflineReasonType,
   VideoSourceType,
 } from 'react-native-agora';
-import { ChatClient } from 'react-native-chat-sdk';
 
 import {
   CallEndReason,
@@ -26,6 +25,7 @@ import {
   CallErrorType,
   CallType,
 } from '../enums';
+import { ChatClient, ChatMessage } from '../rename.chat';
 import { hashCode, timestamp, uuid } from '../utils/utils';
 import { calllog } from './CallConst';
 import * as K from './CallConst';
@@ -154,6 +154,7 @@ export class CallManagerImpl
       userId: string;
       onResult: (params: { user: CallUser; error?: any }) => void;
     }) => void;
+    requestInviteContent?: (callType: CallType) => string;
     onResult?: (params?: { error?: CallError }) => void;
   }): void {
     if (this._isInit === true) {
@@ -195,7 +196,7 @@ export class CallManagerImpl
         params.onResult?.();
       }
     });
-    this.initListener();
+    this.initListener(params);
     i1 = true;
     if (i1 && i2) {
       params.onResult?.();
@@ -221,14 +222,17 @@ export class CallManagerImpl
     this.unInitListener();
   }
 
-  private initListener(): void {
+  private initListener(params: any): void {
     this._timer.init({
       listener: this,
       timeout: this._option.callTimeout ?? K.KeyTimeout,
     });
     this._client = ChatClient.getInstance();
     this.client?.chatManager.addMessageListener(this._sig);
-    this._sig.init({ listener: this });
+    this._sig.init({
+      listener: this,
+      inviteContentHandler: params.requestInviteContent,
+    });
   }
   private unInitListener(): void {
     this._timer.unInit();
@@ -548,12 +552,13 @@ export class CallManagerImpl
             inviteeDeviceToken: invitee.userDeviceToken ?? '',
             inviterDeviceToken: call.inviter.userDeviceToken ?? '',
             reply: 'refuse',
-            onResult: ({ callId, error }) => {
+            onResult: ({ callId, error, msg }) => {
               calllog.log(
                 'CallManagerImpl:refuseCall:sendInviteReply:',
                 callId,
                 error
               );
+              this._onSignallingMessage(msg);
               if (error) {
                 this.timer.stopTiming({ callId, userId: call.inviter.userId });
                 this._answerTimeout({ callId, userId: call.inviter.userId });
@@ -756,13 +761,14 @@ export class CallManagerImpl
           callId: call.callId,
           inviteeId: invitee?.userId,
           inviterDeviceToken: call.inviter.userDeviceToken!,
-          onResult: ({ callId, error }) => {
+          onResult: ({ callId, error, msg }) => {
             calllog.log(
               'CallManagerImpl:_cancelCall:sendInviteCancel:',
               callId,
               error
             );
             // Note: Ignore the result.
+            this._onSignallingMessage(msg);
           },
         });
       }
@@ -787,12 +793,13 @@ export class CallManagerImpl
               callId: call.callId,
               inviteeId: invitee?.userId,
               inviterDeviceToken: call.inviter.userDeviceToken!,
-              onResult: ({ callId, error }) => {
+              onResult: ({ callId, error, msg }) => {
                 calllog.log(
                   'CallManagerImpl:_hangUpCall:sendInviteCancel:',
                   callId,
                   error
                 );
+                this._onSignallingMessage(msg);
               },
             });
           }
@@ -1061,8 +1068,9 @@ export class CallManagerImpl
           inviterDeviceToken: this.deviceToken, // !!! It may not be consistent.
           callId: call.callId,
           ext: params.extension,
-          onResult: ({ callId, error }) => {
+          onResult: ({ callId, error, msg }) => {
             calllog.log('CallManagerImpl:sendInvite:', callId, error);
+            this._onSignallingMessage(msg);
             if (error) {
               this.timer.stopTiming({ callId, userId: id });
               const call = this._getCall(callId);
@@ -1129,8 +1137,9 @@ export class CallManagerImpl
           inviterDeviceToken: this.deviceToken, // !!! It may not be consistent.
           callId: call.callId,
           ext: params.extension,
-          onResult: ({ callId, error }) => {
+          onResult: ({ callId, error, msg }) => {
             calllog.log('CallManagerImpl:sendInvite:', callId);
+            this._onSignallingMessage(msg);
             if (error) {
               // Note: Could be a network problem. Could be on a blacklist.
               this.timer.stopTiming({ callId, userId: id });
@@ -1174,13 +1183,14 @@ export class CallManagerImpl
         ...params,
         inviteeId: params.userId,
         inviterDeviceToken: call.inviter.userDeviceToken!,
-        onResult: ({ callId, error }) => {
+        onResult: ({ callId, error, msg }) => {
           calllog.log(
             'CallManagerImpl:_inviteTimeout:sendInviteCancel:',
             callId,
             error
           );
           // Note: Ignore the result.
+          this._onSignallingMessage(msg);
         },
       });
       if (
@@ -1257,6 +1267,12 @@ export class CallManagerImpl
   }): void {
     calllog.log('CallManagerImpl:_onCallOccurError', params);
     this.listener?.onCallOccurError?.(params);
+  }
+
+  protected _onSignallingMessage(msg?: ChatMessage) {
+    if (msg) {
+      this.userListener?.onSignallingMessage?.(msg);
+    }
   }
 
   protected _onRequestJoin(params: { callId: string }): void {
@@ -1361,9 +1377,14 @@ export class CallManagerImpl
         inviteeDeviceToken: this.deviceToken,
         inviterDeviceToken: params.inviterDeviceToken,
         reply: 'busy',
-        onResult: (params: { callId: string; error?: CallError }) => {
+        onResult: (params: {
+          callId: string;
+          error?: CallError;
+          msg?: ChatMessage;
+        }) => {
           calllog.log('CallManagerImpl:onInvite:sendInviteReply:', params);
           // Note: ignore.
+          this._onSignallingMessage(params.msg);
         },
       });
       return;
@@ -1392,11 +1413,16 @@ export class CallManagerImpl
           inviteeDeviceToken: this.deviceToken,
           inviterDeviceToken: params.inviterDeviceToken,
           reply: 'busy',
-          onResult: (params: { callId: string; error?: CallError }) => {
+          onResult: (params: {
+            callId: string;
+            error?: CallError;
+            msg?: ChatMessage;
+          }) => {
             calllog.log(
               'CallManagerImpl:onInviteInternal:sendInviteReply:',
               params
             );
+            this._onSignallingMessage(params.msg);
           },
         });
         this.userListener?.onCallOccurError?.({

@@ -14,7 +14,7 @@ import {
   DataEventType,
   MessageChatSdkEvent,
   MessageChatSdkEventType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { MD3LightTheme, MD3Theme } from 'react-native-paper';
 
 import TabBarIcon from '../components/TabBarIcon';

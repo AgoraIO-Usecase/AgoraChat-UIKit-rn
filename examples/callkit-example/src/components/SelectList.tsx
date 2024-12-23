@@ -6,8 +6,8 @@ import {
   TextInput as RNTextInput,
   View,
 } from 'react-native';
-import type { InviteeListProps } from 'react-native-chat-callkit';
-import { Button, RadioButton, SearchBar } from 'react-native-chat-uikit';
+import type { InviteeListProps } from 'react-native-agora-chat-callkit';
+import { Button, RadioButton, SearchBar } from 'react-native-agora-chat-uikit';
 
 import { useAppChatSdkContext } from '../contexts/AppImSdkContext';
 

@@ -18,7 +18,7 @@ import {
   ListHeaderProps,
   LocalIcon,
   SearchBar,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { RefreshControl } from 'react-native-gesture-handler';
 
 import { COUNTRY } from './const';

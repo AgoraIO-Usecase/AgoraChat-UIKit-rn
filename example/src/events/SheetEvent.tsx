@@ -3,7 +3,7 @@ import {
   ExtraDataType,
   getScaleFactor,
   ThemeContextType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import { CreateGroupSettings } from '../components/CreateGroupSettings';
 import type { AppStringSet } from '../I18n/AppCStringSet.en';

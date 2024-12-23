@@ -6,11 +6,11 @@ import {
   formatElapsed,
   MultiCall,
   SingleCall,
-} from 'react-native-chat-callkit';
+} from 'react-native-agora-chat-callkit';
 import type {
   ExtraDataType,
   VoiceStateContextType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import { ContactList } from '../components/SelectList';
 import type { StateActionEventType } from './Events';

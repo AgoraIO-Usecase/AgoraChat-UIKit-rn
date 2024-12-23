@@ -2,7 +2,7 @@ import type { ChatClient } from 'react-native-agora-chat';
 import {
   UIKitChatSdkContext,
   useChatSdkContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export class AppChatSdkContext extends UIKitChatSdkContext {
   constructor(params: { client: ChatClient }) {

@@ -1,7 +1,7 @@
 import type { HeaderButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import * as React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { createStyleSheet } from 'react-native-chat-uikit';
+import { createStyleSheet } from 'react-native-agora-chat-uikit';
 
 import { useAppI18nContext } from '../contexts/AppI18nContext';
 

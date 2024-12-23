@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-import { RadioButton as MyRadioButton } from 'react-native-chat-uikit';
+import { RadioButton as MyRadioButton } from 'react-native-agora-chat-uikit';
 import { Button, Checkbox, RadioButton } from 'react-native-paper';
 
 export default function TestRadioButton() {

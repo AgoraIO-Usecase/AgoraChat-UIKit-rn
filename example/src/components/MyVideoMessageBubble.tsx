@@ -13,7 +13,7 @@ import {
   MessageItemType,
   StateLabel,
   VideoMessageItemType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export const MyVideoMessageBubble: ListRenderItem<MessageItemType> = React.memo(
   (info: ListRenderItemInfo<MessageItemType>): React.ReactElement | null => {

@@ -19,7 +19,7 @@ import {
   LocalIconName,
   TextInput,
   useI18nContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 type BaseProps = {
   chatId: string;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as RNButton, View } from 'react-native';
-import { Switch } from 'react-native-chat-uikit';
+import { Switch } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestSwitch() {

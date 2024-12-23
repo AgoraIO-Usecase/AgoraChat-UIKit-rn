@@ -21,7 +21,7 @@ import {
   localLocalIcon,
   Services,
   UIKIT_VERSION,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';

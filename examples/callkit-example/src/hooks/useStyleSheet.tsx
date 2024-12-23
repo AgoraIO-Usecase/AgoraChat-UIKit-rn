@@ -2,7 +2,7 @@ import {
   createStyleSheetP,
   type ThemeContextType,
   useThemeContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export const useStyleSheet = (): { safe: any } => {
   const styles = createStyleSheetP((theme: ThemeContextType) => {

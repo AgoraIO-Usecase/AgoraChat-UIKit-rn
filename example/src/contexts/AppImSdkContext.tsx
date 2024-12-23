@@ -8,7 +8,7 @@ import {
 import {
   UIKitChatSdkContext,
   useChatSdkContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export class AppChatSdkContext extends UIKitChatSdkContext {
   getAllUnreadCount: (params: {

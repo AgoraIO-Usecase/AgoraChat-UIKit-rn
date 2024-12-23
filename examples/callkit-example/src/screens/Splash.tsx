@@ -12,7 +12,7 @@ import {
   DataEventType,
   getScaleFactor,
   Loading,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import { useAppChatSdkContext } from '../contexts/AppImSdkContext';
 import type { BizEventType, DataActionEventType } from '../events';

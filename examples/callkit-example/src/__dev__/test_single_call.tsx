@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CallState, SingleCall } from 'react-native-chat-callkit';
+import { CallState, SingleCall } from 'react-native-agora-chat-callkit';
 
 // import { TestEnum } from '../../../../packages/react-native-chat-callkit/src/view/SingleCall';
 

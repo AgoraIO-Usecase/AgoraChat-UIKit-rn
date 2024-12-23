@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { Platform, View } from 'react-native';
-import { createStyleSheet, ICON_ASSETS, Image } from 'react-native-chat-uikit';
+import {
+  createStyleSheet,
+  ICON_ASSETS,
+  Image,
+} from 'react-native-agora-chat-uikit';
 
 type HeaderTitleProps = {
   name: 'Chats' | 'Contacts';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { LocalIcon, LocalIconName } from 'react-native-chat-uikit';
+import { LocalIcon, LocalIconName } from 'react-native-agora-chat-uikit';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const AVATAR_ASSETS = [

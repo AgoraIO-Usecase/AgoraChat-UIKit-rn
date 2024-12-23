@@ -6,7 +6,7 @@ import type {
   DialogContextType,
   ExtraDataType,
   MessageItemStateType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import type { MenuActionEventType } from './Events';
 import { sendEvent, type sendEventProps } from './sendEvent';

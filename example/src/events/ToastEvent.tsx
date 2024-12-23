@@ -1,4 +1,7 @@
-import type { ExtraDataType, ToastContextType } from 'react-native-chat-uikit';
+import type {
+  ExtraDataType,
+  ToastContextType,
+} from 'react-native-agora-chat-uikit';
 
 import type { ToastActionEventType } from './Events';
 import type { BizEventType } from './types';

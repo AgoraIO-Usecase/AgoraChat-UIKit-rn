@@ -58,7 +58,7 @@ import { autoFocus } from '../utils/platform';
 //   Services,
 //   timestamp,
 //   useChatSdkContext,
-// } from 'react-native-chat-uikit';
+// } from 'react-native-agora-chat-uikit';
 
 export type ItemDataType = ItemData & {
   convId: string;

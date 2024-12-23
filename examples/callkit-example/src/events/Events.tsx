@@ -6,7 +6,7 @@ import type {
   UikitSheetActionEventType,
   UikitStateActionEventType,
   UikitToastActionEventType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 ////////////////////////////////////////////////////////////////////////////////
 //// ToastActionEventType //////////////////////////////////////////////////////

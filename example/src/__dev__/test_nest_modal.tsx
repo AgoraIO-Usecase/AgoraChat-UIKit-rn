@@ -4,7 +4,7 @@ import {
   FragmentContainer,
   useBottomSheet,
   useThemeContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 const Content = ({
   name,

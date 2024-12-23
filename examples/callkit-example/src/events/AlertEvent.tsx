@@ -1,4 +1,7 @@
-import type { DialogContextType, ExtraDataType } from 'react-native-chat-uikit';
+import type {
+  DialogContextType,
+  ExtraDataType,
+} from 'react-native-agora-chat-uikit';
 
 import type { AlertActionEventType } from './Events';
 import { sendEvent, sendEventProps } from './sendEvent';

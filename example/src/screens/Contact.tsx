@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import type { ParamListBase } from '@react-navigation/native';
 import * as React from 'react';
 import { DeviceEventEmitter, View } from 'react-native';
-import type { DataEventType } from 'react-native-chat-uikit';
+import type { DataEventType } from 'react-native-agora-chat-uikit';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';
 import TabBarIcon from '../components/TabBarIcon';

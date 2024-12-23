@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { CheckButton as MyCheckButton } from 'react-native-chat-uikit';
+import { CheckButton as MyCheckButton } from 'react-native-agora-chat-uikit';
 import { Button, Checkbox, RadioButton } from 'react-native-paper';
 
 export default function TestCheckButton() {

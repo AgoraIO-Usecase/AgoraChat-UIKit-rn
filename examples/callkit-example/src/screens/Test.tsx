@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 import type { RootScreenParamsList } from '../routes';
 

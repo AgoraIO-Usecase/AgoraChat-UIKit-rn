@@ -8,14 +8,6 @@ import {
   ChatMessageType,
 } from 'react-native-agora-chat';
 import {
-  AudioEncoderAndroidType,
-  type AudioSet,
-  AudioSourceAndroidType,
-  AVEncoderAudioQualityIOSType,
-  AVEncodingOption,
-  AVModeIOSOption,
-} from 'react-native-audio-recorder-player';
-import {
   ChatFragment,
   ChatFragmentRef,
   DataEventType,
@@ -32,7 +24,15 @@ import {
   Services,
   uuid,
   VoiceMessageItemType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
+import {
+  AudioEncoderAndroidType,
+  type AudioSet,
+  AudioSourceAndroidType,
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  AVModeIOSOption,
+} from 'react-native-audio-recorder-player';
 
 import { MyFileMessageBubble } from '../components/MyFileMessageBubble';
 import { MyTextMessageBubble } from '../components/MyTextMessageBubble';

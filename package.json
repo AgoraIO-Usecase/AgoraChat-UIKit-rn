@@ -29,10 +29,10 @@
     "typescript": "^4.5.2"
   },
   "scripts": {
-    "yarn-lint": "yarn workspace react-native-chat-uikit lint && yarn workspace react-native-chat-callkit lint",
+    "yarn-lint": "yarn workspace react-native-agora-chat-uikit lint && yarn workspace react-native-agora-chat-callkit lint",
     "lerna-lint": "lerna run lint",
     "lint": "yarn run lerna-lint",
-    "yarn-prepack": "yarn workspace react-native-chat-uikit prepack && yarn workspace react-native-chat-callkit prepack",
+    "yarn-prepack": "yarn workspace react-native-agora-chat-uikit prepack && yarn workspace react-native-agora-chat-callkit prepack",
     "lerna-prepack": "lerna run prepack --verbose",
     "prepack": "yarn run lerna-prepack & yarn run sdk-version",
     "prepare": "yarn run prepack",

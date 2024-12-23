@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 import { formatElapsed } from '../../../../packages/react-native-chat-callkit/src/utils/utils';
 

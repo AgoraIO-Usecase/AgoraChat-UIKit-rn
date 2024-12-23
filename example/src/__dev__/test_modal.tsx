@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import { Modal } from 'react-native-chat-uikit';
+import { Modal } from 'react-native-agora-chat-uikit';
 
 const App = () => {
   const [modalVisible, setModalVisible] = React.useState(false);

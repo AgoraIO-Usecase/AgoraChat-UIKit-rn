@@ -33,7 +33,7 @@ import {
   LocalIcon,
   LocalIconName as IconName,
   messageTime,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import HomeHeaderTitle from '../components/HomeHeaderTitle';

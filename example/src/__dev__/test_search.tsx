@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
-import { SearchBar } from 'react-native-chat-uikit';
+import { SearchBar } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestSearch() {

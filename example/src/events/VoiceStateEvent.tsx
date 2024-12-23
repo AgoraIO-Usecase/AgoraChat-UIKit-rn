@@ -6,7 +6,7 @@ import {
   LocalIcon,
   ThemeContextType,
   VoiceStateContextType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import type { AppStringSet } from '../I18n/AppCStringSet.en';
 import type { StateActionEventType } from './Events';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Image, LocalIcon } from 'react-native-chat-uikit';
+import { Image, LocalIcon } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 const styles = StyleSheet.create({

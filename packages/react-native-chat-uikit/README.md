@@ -95,7 +95,7 @@ npx react-native init ChatApp
 #### Install UIKit and the required dependencies
 
 ```sh
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 ```
 
 #### Permission Requirements
@@ -139,7 +139,7 @@ import {
   ChatFragment,
   GlobalContainer as UikitContainer,
   UikitModalPlaceholder,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 export default function App() {
   const appKey = '<your app key>';
   const chatId = '<peer target ID>'; // The Chat ID. It can be a person or a group.
@@ -190,7 +190,7 @@ import * as React from 'react';
 import {
   ConversationListFragment,
   ScreenContainer,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -336,7 +336,7 @@ The simplest integration example is as follows:
 
 ```typescript
 import * as React from 'react';
-import { ChatFragment, ScreenContainer } from 'react-native-chat-uikit';
+import { ChatFragment, ScreenContainer } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -371,7 +371,7 @@ For example: After selecting a picture, send a picture message
 
 ```typescript
 import type { BizEventType, DataActionEventType } from '../events';
-import { DataEventType } from 'react-native-chat-uikit';
+import { DataEventType } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;

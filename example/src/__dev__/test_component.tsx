@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { LocalIcon, Switch } from 'react-native-chat-uikit';
+import { LocalIcon, Switch } from 'react-native-agora-chat-uikit';
 
 const Fn: React.ComponentType<{ name: string }> = ({
   name,

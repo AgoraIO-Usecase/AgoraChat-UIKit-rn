@@ -1,7 +1,7 @@
 // import * as React from 'react';
 // import { View } from 'react-native';
-// import { ChatCallkitView } from 'react-native-chat-callkit';
-// import { ChatUikitView } from 'react-native-chat-uikit';
+// import { ChatCallkitView } from 'react-native-agora-chat-callkit';
+// import { ChatUikitView } from 'react-native-agora-chat-uikit';
 
 // export default function TestNativeView() {
 //   return (

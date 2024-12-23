@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 import type { User } from '../../../../packages/react-native-chat-callkit/src/types';
 import { AudioTabs } from '../../../../packages/react-native-chat-callkit/src/view/components/AudioTabs';

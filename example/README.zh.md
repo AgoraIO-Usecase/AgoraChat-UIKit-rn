@@ -94,7 +94,7 @@ export const accountType = 'agora'; // 'easemob' or 'agora'
 
 ```sh
 cd your_project_root
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 ```
 
 ## 初始化设置
@@ -102,7 +102,7 @@ yarn add react-native-chat-uikit
 在准备使用 uikit 之前，需要进行初始化操作。其中模态组件是用来接收事件并显示模态窗口的。如果缺省则使用默认的。
 
 ```typescript
-import { GlobalContainer as UikitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as UikitContainer } from 'react-native-agora-chat-uikit';
 import { ModalPlaceholder } from './events';
 export default function App() {
   return (
@@ -140,7 +140,7 @@ export default function App() {
 
 ```typescript
 import * as React from 'react';
-import { ChatFragment, ScreenContainer } from 'react-native-chat-uikit';
+import { ChatFragment, ScreenContainer } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -316,7 +316,7 @@ export default function ChatScreen(): JSX.Element {
 
 ```typescript
 import type { BizEventType, DataActionEventType } from '../events';
-import { DataEventType } from 'react-native-chat-uikit';
+import { DataEventType } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -658,7 +658,7 @@ import * as React from 'react';
 import {
   ConversationListFragment,
   ScreenContainer,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;

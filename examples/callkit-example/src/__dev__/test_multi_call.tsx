@@ -4,8 +4,8 @@ import {
   CallState,
   InviteeListProps,
   MultiCall,
-} from 'react-native-chat-callkit';
-import { Button } from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-callkit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 import { SelectListMemo } from '../components/SelectList';
 

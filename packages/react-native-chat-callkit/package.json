@@ -1,5 +1,5 @@
 {
-  "name": "react-native-chat-callkit",
+  "name": "react-native-agora-chat-callkit",
   "version": "1.0.1",
   "description": "test",
   "main": "lib/commonjs/index",
@@ -40,7 +40,7 @@
     "generate-bundle": "node scripts/bundle-icons.js",
     "change-icon-name": "node scripts/change-icons-name.js",
     "doctor": "yarn expo-doctor",
-    "manual-release": "node '../../scripts/release-agora-version.js' 1.0.0 1.0.1 react-native-agora-chat-callkit react-native-chat-callkit"
+    "manual-release": "node '../../scripts/release-agora-version.js' 1.0.0 1.0.1 react-native-agora-chat-callkit react-native-agora-chat-callkit"
   },
   "keywords": [
     "react-native",

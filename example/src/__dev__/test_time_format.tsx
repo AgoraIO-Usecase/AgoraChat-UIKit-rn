@@ -1,6 +1,6 @@
 // https://tool.lu/timestamp/
 import * as React from 'react';
-import { messageTimeForChat } from 'react-native-chat-uikit';
+import { messageTimeForChat } from 'react-native-agora-chat-uikit';
 
 export default function TestTime() {
   const now = messageTimeForChat(1700533685532); // 2023-11-21 10:28:05

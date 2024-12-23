@@ -10,7 +10,7 @@ import {
   EqualHeightListItemData,
   LocalIcon,
   timestamp,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { FlatList } from 'react-native-gesture-handler';
 import { Button } from 'react-native-paper';
 

@@ -15,7 +15,7 @@ import {
   localLocalIcon,
   MessageItemType,
   StateLabel,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 const RenderRecallMessage = (props: MessageItemType): JSX.Element => {
   const { state, ext, ...others } = props;

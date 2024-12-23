@@ -4,7 +4,7 @@ import {
   Button as UIButton,
   Loading,
   LoadingButton,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestButton() {

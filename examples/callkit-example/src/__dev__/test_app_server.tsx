@@ -2,8 +2,8 @@ import type { CallManagerImpl } from 'packages/react-native-chat-callkit/src/cal
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { ChatClient } from 'react-native-agora-chat';
-import { useCallkitSdkContext } from 'react-native-chat-callkit';
-import { Button } from 'react-native-chat-uikit';
+import { useCallkitSdkContext } from 'react-native-agora-chat-callkit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 let gid: string = '';
 let gps: string = '';

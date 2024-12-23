@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { DevDebug } from 'react-native-chat-uikit';
+import { DevDebug } from 'react-native-agora-chat-uikit';
 
 import TestColor from './test_color';
 

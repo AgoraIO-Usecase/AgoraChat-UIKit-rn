@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { SimulateGif } from 'react-native-chat-uikit';
+import { SimulateGif } from 'react-native-agora-chat-uikit';
 
 export default function TestSpeaker3(): JSX.Element {
   console.log('test:TestSpeaker:');

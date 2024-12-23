@@ -14,8 +14,8 @@ import {
   CallType,
   CallUser,
   useCallkitSdkContext,
-} from 'react-native-chat-callkit';
-import { Button, RadioButton } from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-callkit';
+import { Button, RadioButton } from 'react-native-agora-chat-uikit';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { useAppChatSdkContext } from '../contexts/AppImSdkContext';

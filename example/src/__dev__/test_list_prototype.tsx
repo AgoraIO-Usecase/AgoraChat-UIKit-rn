@@ -11,7 +11,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Button, LoadingRN } from 'react-native-chat-uikit';
+import { Button, LoadingRN } from 'react-native-agora-chat-uikit';
 
 import { COUNTRY } from './const';
 

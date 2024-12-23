@@ -1,7 +1,7 @@
 import type { HeaderButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-import { createStyleSheet, LocalIcon } from 'react-native-chat-uikit';
+import { createStyleSheet, LocalIcon } from 'react-native-agora-chat-uikit';
 
 export default function HomeHeaderRight(_: HeaderButtonProps): JSX.Element {
   // console.log('test:HomeHeaderRight:', props);

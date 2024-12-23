@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Alert } from 'react-native-chat-uikit';
+import { Alert } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestAlert() {

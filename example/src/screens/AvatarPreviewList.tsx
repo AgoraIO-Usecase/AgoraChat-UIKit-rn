@@ -13,7 +13,7 @@ import {
   DataEventType,
   LocalIcon,
   LocalIconName,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { useAppChatSdkContext } from '../contexts/AppImSdkContext';

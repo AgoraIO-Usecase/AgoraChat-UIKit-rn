@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as RNButton, View } from 'react-native';
-import { LocalIcon, VectorIcon } from 'react-native-chat-uikit';
+import { LocalIcon, VectorIcon } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestIcon() {

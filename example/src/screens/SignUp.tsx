@@ -15,7 +15,7 @@ import {
   getScaleFactor,
   LocalIcon,
   TextInput,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAppI18nContext } from '../contexts/AppI18nContext';

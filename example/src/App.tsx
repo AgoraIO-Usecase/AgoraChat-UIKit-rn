@@ -18,12 +18,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { Linking, Platform, View } from 'react-native';
 import { ChatClient } from 'react-native-agora-chat';
-import * as Audio from 'react-native-audio-recorder-player';
 import {
   CALLKIT_VERSION,
   CallUser,
   GlobalContainer as CallkitContainer,
-} from 'react-native-chat-callkit';
+} from 'react-native-agora-chat-callkit';
 import {
   createStringSetEn2,
   DarkTheme,
@@ -34,7 +33,8 @@ import {
   Services,
   UIKIT_VERSION,
   updateScaleFactor,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
+import * as Audio from 'react-native-audio-recorder-player';
 import * as DocumentPicker from 'react-native-document-picker';
 import * as FileAccess from 'react-native-file-access';
 import * as ImagePicker from 'react-native-image-picker';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Badge } from 'react-native-chat-uikit';
+import { Badge } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestBadge() {

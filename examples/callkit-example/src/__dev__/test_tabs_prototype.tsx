@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Animated, useWindowDimensions, View } from 'react-native';
-import { timestamp } from 'react-native-chat-uikit';
+import { timestamp } from 'react-native-agora-chat-uikit';
 import { ScrollView } from 'react-native-gesture-handler';
 
 type TabViewProps = {

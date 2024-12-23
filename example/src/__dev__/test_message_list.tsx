@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import {
   MessageBubbleListFragment as DefaultMessageBubbleList,
   MessageBubbleListRef as DefaultMessageBubbleListRef,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestMessageList() {

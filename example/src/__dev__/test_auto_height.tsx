@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-// import { MenuBar } from 'react-native-chat-uikit';
+// import { MenuBar } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestAutoHeight() {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { useChatSdkContext } from 'react-native-chat-uikit';
+import { useChatSdkContext } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 type MyComponentProps = {

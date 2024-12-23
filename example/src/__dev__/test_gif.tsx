@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Image } from 'react-native-chat-uikit';
+import { Image } from 'react-native-agora-chat-uikit';
 
 export default function TestGif(): JSX.Element {
   return (

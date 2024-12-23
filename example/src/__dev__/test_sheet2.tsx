@@ -1,7 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import * as React from 'react';
 import { Button as RNButton, View } from 'react-native';
-import { useBottomSheet, useManualCloseDialog } from 'react-native-chat-uikit';
+import {
+  useBottomSheet,
+  useManualCloseDialog,
+} from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { GestureResponderEvent, View } from 'react-native';
-import { FragmentContainer, useBottomSheet } from 'react-native-chat-uikit';
+import {
+  FragmentContainer,
+  useBottomSheet,
+} from 'react-native-agora-chat-uikit';
 
 /**
  * use useBottomSheet, but no use useState

@@ -1,5 +1,5 @@
 import { DeviceEventEmitter } from 'react-native';
-import { timestamp } from 'react-native-chat-uikit';
+import { timestamp } from 'react-native-agora-chat-uikit';
 
 import type { ActionEventType } from './Events';
 import type { BizEventType, EventType } from './types';

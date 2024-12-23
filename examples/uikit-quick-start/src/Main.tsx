@@ -6,7 +6,7 @@ import {
   ScreenContainer,
   TextInput,
   useChatSdkContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import {
   defaultId,

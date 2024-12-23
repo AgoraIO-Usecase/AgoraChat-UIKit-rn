@@ -18,7 +18,7 @@
 ```typescript
 import * as React from 'react';
 import ChatFragment from '../fragments/Chat';
-import { ScreenContainer } from 'react-native-chat-uikit';
+import { ScreenContainer } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -121,7 +121,7 @@ export default function ChatScreen(): JSX.Element {
 
 ```typescript
 import type { BizEventType, DataActionEventType } from '../events';
-import { DataEventType } from 'react-native-chat-uikit';
+import { DataEventType } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;

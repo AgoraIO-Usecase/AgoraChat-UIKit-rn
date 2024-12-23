@@ -6,7 +6,7 @@ import {
   getScaleFactor,
   MessageItemType,
   StateLabel,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export const CustomMessageRenderItem = React.memo(
   ({

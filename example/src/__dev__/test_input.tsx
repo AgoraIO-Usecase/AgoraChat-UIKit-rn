@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, TextInput as RNTextInput, View } from 'react-native';
-import { LocalIcon, TextInput } from 'react-native-chat-uikit';
+import { LocalIcon, TextInput } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 export default function TestInput() {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   UikitModalPlaceholder,
   useThemeContext,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import { useAppI18nContext } from '../contexts/AppI18nContext';
 import { handleAlertEvent } from './AlertEvent';

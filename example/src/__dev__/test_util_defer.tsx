@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as RNButton, Text, View } from 'react-native';
-import { useDeferredValue } from 'react-native-chat-uikit';
+import { useDeferredValue } from 'react-native-agora-chat-uikit';
 
 let count = 0;
 export default function TestUtilDefer() {

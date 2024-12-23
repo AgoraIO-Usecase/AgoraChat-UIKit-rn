@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { createStyleSheet } from 'react-native-chat-uikit';
+import { createStyleSheet } from 'react-native-agora-chat-uikit';
 
 export default function TestStyle() {
   React.useEffect(() => {

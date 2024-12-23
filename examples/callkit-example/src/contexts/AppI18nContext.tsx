@@ -1,4 +1,4 @@
-import * as uikit from 'react-native-chat-uikit';
+import * as uikit from 'react-native-agora-chat-uikit';
 
 import type { AppStringSet } from '../I18n/AppCStringSet.en';
 

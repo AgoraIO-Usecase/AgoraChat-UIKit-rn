@@ -98,7 +98,7 @@ npx react-native init ChatApp
 ## Install UIKit and the required dependencies
 
 ```sh
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 ```
 
 ## Permission Requirements
@@ -141,7 +141,7 @@ Initialize the UIKit SDK. Fill in the necessary parameters. For example: appkey.
 import {
   GlobalContainer as UikitContainer,
   UikitModalPlaceholder,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 export default function App() {
   return (
     <React.StrictMode>
@@ -162,7 +162,7 @@ Add the ChatFragment component. This component includes an input component and a
 
 ```typescript
 import * as React from 'react';
-import { ChatFragment, ScreenContainer } from 'react-native-chat-uikit';
+import { ChatFragment, ScreenContainer } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx'; // The Chat ID. It can be a person or a group.
   const chatType = 0; // 0 means single person chat. 1 means group chat.

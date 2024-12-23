@@ -72,7 +72,7 @@ The following is the most common way, the introduction of integrating `uikit` in
 
 ```sh
 cd your_project_root
-yarn add react-native-chat-uikit
+yarn add react-native-agora-chat-uikit
 ```
 
 For development, compilation, and operation, please refer to relevant chapters. The following uses the integrated chat page as an example to illustrate.
@@ -82,7 +82,7 @@ For development, compilation, and operation, please refer to relevant chapters. 
 Before you are ready to use uikit, you need to initialize it. The modal component is used to receive events and display the modal window. Use default if default.
 
 ```typescript
-import { GlobalContainer as UikitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as UikitContainer } from 'react-native-agora-chat-uikit';
 import { ModalPlaceholder } from './events';
 export default function App() {
   return (
@@ -118,7 +118,7 @@ Sample code:
 
 ```typescript
 import * as React from 'react';
-import { ChatFragment, ScreenContainer } from 'react-native-chat-uikit';
+import { ChatFragment, ScreenContainer } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -294,7 +294,7 @@ For example: After selecting a picture, send a picture message
 
 ```typescript
 import type { BizEventType, DataActionEventType } from '../events';
-import { DataEventType } from 'react-native-chat-uikit';
+import { DataEventType } from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;
@@ -630,7 +630,7 @@ import * as React from 'react';
 import {
   ConversationListFragment,
   ScreenContainer,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 export default function ChatScreen(): JSX.Element {
   const chatId = 'xxx';
   const chatType = 0;

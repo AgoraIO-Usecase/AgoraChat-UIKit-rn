@@ -6,7 +6,7 @@ import {
   createStringSetEn2,
   createStringSetFEn2,
   UIKitStringSet2,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 
 // class s implements StringSetContextType {

@@ -2,7 +2,7 @@ import type {
   DialogContextType,
   ExtraDataType,
   ThemeContextType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 import type { AppStringSet } from '../I18n/AppCStringSet.en';
 import type { PromptActionEventType } from './Events';

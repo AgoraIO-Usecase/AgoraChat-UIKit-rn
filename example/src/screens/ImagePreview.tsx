@@ -7,7 +7,7 @@ import {
   LocalIcon,
   onceEx,
   timestamp,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 // import {
 //   GestureEvent,
 //   NativeViewGestureHandlerPayload,

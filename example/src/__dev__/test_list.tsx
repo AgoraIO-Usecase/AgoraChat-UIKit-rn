@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { LoadingRN } from 'react-native-chat-uikit';
+import { LoadingRN } from 'react-native-agora-chat-uikit';
 
 type ItemData = {
   id: string;

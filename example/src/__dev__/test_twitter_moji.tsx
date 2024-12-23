@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { Image, TextInput } from 'react-native-chat-uikit';
+import { Image, TextInput } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 import moji from 'twemoji';
 

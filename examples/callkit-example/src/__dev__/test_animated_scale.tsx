@@ -7,7 +7,7 @@ import {
   Pressable,
   View,
 } from 'react-native';
-import { Button } from 'react-native-chat-uikit';
+import { Button } from 'react-native-agora-chat-uikit';
 
 type Props = {};
 type State = {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as RNButton, View } from 'react-native';
-import { BottomSheet } from 'react-native-chat-uikit';
+import { BottomSheet } from 'react-native-agora-chat-uikit';
 import { Button } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 

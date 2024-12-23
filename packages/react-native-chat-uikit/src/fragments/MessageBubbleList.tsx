@@ -51,7 +51,7 @@ import type { MessageItemStateType } from './types';
 //   Loading,
 //   LocalIcon,
 //   wait,
-// } from 'react-native-chat-uikit';
+// } from 'react-native-agora-chat-uikit';
 
 export type updateMessageStateType = 'one-all' | 'one-state' | 'all-state';
 

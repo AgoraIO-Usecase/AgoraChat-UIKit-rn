@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as RNButton, View } from 'react-native';
-import { DialogBox } from 'react-native-chat-uikit';
+import { DialogBox } from 'react-native-agora-chat-uikit';
 import { Button, Text } from 'react-native-paper';
 
 export default function TestBox() {

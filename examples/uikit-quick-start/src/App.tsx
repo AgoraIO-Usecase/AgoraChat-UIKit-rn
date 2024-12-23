@@ -8,7 +8,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { GlobalContainer as UikitContainer } from 'react-native-chat-uikit';
+import { GlobalContainer as UikitContainer } from 'react-native-agora-chat-uikit';
 
 import { appKey, autoLogin, debugModel } from './AppConfig';
 import { ChatScreen } from './Chat';

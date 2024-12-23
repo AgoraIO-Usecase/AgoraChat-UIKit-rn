@@ -7,7 +7,7 @@ import type {
   ToastEventType,
   UikitBizEventType,
   VoiceStateEventType,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 
 export type EventType =
   | ToastEventType

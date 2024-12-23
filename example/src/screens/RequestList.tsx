@@ -22,7 +22,7 @@ import {
   EqualHeightListRef,
   getScaleFactor,
   LocalIcon,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

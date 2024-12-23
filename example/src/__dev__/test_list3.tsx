@@ -22,7 +22,7 @@ import {
   ListHeaderProps,
   queueTask,
   SearchBar,
-} from 'react-native-chat-uikit';
+} from 'react-native-agora-chat-uikit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useStyleSheet } from '../hooks/useStyleSheet';

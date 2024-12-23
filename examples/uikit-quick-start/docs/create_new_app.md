@@ -14,48 +14,40 @@ yarn && yarn run env
 
 3. Add dependencies to the project and re-run the `yarn` command.
 
-```json
-{
-  "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.11",
-    "@react-native-camera-roll/camera-roll": "^5.6.0",
-    "@react-native-clipboard/clipboard": "^1.11.2",
-    "@react-native-firebase/app": "^18.0.0",
-    "@react-native-firebase/messaging": "^18.0.0",
-    "react-native-audio-recorder-player": "^3.5.3",
-    "react-native-chat-sdk": "^1.2.0",
-    "react-native-chat-uikit": "^1.0.0",
-    "react-native-create-thumbnail": "^1.6.4",
-    "react-native-document-picker": "^9.0.1",
-    "react-native-fast-image": "^8.6.3",
-    "react-native-file-access": "^3.0.4",
-    "react-native-get-random-values": "~1.8.0",
-    "react-native-image-picker": "^5.4.2",
-    "react-native-permissions": "^3.8.0",
-    "react-native-safe-area-context": "4.5.0",
-    "react-native-screens": "^3.20.0",
-    "react-native-video": "^5.2.1"
-  }
-}
+```sh
+yarn add @react-native-async-storage/async-storage \
+@react-native-camera-roll/camera-roll \
+@react-native-clipboard/clipboard \
+@react-native-firebase/app \
+@react-native-firebase/messaging \
+react-native-audio-recorder-player \
+react-native-agora-chat \
+react-native-agora-chat-uikit \
+react-native-create-thumbnail \
+react-native-document-picker \
+react-native-fast-image \
+react-native-file-access \
+react-native-get-random-values \
+react-native-image-picker \
+react-native-permissions \
+react-native-safe-area-context \
+react-native-screens \
+react-native-video
 ```
 
 For callkit, you also need to add dependencies.
 
-```json
-{
-  "dependencies": {
-    "react-native-agora": "^4.2.0",
-    "react-native-agora-chat": "1.3.0-1",
-    "react-native-device-info": "^10.6.0",
-    "react-native-fast-image": "^8.6.3",
-    "react-native-pager-view": "6.1.2",
-    "react-native-paper": "^5.8.0",
-    "react-native-permissions": "^3.8.0",
-    "react-native-safe-area-context": "4.5.0",
-    "react-native-screens": "^3.20.0",
-    "react-native-tab-view": "^3.5.1"
-  }
-}
+```sh
+yarn add react-native-agora \
+react-native-agora-chat \
+react-native-device-info \
+react-native-fast-image \
+react-native-pager-view \
+react-native-paper \
+react-native-permissions \
+react-native-safe-area-context \
+react-native-screens \
+react-native-tab-view
 ```
 
 4. Configure the iOS platform.

@@ -105,7 +105,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-agora": ">=4.1.0",
-    "react-native-chat-sdk": ">=1.1.0",
+    "react-native-aogra-chat": ">=1.1.0",
     "react-native-device-info": ">=10.6.0",
     "react-native-fast-image": ">=8.6.3",
     "react-native-pager-view": ">=6.1.2",

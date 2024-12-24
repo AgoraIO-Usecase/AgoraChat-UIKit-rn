@@ -11,6 +11,7 @@ import { DeviceEventEmitter, View } from 'react-native';
 
 import { AppDev } from './__dev__/AppDev';
 import {
+  ChatOptions,
   Container,
   useDarkTheme,
   useLightTheme,
@@ -34,6 +35,11 @@ const env = require('./env');
 const Root = createNativeStackNavigator<RootParamsList>();
 
 SplashScreen.preventAutoHideAsync();
+
+const opt =
+  env.accountType === 'easemob' || env.accountType === 'agora'
+    ? new ChatOptions({ appKey: env.appKey })
+    : new ChatOptions({ appKey: env.appKey });
 
 export function App() {
   const [initialRouteName] = React.useState('TopMenu' as RootParamsName);
@@ -110,16 +116,18 @@ export function App() {
     }
   }
 
+  console.log('test:zuoyu:init:app:', opt);
+
   return (
     <React.StrictMode>
       <Container
-        appKey={env.appKey}
+        opt={opt}
         isDevMode={env.isDevMode}
         palette={palette}
         theme={theme}
         roomOption={{ globalBroadcast: { isVisible: true } }}
         language={'zh-Hans'}
-        fontFamily={fontFamily}
+        // fontFamily={fontFamily}
         onInitialized={() => {
           console.log('dev:onInitialized:');
           isContainerReadyRef.current = true;

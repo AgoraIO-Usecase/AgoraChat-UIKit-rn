@@ -61,6 +61,7 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       onGroupMessageRead: this.bindOnGroupMessageRead.bind(this),
       onMessagesDelivered: this.bindOnMessagesDelivered.bind(this),
       onMessagesRecalled: this.bindOnMessagesRecalled.bind(this),
+      // onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
       onMessageContentChanged: this.bindOnMessageContentChanged.bind(this),
       onMessagePinChanged: this.bindOnMessagePinChanged.bind(this),
     };
@@ -193,6 +194,19 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       });
     });
   }
+  // onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>): void {
+  //   messages.forEach((info) => {
+  //     const tipMsg = this.createRecallMessageTip(info.recalledMessage);
+  //     this._client.insertMessage({
+  //       message: tipMsg,
+  //       onResult: () => {
+  //         this._userListener.forEach((v) => {
+  //           v.onRecvRecallMessage?.(info.recalledMessage, tipMsg);
+  //         });
+  //       },
+  //     });
+  //   });
+  // }
   bindOnMessageContentChanged(
     message: ChatMessage,
     lastModifyOperatorId: string,

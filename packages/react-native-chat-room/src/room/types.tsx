@@ -3,6 +3,8 @@ import type {
   ChatClient,
   ChatCursorResult,
   ChatMessage,
+  ChatMessagePinInfo,
+  ChatOptions,
   ChatRoom,
 } from '../rename.chat';
 import type { Keyof } from '../types';
@@ -56,7 +58,10 @@ export type RoomEventType =
   | 'fetch_member_list'
   | 'fetch_muter_list'
   | 'send_gift'
-  | 'send_text';
+  | 'send_text'
+  | 'pin_message'
+  | 'unpin_message'
+  | 'fetch_pin_message';
 
 /**
  * The type of user data.
@@ -207,6 +212,21 @@ export interface MessageServiceListener {
    * @param notifyMessage the message object.
    */
   onGlobalNotifyReceived?(notifyMessage: ChatMessage): void;
+
+  /**
+   * This notification will be received when the message is pined.
+   * @param params -
+   * - messageId: the message id.
+   * - convId: the conversation id.
+   * - pinOperation: the pin operation.
+   * - pinInfo: the pin info.
+   */
+  onMessagePinChanged?(params: {
+    messageId: string;
+    convId: string;
+    pinOperation: number;
+    pinInfo: ChatMessagePinInfo;
+  }): void;
 }
 
 export interface ErrorServiceListener {
@@ -255,11 +275,29 @@ export interface RoomService {
    * - result: The result after performing the operation. If failed, an error object is returned.
    *
    * @noThrows {@link UIKitError}
+   *
+   * @deprecated please use with {@link initWithOption}
    */
   init(params: {
     appKey: string;
     debugMode?: boolean;
     autoLogin?: boolean;
+    result?: (params: { isOk: boolean; error?: UIKitError }) => void;
+  }): Promise<void>;
+
+  /**
+   * Initialize the IM service.
+   *
+   * The initialization operation is a necessary prerequisite for using `RoomService`. Usually it won't fail. Usually an error is reported because `appKey` is not set or `appKey` is empty.
+   *
+   * @params
+   * - opt: chat sdk option.
+   * - result: The result after performing the operation. If failed, an error object is returned.
+   *
+   * @noThrows {@link UIKitError}
+   */
+  initWithOption(params: {
+    options: ChatOptions;
     result?: (params: { isOk: boolean; error?: UIKitError }) => void;
   }): Promise<void>;
 
@@ -551,6 +589,53 @@ export interface RoomService {
   userInfoFromMessage(msg?: ChatMessage): UserServiceData | undefined;
 
   /**
+   * Pin message.
+   * @param params -
+   * - msgId: the message id.
+   *
+   * @throws {@link UIKitError}
+   */
+  pinMessage(params: { msgId: string }): Promise<void>;
+  /**
+   * Unpin message.
+   * @param params -
+   * - msgId: the message id.
+   *
+   * @throws {@link UIKitError}
+   */
+  unPinMessage(params: { msgId: string }): Promise<void>;
+  /**
+   * Fetch pinned messages list.
+   * @param params -
+   * - convId: the conversation id.
+   * - forceRequest: whether to force request.
+   * - onResult: the result callback.
+   */
+  fetchPinnedMessages(params: {
+    convId: string;
+    forceRequest?: boolean;
+    onResult: (params: {
+      isOk: boolean;
+      msgs?: ChatMessage[];
+      error?: UIKitError;
+    }) => void;
+  }): Promise<void>;
+  /**
+   * Get local pinned messages list.
+   * @param params -
+   * - convId: the conversation id.
+   * - onResult: the result callback.
+   */
+  getPinnedMessages(params: {
+    convId: string;
+    onResult: (params: {
+      isOk: boolean;
+      msgs?: ChatMessage[];
+      error?: UIKitError;
+    }) => void;
+  }): Promise<void>;
+
+  /**
    * Send a error to the listener.
    * @params
    * - error: the error object.
@@ -573,12 +658,20 @@ export interface RoomService {
 export type RoomServiceInit = {
   /**
    * Agora appKey.
+   *
+   * @deprecated Please use {@link ChatOptions} instead.
    */
   appKey: string;
   /**
    * Whether to enable debug mode.
+   *
+   * @deprecated Please use {@link ChatOptions} instead.
    */
   debugMode?: boolean;
+  /**
+   * IM initialization is completed.
+   */
+  opt: ChatOptions;
   /**
    * IM initialization is completed.
    */

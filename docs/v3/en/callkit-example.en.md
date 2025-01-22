@@ -16,7 +16,7 @@ This component library is primarily used to implement audio and video call funct
 
 This component library mainly supports audio and video calls in both single and group chats.
 
-The library primarily depends on `react-native-agora-chat` and `react-native-agora` to implement audio and video calls.
+The library primarily depends on `react-native-chat-sdk` and `react-native-agora` to implement audio and video calls.
 
 ## Project Configuration
 

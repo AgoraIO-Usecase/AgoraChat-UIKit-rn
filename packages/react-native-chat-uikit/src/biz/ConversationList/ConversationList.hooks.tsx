@@ -489,8 +489,11 @@ export function useConversationList(props: ConversationListProps) {
         onMessage(msgs);
       },
       onMessagesRecalled: async () => {
-        // !!!: see `onRecvRecallMessage`
+        // !!!: see `onMessagesRecalledInfo`
       },
+      // onMessagesRecalledInfo: async () => {
+      //   // !!!: see `onMessagesRecalledInfo`
+      // },
       onConversationsUpdate: () => {
         // !!!: see `UIConversationListListener`
       },

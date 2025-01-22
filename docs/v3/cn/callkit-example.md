@@ -53,7 +53,7 @@ cd ios && pod install
 示例如下：
 
 ```tsx
-import { GlobalContainer as CallKitContainer } from 'react-native-chat-callkit';
+import { GlobalContainer as CallKitContainer } from 'react-native-agora-chat-callkit';
 export function App() {
   // ...
   return (
@@ -81,8 +81,8 @@ export function App() {
 
 页面主要分为单聊音视频页面和群聊音视频页面。
 
-- SingleCall: `packages/react-native-chat-callkit/src/view/SingleCall.tsx` [源码](../../../packages/react-native-chat-callkit/src/view/SingleCall.tsx)
-- MultiCall: `packages/react-native-chat-callkit/src/view/MultiCall.tsx` [源码](../../../packages/react-native-chat-callkit/src/view/MultiCall.tsx)
+- SingleCall: `packages/react-native-agora-chat-callkit/src/view/SingleCall.tsx` [源码](../../../packages/react-native-agora-chat-callkit/src/view/SingleCall.tsx)
+- MultiCall: `packages/react-native-agora-chat-callkit/src/view/MultiCall.tsx` [源码](../../../packages/react-native-agora-chat-callkit/src/view/MultiCall.tsx)
 
 详见 `examples/callkit-example/src/screens/Home.tsx`。[源码](../../../examples/callkit-example/src/screens/Home.tsx)
 

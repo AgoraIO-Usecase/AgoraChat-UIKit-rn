@@ -230,10 +230,10 @@ This type of component mainly consists of a navigation bar component, a search c
 
 List components:
 
-- ConversationList: `packages/react-native-chat-uikit/src/biz/ConversationList/ConversationList.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/ConversationList/ConversationList.tsx)
-- ContactList: `packages/react-native-chat-uikit/src/biz/ContactList/ContactList.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/ContactList/ContactList.tsx)
-- GroupList: `packages/react-native-chat-uikit/src/biz/GroupList/GroupList.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/GroupList/GroupList.tsx)
-- GroupParticipantList: `packages/react-native-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx)
+- ConversationList: `packages/react-native-agora-chat-uikit/src/biz/ConversationList/ConversationList.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/ConversationList/ConversationList.tsx)
+- ContactList: `packages/react-native-agora-chat-uikit/src/biz/ContactList/ContactList.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/ContactList/ContactList.tsx)
+- GroupList: `packages/react-native-agora-chat-uikit/src/biz/GroupList/GroupList.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/GroupList/GroupList.tsx)
+- GroupParticipantList: `packages/react-native-agora-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx)
 
 Among them, the contact list component is a reusable component that can be used as needed. For example: displaying the contact list, or using it on the user selection page during group creation. For example:
 
@@ -346,8 +346,8 @@ When a user avatar or group avatar is clicked, the detail component page can be 
 
 Detail components include:
 
-- ContactInfo: `packages/react-native-chat-uikit/src/biz/Info/ContactInfo.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/Info/ContactInfo.tsx)
-- GroupInfo: `packages/react-native-chat-uikit/src/biz/Info/GroupInfo.tsx` [Source Code](../../../packages/react-native-chat-uikit/src/biz/Info/GroupInfo.tsx)
+- ContactInfo: `packages/react-native-agora-chat-uikit/src/biz/Info/ContactInfo.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/Info/ContactInfo.tsx)
+- GroupInfo: `packages/react-native-agora-chat-uikit/src/biz/Info/GroupInfo.tsx` [Source Code](../../../packages/react-native-agora-chat-uikit/src/biz/Info/GroupInfo.tsx)
 
 This type of component consists of a navigation bar component, an avatar component, and a single-item list component. The navigation bar can be displayed, hidden, or customized. Other parts can be modified and displayed.
 

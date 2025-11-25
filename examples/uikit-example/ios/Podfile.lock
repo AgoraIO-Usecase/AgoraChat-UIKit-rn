@@ -50,78 +50,6 @@ PODS:
     - EXJSONUtils
   - Expo (48.0.19):
     - ExpoModulesCore
-  - expo-dev-client (2.2.1):
-    - EXManifests
-    - expo-dev-launcher
-    - expo-dev-menu
-    - expo-dev-menu-interface
-    - EXUpdatesInterface
-  - expo-dev-launcher (2.2.1):
-    - EXManifests
-    - expo-dev-launcher/Main (= 2.2.1)
-    - expo-dev-menu
-    - expo-dev-menu-interface
-    - ExpoModulesCore
-    - EXUpdatesInterface
-    - React-Core
-  - expo-dev-launcher/Main (2.2.1):
-    - EXManifests
-    - expo-dev-launcher/Unsafe
-    - expo-dev-menu
-    - expo-dev-menu-interface
-    - ExpoModulesCore
-    - EXUpdatesInterface
-    - React-Core
-  - expo-dev-launcher/Unsafe (2.2.1):
-    - EXManifests
-    - expo-dev-menu
-    - expo-dev-menu-interface
-    - ExpoModulesCore
-    - EXUpdatesInterface
-    - React-Core
-  - expo-dev-menu (2.2.0):
-    - expo-dev-menu/Main (= 2.2.0)
-  - expo-dev-menu-interface (1.1.1)
-  - expo-dev-menu/GestureHandler (2.2.0)
-  - expo-dev-menu/Main (2.2.0):
-    - EXManifests
-    - expo-dev-menu-interface
-    - expo-dev-menu/Vendored
-    - ExpoModulesCore
-    - React-Core
-  - expo-dev-menu/Reanimated (2.2.0):
-    - DoubleConversion
-    - FBLazyVector
-    - FBReactNativeSpec
-    - glog
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-callinvoker
-    - React-Core
-    - React-Core/DevSupport
-    - React-Core/RCTWebSocket
-    - React-CoreModules
-    - React-cxxreact
-    - React-jsi
-    - React-jsiexecutor
-    - React-jsinspector
-    - React-RCTActionSheet
-    - React-RCTAnimation
-    - React-RCTBlob
-    - React-RCTImage
-    - React-RCTLinking
-    - React-RCTNetwork
-    - React-RCTSettings
-    - React-RCTText
-    - React-RCTVibration
-    - ReactCommon/turbomodule/core
-    - Yoga
-  - expo-dev-menu/SafeAreaView (2.2.0)
-  - expo-dev-menu/Vendored (2.2.0):
-    - expo-dev-menu/GestureHandler
-    - expo-dev-menu/Reanimated
-    - expo-dev-menu/SafeAreaView
   - ExpoKeepAwake (12.0.1):
     - ExpoModulesCore
   - ExpoModulesCore (1.2.7):
@@ -642,9 +570,9 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.20.0):
+  - RNScreens (3.29.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-RCTImage
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -670,10 +598,6 @@ DEPENDENCIES:
   - EXJSONUtils (from `../../../node_modules/expo-json-utils/ios`)
   - EXManifests (from `../../../node_modules/expo-manifests/ios`)
   - Expo (from `../../../node_modules/expo`)
-  - expo-dev-client (from `../../../node_modules/expo-dev-client/ios`)
-  - expo-dev-launcher (from `../../../node_modules/expo-dev-launcher`)
-  - expo-dev-menu (from `../../../node_modules/expo-dev-menu`)
-  - expo-dev-menu-interface (from `../../../node_modules/expo-dev-menu-interface/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - EXSplashScreen (from `../../../node_modules/expo-splash-screen/ios`)
@@ -820,14 +744,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-manifests/ios"
   Expo:
     :path: "../../../node_modules/expo"
-  expo-dev-client:
-    :path: "../../../node_modules/expo-dev-client/ios"
-  expo-dev-launcher:
-    :path: "../../../node_modules/expo-dev-launcher"
-  expo-dev-menu:
-    :path: "../../../node_modules/expo-dev-menu"
-  expo-dev-menu-interface:
-    :path: "../../../node_modules/expo-dev-menu-interface/ios"
   ExpoKeepAwake:
     :path: "../../../node_modules/expo-keep-awake/ios"
   ExpoModulesCore:
@@ -987,10 +903,6 @@ SPEC CHECKSUMS:
   EXJSONUtils: 48b1e764ac35160e6f54d21ab60d7d9501f3e473
   EXManifests: e9ccabb71e1433c25ace668d75ce5869b11728f2
   Expo: 16b4a5e653c8d35ba8bef01037f26c6e3a493221
-  expo-dev-client: 88981e6f94ae55c59c5051d50ba308f1a0cdf4a8
-  expo-dev-launcher: 0e01b8a43a87253c594d4dd21270232cff6d250a
-  expo-dev-menu: 4d8acb2c0934cf0b6d462c35e31d3b77703801c3
-  expo-dev-menu-interface: 581788edbee450a9a1b3f7a03bfd85be75d354a5
   ExpoKeepAwake: 481c67a960701751b2a16e6018c2068602beb279
   ExpoModulesCore: 57b9b1b34195cd7c70e20b649934c37509988926
   EXSplashScreen: e4eb582134342e456ec72eda42ae017570c16eb0
@@ -1074,7 +986,7 @@ SPEC CHECKSUMS:
   RNImageCropPicker: b0afedeefd8655254a15c34103718455fde6ce59
   RNPermissions: 9c398ee6c48ae73c3f8bc48f199e3bf0463ac7f7
   RNReanimated: f6d652674c0a32375ccc94a6718effd14d3a4dee
-  RNScreens: c6ae949c292bee8ed7f355ab2adcfc9a51629951
+  RNScreens: a425ae50ad66d024a6e936121bf5c9fbe6a5cdc6
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

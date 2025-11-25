@@ -11,6 +11,5 @@ utils.kvs2.forEach((element) => {
 module.exports = {
   dependencies: {
     ...dependencies,
-    ...require('expo-dev-client/dependencies'),
   },
 };

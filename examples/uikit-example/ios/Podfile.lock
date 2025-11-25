@@ -1,5 +1,4 @@
 PODS:
-  - AgoraInfra_iOS (1.2.13)
   - AgoraIrisRTC_iOS (4.2.6-build.3)
   - AgoraRtcEngine_iOS (4.2.6):
     - AgoraRtcEngine_iOS/AIAEC (= 4.2.6)
@@ -212,20 +211,19 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - HyphenateChat (4.11.0):
-    - AgoraInfra_iOS (= 1.2.13)
+  - HyphenateChat (4.10.2)
   - libevent (2.1.12)
-  - libwebp (1.3.2):
-    - libwebp/demux (= 1.3.2)
-    - libwebp/mux (= 1.3.2)
-    - libwebp/sharpyuv (= 1.3.2)
-    - libwebp/webp (= 1.3.2)
-  - libwebp/demux (1.3.2):
+  - libwebp (1.5.0):
+    - libwebp/demux (= 1.5.0)
+    - libwebp/mux (= 1.5.0)
+    - libwebp/sharpyuv (= 1.5.0)
+    - libwebp/webp (= 1.5.0)
+  - libwebp/demux (1.5.0):
     - libwebp/webp
-  - libwebp/mux (1.3.2):
+  - libwebp/mux (1.5.0):
     - libwebp/demux
-  - libwebp/sharpyuv (1.3.2)
-  - libwebp/webp (1.3.2):
+  - libwebp/sharpyuv (1.5.0)
+  - libwebp/webp (1.5.0):
     - libwebp/sharpyuv
   - OpenSSL-Universal (1.1.1100)
   - Permission-Camera (3.8.0):
@@ -471,13 +469,12 @@ PODS:
     - React-Core
   - react-native-chat-callkit (1.0.4):
     - React-Core
-  - react-native-chat-room (1.0.1-beta.0):
+  - react-native-chat-room (1.0.0-beta.0):
     - React-Core
-  - react-native-chat-sdk (1.7.0):
-    - HyphenateChat (~> 4.11.0)
-    - RCT-Folly (= 2021.07.22.00)
+  - react-native-chat-sdk (1.3.1):
+    - HyphenateChat (= 4.10.2)
     - React-Core
-  - react-native-chat-uikit (2.4.2):
+  - react-native-chat-uikit (2.0.0-beta.0):
     - React-Core
   - react-native-create-thumbnail (2.0.1):
     - React-Core
@@ -607,15 +604,15 @@ PODS:
   - RNGestureHandler (2.20.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNImageCropPicker (0.40.3):
+  - RNImageCropPicker (0.42.0):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.40.3)
-    - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.40.3):
+    - RNImageCropPicker/QBImagePickerController (= 0.42.0)
+    - TOCropViewController (~> 2.7.4)
+  - RNImageCropPicker/QBImagePickerController (0.42.0):
     - React-Core
     - React-RCTImage
-    - TOCropViewController
+    - TOCropViewController (~> 2.7.4)
   - RNPermissions (3.8.0):
     - React-Core
   - RNReanimated (2.14.4):
@@ -708,11 +705,11 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (= 0.182.0)
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - OpenSSL-Universal (= 1.1.1100)
-  - Permission-Camera (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Camera`)
-  - Permission-MediaLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/MediaLibrary`)
-  - Permission-Microphone (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Microphone`)
-  - Permission-Notifications (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Notifications`)
-  - Permission-PhotoLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/PhotoLibrary`)
+  - Permission-Camera (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Camera`)
+  - Permission-MediaLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/MediaLibrary`)
+  - Permission-Microphone (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Microphone`)
+  - Permission-Notifications (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Notifications`)
+  - Permission-PhotoLibrary (from `/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/PhotoLibrary`)
   - RCT-Folly (from `../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../../../node_modules/react-native/Libraries/TypeSafety`)
@@ -734,7 +731,7 @@ DEPENDENCIES:
   - "react-native-cameraroll (from `../../../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-chat-callkit (from `../../../packages/react-native-chat-callkit`)
   - react-native-chat-room (from `../../../packages/react-native-chat-room`)
-  - react-native-chat-sdk (from `../../../node_modules/react-native-chat-sdk`)
+  - react-native-chat-sdk (from `../../../node_modules/react-native-agora-chat`)
   - react-native-chat-uikit (from `../../../packages/react-native-chat-uikit`)
   - react-native-create-thumbnail (from `../../../node_modules/react-native-create-thumbnail`)
   - react-native-document-picker (from `../../../node_modules/react-native-document-picker`)
@@ -775,7 +772,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AgoraInfra_iOS
     - AgoraIrisRTC_iOS
     - AgoraRtcEngine_iOS
     - ASN1Decoder
@@ -851,15 +847,15 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/glog.podspec"
   Permission-Camera:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Camera"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Camera"
   Permission-MediaLibrary:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/MediaLibrary"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/MediaLibrary"
   Permission-Microphone:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Microphone"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Microphone"
   Permission-Notifications:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/Notifications"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/Notifications"
   Permission-PhotoLibrary:
-    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0/node_modules/react-native-permissions/ios/PhotoLibrary"
+    :path: "/Users/asterisk/Codes/rn/react-native-chat-library-2.0-agora/node_modules/react-native-permissions/ios/PhotoLibrary"
   RCT-Folly:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -899,7 +895,7 @@ EXTERNAL SOURCES:
   react-native-chat-room:
     :path: "../../../packages/react-native-chat-room"
   react-native-chat-sdk:
-    :path: "../../../node_modules/react-native-chat-sdk"
+    :path: "../../../node_modules/react-native-agora-chat"
   react-native-chat-uikit:
     :path: "../../../packages/react-native-chat-uikit"
   react-native-create-thumbnail:
@@ -976,31 +972,30 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AgoraInfra_iOS: 65e11a2183ab7836258768868d06058c22701b13
   AgoraIrisRTC_iOS: 8346499b82968a4967e3d0bec2cf14bf7c0c3f76
   AgoraRtcEngine_iOS: ac647332ad8f86d79cf810601c9e62b28c3a4de0
   ASN1Decoder: 91cb1d781b5a178ea7375b2f1519e2bdaaa4c427
-  boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
+  boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
+  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
-  EASClient: 950674e1098ebc09c4c2cf064a61e42e84d9d4c6
-  EXApplication: d8f53a7eee90a870a75656280e8d4b85726ea903
-  EXConstants: f348da07e21b23d2b085e270d7b74f282df1a7d9
-  EXFileSystem: 844e86ca9b5375486ecc4ef06d3838d5597d895d
-  EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
+  EASClient: 2328890f5a0ce5f46c64895bb1741927c64a191d
+  EXApplication: 9e02dde69a11d17d394bc89a9ea90c619217bada
+  EXConstants: 0a70495c8b5dff454903ed9e798dbb39da9c3fd7
+  EXFileSystem: 6c8c6df1f092c49cbbb97df4273eee3b619369b9
+  EXFont: b5ea75d76062ca34e3bfbbff13566fff2ed3908e
   EXJSONUtils: 48b1e764ac35160e6f54d21ab60d7d9501f3e473
-  EXManifests: 500666d48e8dd7ca5a482c9e729e4a7a6c34081b
-  Expo: 8448e3a2aa1b295f029c81551e1ab6d986517fdb
-  expo-dev-client: 92b9e487ad6a05a3ad1dda70334729ccaf622bfe
-  expo-dev-launcher: 5275974e9f825f70a33bb79301a8ab894179fa94
-  expo-dev-menu: 8148bc67b09e97ccbe01da87d429cd86d39197c4
-  expo-dev-menu-interface: 6c82ae323c4b8724dead4763ce3ff24a2108bdb1
-  ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
-  ExpoModulesCore: 653958063a301098b541ae4dfed1ac0b98db607b
-  EXSplashScreen: 0e0a9ba0cf7553094e93213099bd7b42e6e237e9
+  EXManifests: e9ccabb71e1433c25ace668d75ce5869b11728f2
+  Expo: 16b4a5e653c8d35ba8bef01037f26c6e3a493221
+  expo-dev-client: 88981e6f94ae55c59c5051d50ba308f1a0cdf4a8
+  expo-dev-launcher: 0e01b8a43a87253c594d4dd21270232cff6d250a
+  expo-dev-menu: 4d8acb2c0934cf0b6d462c35e31d3b77703801c3
+  expo-dev-menu-interface: 581788edbee450a9a1b3f7a03bfd85be75d354a5
+  ExpoKeepAwake: 481c67a960701751b2a16e6018c2068602beb279
+  ExpoModulesCore: 57b9b1b34195cd7c70e20b649934c37509988926
+  EXSplashScreen: e4eb582134342e456ec72eda42ae017570c16eb0
   EXStructuredHeaders: f3a6d417d5d12ef369fd1a31320d1c188a1b0f4b
-  EXUpdates: 603c4dfec2ed9ef323dfbd9c59c946593d4d9a5c
+  EXUpdates: 1ab1bd16f9ccb1eaa7f8e8220e8d8e5b2aa2855a
   EXUpdatesInterface: e86394c0770f14eb96386cbb32be83fa6a97e8f9
   FBLazyVector: c511d4cd0210f416cb5c289bd5ae6b36d909b048
   FBReactNativeSpec: de92737f433b7edb416db4d29d03ab41229a5f70
@@ -1015,49 +1010,49 @@ SPEC CHECKSUMS:
   FlipperKit: 2efad7007d6745a3f95e4034d547be637f89d3f6
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  HyphenateChat: 2fa2940fe4b6d881bc6d27b0deed1968396d529f
+  HyphenateChat: 6924f613947f6301bee909fc12c3bb01b50f52c6
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  Permission-Camera: e6d142d7d8b714afe0a83e5e6ae17eb949f1e3e9
-  Permission-MediaLibrary: 6a5888dd77669b568716bea80c21340aaab74c51
-  Permission-Microphone: 644b1de8bcc2afcaf934e09a22bee507a95796a7
-  Permission-Notifications: aa91ec29236626ff59cb60e08389c0a59a9d32c5
-  Permission-PhotoLibrary: 31787bbe77d0d3ae6a5267b8435e4a2e9ef78f1d
-  RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
+  Permission-Camera: 09722f022ee0c112917fcd7991d9832f10f78fa7
+  Permission-MediaLibrary: 86a552281ef94e04856d6a3c46966c4bceb3fcd1
+  Permission-Microphone: c3786a6a45d7fe77cf88a03c9a18d063a97896a6
+  Permission-Notifications: c5842ced07b9f181ed638193533eb11e35b5e947
+  Permission-PhotoLibrary: 6da0b6851dfce0936430eabf57066f827b066b0e
+  RCT-Folly: 8dc08ca5a393b48b1c523ab6220dfdcc0fe000ad
   RCTRequired: f6187ec763637e6a57f5728dd9a3bdabc6d6b4e0
   RCTTypeSafety: a01aca2dd3b27fa422d5239252ad38e54e958750
   React: 741b4f5187e7a2137b69c88e65f940ba40600b4b
   React-callinvoker: 72ba74b2d5d690c497631191ae6eeca0c043d9cf
-  React-Codegen: 6a3870e906e80066a9b707389846c692a02415d9
-  React-Core: 9cf97a2d0830a024deffebe873407f6717bbcc19
-  React-CoreModules: ffd19b082fc36b9b463fedf30955138b5426c053
-  React-cxxreact: f88c74ac51e59c294fbf825974d377fcf9641eba
+  React-Codegen: 1e4b321e16e90bdb7063938bedd653fa38607b05
+  React-Core: 7945a2947fc489818de6d423cacb564ae9861501
+  React-CoreModules: 9d67a88b2503741807ae822183bba10218c94c72
+  React-cxxreact: 9f0393c5c110c6035a00df501857c3759912ed39
   React-jsc: 75bfda40ea4032b5018875355ab5ee089ac748bf
-  React-jsi: 71ae5726d2b0fd6b0aaa0845a9294739cf4c95c6
-  React-jsiexecutor: 089cd07c76ecf498960a64ba8ae0f2dddd382f44
+  React-jsi: ffc1723902d1be93fcde97d93c6829cc1d9a144c
+  React-jsiexecutor: dc5e7ce50a53872a0e2fe0465c4733df5c979a3d
   React-jsinspector: b6ed4cb3ffa27a041cd440300503dc512b761450
-  React-logger: 186dd536128ae5924bc38ed70932c00aa740cd5b
-  react-native-agora: 7026292738f2de759f532938db629c7acda377af
-  react-native-blur: cfdad7b3c01d725ab62a8a729f42ea463998afa2
-  react-native-cameraroll: 755bcc628148a90a7c9cf3f817a252be3a601bc5
-  react-native-chat-callkit: a1b5e4885d58e4ac5153aade90b6f6fbb32d333b
-  react-native-chat-room: 3367d4a6ad6694c749b199efc0627732bea70b41
-  react-native-chat-sdk: e6e94d990f751e9e454808075fa227fcfb5b32e5
-  react-native-chat-uikit: d8b7822361352151a3b6fd1de24bb06d4fc5e1f7
-  react-native-create-thumbnail: 4ffd51a6c02a9313edc74e2460cd07264221f554
-  react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
-  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
-  react-native-image-editor: ad8248fc404d17b697b531d692b9b1ca2d1c0896
-  react-native-image-picker: 5e076db26cd81660cfb6db5bcf517cfa12054d45
-  react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
-  react-native-safe-area-context: 5141f11858b033636f1788b14f32eaba92cee810
-  react-native-slider: ae9441a884f8465762f1f68d31eafad42663adb4
-  react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  React-logger: f56fb139828fc569c26c8fc004837e86843573c5
+  react-native-agora: f0f15f4989e7ed09bee76cb575bd81b011cba26a
+  react-native-blur: c91c10c67be1f096415e63925640baa59e2132d2
+  react-native-cameraroll: 3a3719e98d69e74755ae734d6528d195a61feaa8
+  react-native-chat-callkit: a0d720625d7041ca1a51c318de524d8c208b26f8
+  react-native-chat-room: 632cdb406ed8e10cb85271379a5edaa1bc5bf5e7
+  react-native-chat-sdk: e1b2434e99a797959e16668a1e87fcf10c3921c0
+  react-native-chat-uikit: 744758cdd16ec732aa40303bb4d5333730258dbc
+  react-native-create-thumbnail: 4bb224ef811cbb4fc9dd7345118491569494ec38
+  react-native-document-picker: 10fce9a283ba4b74533d8378e76b3c38a66347d6
+  react-native-get-random-values: 0fd2b6a3129988d701d10e30f0622d5f039531bc
+  react-native-image-editor: 66f68a06f4c1e33ddba1936ef41ba587c7ae0077
+  react-native-image-picker: 7a3502135a13fc56d406f5213b7346de6bc5f38b
+  react-native-pager-view: 49d43927514af5e800108d3c5f651eb58b595d24
+  react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
+  react-native-slider: ecf6dc3270a55131a18cef3aaf14ec14fbc624f8
+  react-native-video: 2aad0d963bf3952bd9ebb2f53fab799338e8e202
   React-perflogger: e706562ab7eb8eb590aa83a224d26fa13963d7f2
   React-RCTActionSheet: 57d4bd98122f557479a3359ad5dad8e109e20c5a
   React-RCTAnimation: ccf3ef00101ea74bda73a045d79a658b36728a60
-  React-RCTAppDelegate: de78bc79e1a469ffa275fbe3948356cea061c4bb
+  React-RCTAppDelegate: 8fd3a3733a1d4579b85df18ec71d5168dc6cfd1b
   React-RCTBlob: 519c8ecb8ef83ce461a5670bdaf2fef882af3393
   React-RCTImage: f2e4904566ccccaa4b704170fcc5ae144ca347bf
   React-RCTLinking: 52a3740e3651e30aa11dff5a6debed7395dd8169
@@ -1066,20 +1061,20 @@ SPEC CHECKSUMS:
   React-RCTText: c9dfc6722621d56332b4f3a19ac38105e7504145
   React-RCTVibration: f09f08de63e4122deb32506e20ca4cae6e4e14c1
   React-runtimeexecutor: 4817d63dbc9d658f8dc0ec56bd9b83ce531129f0
-  ReactCommon: 154ea4b064ea8d82b2bd31080589fc7f5959ff9b
-  ReactNativeFileAccess: 4530e3be4d5069454c6c6389096d8cb78c897f2c
-  RNAudioRecorderPlayer: 6638283925b46808310c9fdf803ebabc3abdbadc
-  RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
-  RNCClipboard: d77213bfa269013bf4b857b7a9ca37ee062d8ef1
-  RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
-  RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
-  RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
-  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 74c531dc20aa37fb3a8d3d8514447a0d129ddb7d
-  RNImageCropPicker: e7ab6fb43d2fc3e84651e786ef4a080d63b0ed3d
-  RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
-  RNReanimated: addc4900bf47882118d0a1b21747fa6705fa8cff
-  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
+  ReactCommon: 4a8c54ef74ae48c243ba111911d1c098d12bde5c
+  ReactNativeFileAccess: e4b9196c358350d276bc55f40c835fc2abed4822
+  RNAudioRecorderPlayer: 5208e7a883cb8cdd5e7d26eb5110f6eb74ebe2d6
+  RNCAsyncStorage: 357676e1dc19095208c80d4271066c407cd02ed1
+  RNCClipboard: 9d33327413fe87aa0c8ef83e1b9a939d7c4f535d
+  RNDeviceInfo: addb9b427c2822a2d8e94c87a136a224e0af738c
+  RNFastImage: 462a183c4b0b6b26fdfd639e1ed6ba37536c3b87
+  RNFileViewer: 4b5d83358214347e4ab2d4ca8d5c1c90d869e251
+  RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
+  RNGestureHandler: 1a022f47e3922a3f075135c038d7c50584557c28
+  RNImageCropPicker: b0afedeefd8655254a15c34103718455fde6ce59
+  RNPermissions: 9c398ee6c48ae73c3f8bc48f199e3bf0463ac7f7
+  RNReanimated: f6d652674c0a32375ccc94a6718effd14d3a4dee
+  RNScreens: c6ae949c292bee8ed7f355ab2adcfc9a51629951
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

@@ -1,12 +1,11 @@
 import type { CameraRoll as MediaLibrary } from '@react-native-camera-roll/camera-roll';
 import type Clipboard from '@react-native-clipboard/clipboard';
+import type * as DocumentPicker from '@react-native-documents/picker';
 import type * as Audio from 'react-native-audio-recorder-player';
 import type CreateThumbnail from 'react-native-create-thumbnail';
-import type * as DocumentPicker from 'react-native-document-picker';
 import type FileAccess from 'react-native-file-access';
 import { Dirs } from 'react-native-file-access';
 import type ImagePicker from 'react-native-image-picker';
-import type VideoComponent from 'react-native-video';
 
 import type { Nullable } from '../types';
 
@@ -67,10 +66,12 @@ export interface PlayAudioOptions extends OpenResult {
   opt?: Record<string, string>;
   onPlay?: ({
     isMuted,
+    isFinished,
     currentPosition,
     duration,
   }: {
     isMuted?: boolean;
+    isFinished: boolean;
     currentPosition: number;
     duration: number;
   }) => void;
@@ -92,7 +93,7 @@ export interface ClipboardService {
 // export interface FileService {}
 // export interface AudioService {}
 export type MediaServiceOptions = {
-  videoModule: typeof VideoComponent;
+  videoModule: any;
   videoThumbnail: typeof CreateThumbnail;
   imagePickerModule: typeof ImagePicker;
   documentPickerModule: typeof DocumentPicker;
@@ -108,6 +109,12 @@ export type MediaServiceOptions = {
  * Users can implement the interface by themselves.
  */
 export interface MediaService {
+  /**
+   * @deprecated 2025-11-07
+   * This method is deprecated and will be removed in the future.
+   * Please use the new method to get the video component.
+   * @param props
+   */
   getVideoComponent<Props = {}>(props: VideoProps & Props): JSX.Element;
   getVideoThumbnail(
     options: VideoThumbnailOptions

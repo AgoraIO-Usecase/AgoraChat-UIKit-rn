@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import {
-  ChatOptions,
   Container,
   createDarkTheme,
   createLightTheme,
@@ -47,7 +46,7 @@ export default function test_simple_toast() {
   const theme = light ? dark : dark;
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as ChatOptions}
+      opt={{ appKey: 'sdf' } as any}
       isDevMode={true}
       palette={palette}
       theme={theme}

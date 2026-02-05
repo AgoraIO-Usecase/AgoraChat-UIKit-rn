@@ -44,11 +44,11 @@ import {
   usePermissions,
   usePresetPalette,
 } from '../../rename.uikit';
-// import { getDeviceName, getSystemName, getSystemVersion, getModel, getVersion } from 'react-native-device-info';
 import { createStringSetCn, createStringSetEn } from '../common';
 import { boloo_da_ttf, twemoji_ttf } from '../common/assets';
 import {
   accountType,
+  appId,
   appKey,
   boloo_da_ttf_name,
   demoType,
@@ -56,9 +56,8 @@ import {
   imPort,
   imServer,
   isDevMode,
-  restServer,
+  restServerDomain,
   twemoji_ttf_name,
-  useSendBox,
 } from '../common/const';
 import type { RootParamsList, RootParamsName } from '../routes';
 import { formatNavigationState } from '../utils/utils';
@@ -66,43 +65,49 @@ import { useUserInfo } from './useUserInfo';
 
 export function useAppConfig() {
   const appKeyRef = React.useRef(appKey);
-  const autoLogin = React.useRef(false).current;
-  const imServerRef = React.useRef(imServer);
-  const imPortRef = React.useRef(imPort);
-  const enableDNSConfigRef = React.useRef(enableDNSConfig);
+  const appIdRef = React.useRef(appId);
+  const autoLoginRef = React.useRef(false);
+  const restServerDomainRef = React.useRef<string | undefined>(
+    restServerDomain
+  );
+  const imServerRef = React.useRef<string | undefined>(imServer);
+  const imPortRef = React.useRef<any>(imPort);
+  const enableDNSConfigRef = React.useRef<boolean | undefined>(enableDNSConfig);
 
   const getOptions = React.useCallback(() => {
     return {
       appKey: appKeyRef.current,
+      appId: appIdRef.current,
       debugModel: isDevMode,
-      autoLogin: autoLogin,
+      autoLogin: autoLoginRef.current,
       autoAcceptGroupInvitation: true,
       requireAck: true,
       requireDeliveryAck: true,
-      restServer: useSendBox ? restServer : undefined,
-      imServer: useSendBox ? imServerRef.current : undefined,
-      imPort: useSendBox ? imPortRef.current : (undefined as any),
-      enableDNSConfig: useSendBox ? enableDNSConfigRef.current : undefined,
+      restServer: restServerDomainRef.current,
+      imServer: imServerRef.current,
+      imPort: imPortRef.current,
+      enableDNSConfig: enableDNSConfigRef.current,
+      pushConfig: undefined,
     } as ChatOptionsType;
-  }, [autoLogin]);
+  }, []);
 
   return {
     appKeyRef,
+    appIdRef,
     imServerRef,
     imPortRef,
+    restServerDomainRef,
     enableDNSConfigRef,
-    autoLogin,
+    autoLoginRef,
     getOptions,
   };
 }
 
 export function useApp() {
   const im = getChatService();
-  // const list = React.useRef<Map<string, DataModel>>(new Map());
   const permissionsRef = React.useRef(false);
   const { getPermission } = usePermissions();
   const initialRouteNameRef = React.useRef('Splash' as RootParamsName);
-  // const autoLogin = React.useRef(false).current;
   const palette = usePresetPalette();
   const paletteRef = React.useRef(palette);
   const ra = getReleaseArea();
@@ -120,6 +125,7 @@ export function useApp() {
   const enableReactionRef = React.useRef(false);
   const enableThreadRef = React.useRef(false);
   const enableTranslateRef = React.useRef(false);
+  const enableRoamMessageRef = React.useRef(false);
   const enableAVMeetingRef = React.useRef(false);
   const enableOfflinePushRef = React.useRef(false);
   const enableTypingRef = React.useRef(false);
@@ -143,38 +149,20 @@ export function useApp() {
   });
   const rootRef = useNavigationContainerRef<RootParamsList>();
   const serverConfigVisibleRef = React.useRef(false);
-  // const appKeyRef = React.useRef(appKey);
-
-  // const imServerRef = React.useRef(imServer);
-  // const imPortRef = React.useRef(imPort);
-  // const enableDNSConfigRef = React.useRef(enableDNSConfig);
   const [_initParams, setInitParams] = React.useState(false);
+  const { getDataFromStorage } = useUserInfo();
   const {
-    getDataFromStorage,
-    // updateDataFromServer,
-    // updateDataToStorage,
-    // users,
-  } = useUserInfo();
-  const { appKeyRef, imServerRef, imPortRef, enableDNSConfigRef, getOptions } =
-    useAppConfig();
+    appKeyRef,
+    appIdRef,
+    imServerRef,
+    imPortRef,
+    restServerDomainRef,
+    enableDNSConfigRef,
+    getOptions,
+    autoLoginRef,
+  } = useAppConfig();
 
   const { updater } = useForceUpdate();
-
-  // const getOptions = React.useCallback(() => {
-  //   return {
-  //     appKey: appKeyRef.current,
-
-  //     debugModel: isDevMode,
-  //     autoLogin: autoLogin,
-  //     autoAcceptGroupInvitation: true,
-  //     requireAck: true,
-  //     requireDeliveryAck: true,
-  //     restServer: useSendBox ? restServer : undefined,
-  //     imServer: useSendBox ? imServerRef.current : undefined,
-  //     imPort: useSendBox ? imPortRef.current : (undefined as any),
-  //     enableDNSConfig: useSendBox ? enableDNSConfigRef.current : undefined,
-  //   } as ChatOptionsType;
-  // }, [autoLogin]);
 
   const onUsersHandler = React.useCallback(
     async (data: Map<string, DataModel>) => {
@@ -600,6 +588,14 @@ export function useApp() {
         updater();
       }
     );
+    const ret20 = DeviceEventEmitter.addListener(
+      '_demo_emit_app_roam_message',
+      (e) => {
+        console.log('dev:emit:app:roam_message:', e);
+        enableRoamMessageRef.current = e === 'enable';
+        updater();
+      }
+    );
     return () => {
       ret.remove();
       ret2.remove();
@@ -620,6 +616,7 @@ export function useApp() {
       ret17.remove();
       ret18.remove();
       ret19.remove();
+      ret20.remove();
     };
   }, [dark, light, updatePush, updater]);
 
@@ -686,6 +683,7 @@ export function useApp() {
     enableThreadRef,
     enableTranslateRef,
     enableAVMeetingRef,
+    enableRoamMessageRef,
     enableOfflinePushRef,
     enableTypingRef,
     enableBlockRef,
@@ -693,8 +691,10 @@ export function useApp() {
     rootRef,
     serverConfigVisibleRef,
     appKeyRef,
+    appIdRef,
     imServerRef,
     imPortRef,
+    restServerDomainRef,
     enableDNSConfigRef,
     _initParams,
     setInitParams,
@@ -715,5 +715,6 @@ export function useApp() {
     getNaviTheme,
     messageMenuStyleRef,
     messageInputBarExtensionStyleRef,
+    autoLoginRef,
   };
 }

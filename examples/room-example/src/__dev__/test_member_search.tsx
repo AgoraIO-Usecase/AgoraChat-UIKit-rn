@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import {
-  ChatOptions,
   Container,
   createDarkTheme,
   createLightTheme,
@@ -29,11 +28,7 @@ export default function test_member_search() {
   const dark = createDarkTheme(palette);
   const theme = light ? light : dark;
   return (
-    <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as ChatOptions}
-      palette={palette}
-      theme={theme}
-    >
+    <Container opt={{ appKey: 'sdf' } as any} palette={palette} theme={theme}>
       <SearchParticipantComponent />
     </Container>
   );

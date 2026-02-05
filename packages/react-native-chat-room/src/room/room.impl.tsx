@@ -870,70 +870,71 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
     this._roomListener = undefined;
   }
   _initConnectListener() {
+    const listeners = this._listeners;
     this._connectListener = {
       onConnected: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onConnected?.();
         });
       },
       onDisconnected: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.others);
         });
       },
       onTokenWillExpire: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.token_will_expire);
         });
       },
       onTokenDidExpire: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.token_did_expire);
         });
       },
       onAppActiveNumberReachLimit: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(
             DisconnectReasonType.app_active_number_reach_limit
           );
         });
       },
       onUserDidLoginFromOtherDevice: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(
             DisconnectReasonType.user_did_login_from_other_device
           );
         });
       },
       onUserDidRemoveFromServer: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.user_did_remove_from_server);
         });
       },
       onUserDidForbidByServer: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.user_did_forbid_by_server);
         });
       },
       onUserDidChangePassword: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.user_did_change_password);
         });
       },
       onUserDidLoginTooManyDevice: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(
             DisconnectReasonType.user_did_login_too_many_device
           );
         });
       },
       onUserKickedByOtherDevice: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.user_kicked_by_other_device);
         });
       },
       onUserAuthenticationFailed: () => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onDisconnected?.(DisconnectReasonType.user_authentication_failed);
         });
       },
@@ -941,24 +942,35 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
     this.client.addConnectionListener(this._connectListener);
   }
   _initMessageListener() {
+    const listeners = this._listeners;
+    const roomId = this.roomId;
     this._messageListener = {
       onMessagesRecalled(messages) {
-        this._listeners.forEach((v) => {
-          if (this.roomId) {
+        listeners.forEach((v) => {
+          if (roomId) {
             for (const message of messages) {
-              v.onMessageRecalled?.(this.roomId, message);
+              v.onMessageRecalled?.(roomId, message);
             }
           }
         });
       },
+      // onMessagesRecalledInfo(infos) {
+      //   listeners.forEach((v) => {
+      //     if (roomId) {
+      //       for (const info of infos) {
+      //         v.onMessageRecalled?.(roomId, info.recalledMessage!);
+      //       }
+      //     }
+      //   });
+      // },
       onMessagesReceived: (messages) => {
-        this._listeners.forEach((v) => {
-          if (this.roomId) {
+        listeners.forEach((v) => {
+          if (roomId) {
             for (const message of messages) {
               if (message.isBroadcast === true) {
                 v.onGlobalNotifyReceived?.(message);
               } else {
-                v.onMessageReceived?.(this.roomId, message);
+                v.onMessageReceived?.(roomId, message);
               }
             }
           }
@@ -970,7 +982,7 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
         pinOperation: number;
         pinInfo: ChatMessagePinInfo;
       }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onMessagePinChanged?.(params);
         });
       },
@@ -978,14 +990,15 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
     this.client.chatManager.addMessageListener(this._messageListener);
   }
   _initChatroomListener() {
+    const listeners = this._listeners;
     this._roomListener = {
       onDestroyed: (params: { roomId: string; roomName?: string }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserBeKicked?.(params.roomId, 1);
         });
       },
       onMemberJoined: (params: { roomId: string; participant: string }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserJoined?.(params.roomId, {
             userId: params.participant,
           } as UserServiceData);
@@ -996,7 +1009,7 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
         participant: string;
         roomName?: string;
       }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserLeave?.(params.roomId, params.participant);
         });
       },
@@ -1006,7 +1019,7 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
         roomName?: string;
         reason?: string;
       }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserBeKicked?.(params.roomId, 2);
         });
       },
@@ -1015,12 +1028,12 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
         mutes: Array<string>;
         expireTime?: string;
       }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserMuted?.(params.roomId, params.mutes, '');
         });
       },
       onMuteListRemoved: (params: { roomId: string; mutes: Array<string> }) => {
-        this._listeners.forEach((v) => {
+        listeners.forEach((v) => {
           v.onUserUnmuted?.(params.roomId, params.mutes, '');
         });
       },

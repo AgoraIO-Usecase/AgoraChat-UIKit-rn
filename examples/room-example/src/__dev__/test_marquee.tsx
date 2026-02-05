@@ -95,9 +95,7 @@ export function TestGlobalBroadcast() {
 
 export default function test_globalBroadcast() {
   return (
-    <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
-    >
+    <Container opt={{ appKey: 'sdf' } as any}>
       <TestGlobalBroadcast />
     </Container>
   );

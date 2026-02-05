@@ -88,7 +88,7 @@ export function useMessageInput(
   const [inputBarState, setInputBarState] =
     React.useState<MessageInputState>('normal');
   const { messageInputBarStyle } = useConfigContext();
-  const MessageInputBarMenu = React.useMemo(() => {
+  const MessageInputBarMenu: React.ElementType | null = React.useMemo(() => {
     if (messageInputBarStyle === 'bottom-sheet') {
       return BottomSheetNameMenu;
     } else if (messageInputBarStyle === 'extension') {
@@ -386,6 +386,10 @@ export function useMessageInput(
     }
   }, [messageInputBarStyle]);
 
+  const showKeyboard = React.useCallback(() => {
+    inputRef.current?.focus();
+  }, []);
+
   const closeKeyboard = React.useCallback(() => {
     Keyboard.dismiss();
   }, []);
@@ -472,7 +476,11 @@ export function useMessageInput(
       if (closeAfterSend === true) {
         timeoutTask(0, closeKeyboard);
       }
-    } else {
+    } else if (sendIconName === 'xmark_in_circle') {
+      changeInputBarState('keyboard');
+      setSendIconName('plus_in_circle');
+      showKeyboard();
+    } else if (sendIconName === 'plus_in_circle') {
       onShowMessageInputExtendActions();
       if (messageInputBarStyle === 'extension') {
         changeInputBarState('extension');
@@ -600,6 +608,7 @@ export function useMessageInput(
   React.useImperativeHandle(ref, () => {
     return {
       close: () => {
+        onRequestCloseMenu();
         if (selectType === 'common') {
           changeInputBarState('normal');
         }

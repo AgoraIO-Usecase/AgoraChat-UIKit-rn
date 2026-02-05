@@ -7,16 +7,16 @@ AgoraChatCallKit is an open-source audio and video UI library developed based on
 ## Development environment requirements
 
 - MacOS 12 or higher
-- React-Native 0.66 or higher
-- NodeJs 16.18 or higher
+- React-Native 0.71 or higher
+- NodeJs 20.18 or higher
 
 For iOS app:
 
-- Xcode 13 or higher and its related dependency tool.
+- Xcode 15 or higher and its related dependency tool.
 
 For the Android app:
 
-- Android Studio 2021 or higher and its related dependency tool.
+- Android Studio 2022 or higher and its related dependency tool.
 
 ## Installation
 
@@ -29,35 +29,11 @@ yarn add react-native-agora-chat-callkit
 ## Dependencies
 
 ```sh
-yarn add react-native-linear-gradient \
-react-native-safe-area-context
-```
-
-## Quick Start
-
-Initialization
-
-```typescript
-import { Container } from 'react-native-agora-chat-room';
-export function App() {
-  return (
-    <Container opt={{ appKey: '<your app key>' }}>
-      {/** sub component */}
-    </Container>
-  );
-}
-```
-
-Join a room
-
-```typescript
-export function ChatroomScreen() {
-  return (
-    <Chatroom roomId={'<room ID>'} ownerId={'<room owner ID>'}>
-      {/** sub component */}
-    </Chatroom>
-  );
-}
+yarn add @react-native-community/blur \
+react-native-agora \
+react-native-agora-chat \
+react-native-safe-area-context \
+react-native-screens 
 ```
 
 ## Contributing

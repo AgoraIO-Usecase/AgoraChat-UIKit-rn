@@ -26,7 +26,7 @@ export function TestGiftList() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >
@@ -66,7 +66,7 @@ export function TestGiftList2() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >
@@ -123,7 +123,7 @@ export function TestGiftList3() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >

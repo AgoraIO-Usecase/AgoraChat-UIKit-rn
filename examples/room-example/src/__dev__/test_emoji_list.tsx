@@ -28,7 +28,7 @@ export function TestEmojiList() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >
@@ -106,7 +106,7 @@ export function TestEmojiList2() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >
@@ -174,7 +174,7 @@ export function TestViewMemo2() {
   const [, updater] = React.useState(0);
   const c = React.useRef(0);
 
-  const onPress = React.useCallback((i) => {
+  const onPress = React.useCallback((i: number) => {
     console.log('test:TestViewMemo2:onPress:', onPress.name, i);
     updater((pre) => {
       if (c.current++ % 2 === 0) {
@@ -232,7 +232,7 @@ export function TestEmojiList3() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >

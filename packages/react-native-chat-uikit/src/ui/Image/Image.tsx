@@ -1,14 +1,7 @@
 import * as React from 'react';
-import {
-  Image as RNImage,
-  ImageProps as RNImageProps,
-  ImageSourcePropType,
-} from 'react-native';
+import { Image as RNImage } from 'react-native';
 
-export type ImageProps = Omit<RNImageProps, 'source'> & {
-  source: ImageSourcePropType;
-  failedSource?: ImageSourcePropType;
-};
+import type { ImageProps } from './types';
 
 /**
  * It mainly adds the function of native component `RNImage` to use the default image after loading failure.

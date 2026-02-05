@@ -117,7 +117,7 @@ export function TestChatroom2() {
   const light = createLightTheme(pal);
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       isDevMode={true}
       palette={pal}
       theme={light ? light : dark}

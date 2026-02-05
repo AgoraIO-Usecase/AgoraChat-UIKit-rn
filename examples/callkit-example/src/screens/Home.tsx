@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   Alert,
   DeviceEventEmitter,
+  FlatList,
   ListRenderItemInfo,
   Platform,
   StyleSheet,
@@ -10,7 +11,6 @@ import {
   ToastAndroid,
   View,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 
 import { ContactList } from '../components/SelectList';
 import {
@@ -124,7 +124,9 @@ const ContactListMemo = React.memo((props: ContactListProps) => {
         }
         setData([...data]);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('test:ContactList:init:error:', e);
+    }
   }, [data]);
   React.useEffect(() => {
     init();
@@ -298,7 +300,7 @@ export default function HomeScreen({
     }
     if (callType === CallType.Audio1v1 || callType === CallType.Video1v1) {
       return showSingleCall({
-        appKey: ChatClient.getInstance().options.appKey,
+        appKey: ChatClient.getInstance().options?.appKey ?? '',
         agoraAppId: agoraAppId,
         inviterId: inviterId,
         currentId: currentId,
@@ -311,7 +313,7 @@ export default function HomeScreen({
       callType === CallType.VideoMulti
     ) {
       return showMultiCall({
-        appKey: ChatClient.getInstance().options.appKey,
+        appKey: ChatClient.getInstance().options?.appKey ?? '',
         agoraAppId: agoraAppId,
         inviterId: inviterId,
         currentId: currentId,

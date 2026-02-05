@@ -48,7 +48,7 @@ export default function test_alert_rn() {
   const theme = light ? light : dark;
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       isDevMode={true}
       palette={palette}
       theme={theme}

@@ -1,3 +1,4 @@
+import { Locale } from 'date-fns';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import type { StatusType } from '../biz/types';
@@ -17,7 +18,7 @@ import type {
  */
 export type ContainerProps = React.PropsWithChildren<{
   /**
-   * Initialization parameters, the parameters that must be filled in include `appKey`.
+   * Initialization parameters, the parameters that must be filled in include `appKey` or `appId`.
    *
    * This parameter type is equivalent to the `ChatOptions` type. All parameters can be set.
    */
@@ -40,6 +41,12 @@ export type ContainerProps = React.PropsWithChildren<{
    * Default value is `true`.
    */
   enableTranslate?: boolean;
+  /**
+   * Whether to enable roam message.
+   *
+   * Default value is `false`.
+   */
+  enableRoamMessage?: boolean;
   /**
    * The palette.
    */
@@ -168,6 +175,12 @@ export type ContainerProps = React.PropsWithChildren<{
    * IM initialization is completed.
    */
   onInitialized?: (im: ChatService) => void;
+
+  /**
+   * Get the IM service.
+   * @returns The IM service.
+   */
+  onGetChatService?: () => ChatService;
 
   /**
    * @description Registered user information callback. The avatar and nickname of the contact, group member and group are obtained through the callback of this registration. If not provided, the default value will be used.

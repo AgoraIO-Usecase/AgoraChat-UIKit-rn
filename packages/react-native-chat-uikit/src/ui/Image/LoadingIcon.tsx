@@ -2,38 +2,58 @@ import * as React from 'react';
 import { Animated, Easing } from 'react-native';
 
 import type { IconNameType } from '../../assets';
-import type { ImageProps } from './Image';
 import { ClassImage } from './Image.class';
 import { getIconSource } from './Image.hooks';
+import type { ImageProps } from './types';
 
 export type LoadingIconResolutionType = '' | '2x' | '3x';
 export type LoadingIconProps = Omit<ImageProps, 'source' | 'failedSource'> & {
   name?: IconNameType | number;
   resolution?: LoadingIconResolutionType;
   isStop?: boolean;
+  useNativeDriver?: boolean;
 };
 
 const AnimatedImage = Animated.createAnimatedComponent(ClassImage);
 
 export function LoadingIcon(props: LoadingIconProps) {
-  const { name = 'loading', resolution, style, isStop, ...others } = props;
+  const {
+    name = 'loading',
+    resolution,
+    style,
+    isStop,
+    useNativeDriver = true,
+    ...others
+  } = props;
   const deg = React.useRef(new Animated.Value(0)).current;
-  React.useEffect(() => {
-    const animate = Animated.loop(
+  const animatedValue = React.useRef<Animated.CompositeAnimation | null>(null);
+  const initAnimation = React.useCallback(() => {
+    animatedValue.current = Animated.loop(
       Animated.timing(deg, {
         toValue: 1,
         duration: 1000,
-        useNativeDriver: false,
+        useNativeDriver: useNativeDriver,
         easing: Easing.inOut(Easing.linear),
       })
     );
+  }, [deg, useNativeDriver]);
+  const startAnimation = React.useCallback(() => {
+    animatedValue.current?.start();
+  }, [animatedValue]);
+  const stopAnimation = React.useCallback(() => {
+    animatedValue.current?.stop();
+  }, [animatedValue]);
+  React.useEffect(() => {
+    initAnimation();
     if (isStop === true) {
-      animate.stop();
+      stopAnimation();
     } else {
-      // animate.reset();
-      animate.start();
+      startAnimation();
     }
-  }, [deg, isStop]);
+    return () => {
+      stopAnimation();
+    };
+  }, [isStop, initAnimation, startAnimation, stopAnimation]);
   return (
     <AnimatedImage
       source={getIconSource(name, resolution) ?? 0}

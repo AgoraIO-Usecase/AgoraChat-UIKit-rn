@@ -24,7 +24,7 @@ export function TestComponent() {
 }
 
 export function TestComponent2() {
-  const cb = React.useCallback((state) => {
+  const cb = React.useCallback((state: 'load' | 'unload') => {
     console.log('test:TestComponent2:useLifecycle:', state);
   }, []);
   useLifecycle(cb);
@@ -65,11 +65,7 @@ export default function test_use_lifecycle() {
   const dark = createDarkTheme(palette);
   const theme = light ? light : dark;
   return (
-    <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
-      palette={palette}
-      theme={theme}
-    >
+    <Container opt={{ appKey: 'sdf' } as any} palette={palette} theme={theme}>
       <TestUseLifecycle />
     </Container>
   );

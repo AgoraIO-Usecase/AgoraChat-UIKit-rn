@@ -1,10 +1,9 @@
 import { CameraRoll as MediaLibrary } from '@react-native-camera-roll/camera-roll';
 import Clipboard from '@react-native-clipboard/clipboard';
+import * as DocumentPicker from '@react-native-documents/picker';
 import * as Audio from 'react-native-audio-recorder-player';
-import * as DocumentPicker from 'react-native-document-picker';
 import * as FileAccess from 'react-native-file-access';
 import * as ImagePicker from 'react-native-image-picker';
-import VideoComponent from 'react-native-video';
 
 import { uilog } from '../const';
 import {
@@ -188,7 +187,7 @@ export const useInitServices = (props: ContainerProps) => {
 
   if (Services.ms === undefined) {
     Services.createMediaService({
-      videoModule: VideoComponent,
+      videoModule: {} as any,
       videoThumbnail: {} as any,
       imagePickerModule: ImagePicker,
       documentPickerModule: DocumentPicker,

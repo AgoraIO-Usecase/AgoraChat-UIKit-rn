@@ -10,7 +10,7 @@ import {
 
 const getSystemLanguage = () => {
   if (Platform.OS === 'ios') {
-    return NativeModules.SettingsManager.settings.AppleLocale;
+    return NativeModules.SettingsManager?.settings?.AppleLocale;
   } else if (Platform.OS === 'android') {
     return NativeModules.I18nManager?.localeIdentifier;
   }
@@ -40,7 +40,7 @@ export default function test_local_language() {
   const theme = light ? light : dark;
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       isDevMode={true}
       palette={palette}
       theme={theme}

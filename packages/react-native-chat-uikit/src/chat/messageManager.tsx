@@ -61,6 +61,7 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       onGroupMessageRead: this.bindOnGroupMessageRead.bind(this),
       onMessagesDelivered: this.bindOnMessagesDelivered.bind(this),
       onMessagesRecalled: this.bindOnMessagesRecalled.bind(this),
+      // onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
       onMessageContentChanged: this.bindOnMessageContentChanged.bind(this),
       onMessagePinChanged: this.bindOnMessagePinChanged.bind(this),
     };
@@ -193,6 +194,19 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       });
     });
   }
+  // onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>): void {
+  //   messages.forEach((info) => {
+  //     const tipMsg = this.createRecallMessageTip(info.recalledMessage!);
+  //     this._client.insertMessage({
+  //       message: tipMsg,
+  //       onResult: () => {
+  //         this._userListener.forEach((v) => {
+  //           v.onRecvRecallMessage?.(info.recalledMessage!, tipMsg);
+  //         });
+  //       },
+  //     });
+  //   });
+  // }
   bindOnMessageContentChanged(
     message: ChatMessage,
     lastModifyOperatorId: string,
@@ -331,7 +345,7 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
 
   createRecallMessageTip(msg: ChatMessage): ChatMessage {
     const userInfo = userInfoFromMessage(msg);
-    const tip = ChatMessage.createCustomMessage(
+    const tipMsg = ChatMessage.createCustomMessage(
       msg.conversationId,
       gCustomMessageRecallEventType,
       msg.chatType,
@@ -341,12 +355,12 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
           self: this._client.userId ?? '',
           from: msg.from,
           fromName: userInfo?.remark ?? userInfo?.userName ?? msg.from,
+          type: 'system',
         },
       }
     );
-    // tip.localTime = msg.localTime;
-    // tip.serverTime = msg.serverTime;
-    return tip;
+    tipMsg.status = ChatMessageStatus.SUCCESS;
+    return tipMsg;
   }
 
   async recallMessage(msg: ChatMessage): Promise<void> {
@@ -566,8 +580,15 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       params.convId,
       params.tipType,
       params.convType,
-      { params: params.kvs, isChatThread: params.isChatThread }
+      {
+        params: {
+          ...params.kvs,
+          type: 'system',
+        },
+        isChatThread: params.isChatThread,
+      }
     );
+    tipMsg.status = ChatMessageStatus.SUCCESS;
     this._client.insertMessage({
       message: tipMsg,
       onResult: (result) => {

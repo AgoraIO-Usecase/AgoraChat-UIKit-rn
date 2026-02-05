@@ -45,6 +45,7 @@ export function Container(props: ContainerProps) {
     language,
     translateLanguage,
     enableTranslate = true,
+    enableRoamMessage = false,
     palette,
     theme,
     fontFamily,
@@ -79,6 +80,7 @@ export function Container(props: ContainerProps) {
     onConversationListLastMessageSnapshotParams,
     messageMenuStyle = 'bottom-sheet',
     messageInputBarStyle = 'bottom-sheet',
+    onGetChatService,
   } = props;
   useInitServices(props);
   const _palette = usePresetPalette();
@@ -120,6 +122,7 @@ export function Container(props: ContainerProps) {
           >
             <ChatContextProvider
               value={{
+                onGetChatService: onGetChatService,
                 options: options,
                 onInitialized: onInitialized,
                 onGroupsHandler: onGroupsHandler,
@@ -133,6 +136,7 @@ export function Container(props: ContainerProps) {
                   enableCheckType: false,
                   languageCode: getTranslateLanguage(translateLanguage),
                   enableTranslate: enableTranslate,
+                  enableRoamMessage: enableRoamMessage,
                   fontFamily: fontFamily,
                   emojiFontFamily: emojiFontFamily,
                   headerFontFamily: headerFontFamily,

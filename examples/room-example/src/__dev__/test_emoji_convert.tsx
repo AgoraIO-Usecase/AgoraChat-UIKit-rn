@@ -20,7 +20,7 @@ export function TestEmojiConvert() {
 
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as any}
+      opt={{ appKey: 'sdf' } as any}
       palette={pal}
       theme={light ? light : dark}
     >

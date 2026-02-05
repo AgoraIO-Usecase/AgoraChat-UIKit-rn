@@ -1,28 +1,32 @@
 // export const gAvatarUrlBasic =
-//   'https://a1.easemob.com/easemob/chatroom-uikit/chatfiles/';
+//   'https://${appServerDomain}/easemob/chatroom-uikit/chatfiles/';
 
 // export const gRegisterUserUrl =
-//   'https://a1.easemob.com/internal/appserver/liverooms/user/login';
+//   'https://${appServerDomain}/internal/appserver/liverooms/user/login';
 
 // export const gCreateRoomUrl =
-//   'https://a1.easemob.com/internal/appserver/liverooms/';
+//   'https://${appServerDomain}/internal/appserver/liverooms/';
 
 // export const gGetRoomListUrl =
-//   'https://a1.easemob.com/internal/appserver/liverooms';
+//   'https://${appServerDomain}/internal/appserver/liverooms';
 
 // export const gSendBroadcastUrl =
-//   'https://a1.easemob.com/internal/appserver/liverooms/broadcast';
+//   'https://${appServerDomain}/internal/appserver/liverooms/broadcast';
 
 // export const gRemoveRoomUrl =
-//   'https://a1.easemob.com/internal/appserver/liverooms/';
+//   'https://${appServerDomain}/internal/appserver/liverooms/';
 
 const env = require('../../env');
-export const useSendBox = env.useSendBox ?? false;
+export const useSandbox =
+  env.restServerDomain.length > 0 && env.imServer.length > 0; // from android source code
 export const appKey = env.appKey as string;
-export const restServer = env.restServer as string;
-export const imServer = useSendBox ? '180.184.143.60' : undefined;
-export const imPort = useSendBox ? '6717' : undefined;
-export const enableDNSConfig = useSendBox ? false : undefined;
+export const appId = env.appId as string;
+export const appServerDomain: string = env.appServerDomain;
+export const useAppServerDomain = env.useAppServerDomain as boolean;
+export const restServerDomain: string = env.restServerDomain;
+export const imServer: string = env.imServer;
+export const imPort: number = env.imPort;
+export const enableDNSConfig: boolean = !useSandbox;
 export const agoraAppId = env.agoraAppId as string;
 export const isDevMode = env.isDevMode as boolean;
 export const accountType = env.accountType as string;
@@ -30,3 +34,4 @@ export const fcmSenderId = env.fcmSenderId as string;
 export const twemoji_ttf_name = 'Twemoji-Mozilla';
 export const boloo_da_ttf_name = 'Baloo-Da';
 export const demoType = env.demoType ?? 4;
+export const reactStrictMode = env.reactStrictMode as boolean;

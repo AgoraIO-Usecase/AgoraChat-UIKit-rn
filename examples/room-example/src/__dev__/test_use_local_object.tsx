@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import {
-  ChatOptions,
   Container,
   createDarkTheme,
   createLightTheme,
@@ -29,15 +28,11 @@ export const Component1 = React.forwardRef<Component1Ref, {}>(
   (props: {}, ref?: React.ForwardedRef<Component1Ref>) => {
     const {} = props;
     const { r, selfIncreasing } = useMyData();
-    React.useImperativeHandle(
-      ref,
-      () => {
-        return {
-          getR: () => r,
-        };
-      },
-      [r]
-    );
+    React.useImperativeHandle(ref, () => {
+      return {
+        getR: () => r,
+      };
+    }, [r]);
     return (
       <View
         style={{ width: 100, height: 50, backgroundColor: 'blue', margin: 1 }}
@@ -94,7 +89,7 @@ export default function test_use_local_object() {
   const theme = light ? light : dark;
   return (
     <Container
-      opt={{ appKey: 'sdf', autoLogin: false, debugModel: true } as ChatOptions}
+      opt={{ appKey: 'sdf' } as any}
       isDevMode={true}
       palette={palette}
       theme={theme}

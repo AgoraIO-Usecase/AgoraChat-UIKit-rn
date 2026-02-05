@@ -10,8 +10,8 @@ build/
 local.properties
 *.iml
 *.hprof
+.cxx/
 
 # Bundle artifacts
 *.jsbundle
-
-release/
+app/release

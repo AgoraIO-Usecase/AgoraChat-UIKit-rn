@@ -1,3 +1,4 @@
+import { Locale } from 'date-fns';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import type { StatusType } from '../biz/types';
@@ -82,6 +83,13 @@ export type Config = {
    * Detail for `BottomSheetNameMenu` and `MessageInputBarExtensionMenu`.
    */
   messageInputBarStyle?: MessageInputBarExtensionStyle;
+
+  /**
+   * Whether to enable message roaming.
+   *
+   * Default is `false`.
+   */
+  enableRoamMessage?: boolean;
 
   /**
    * The group config.

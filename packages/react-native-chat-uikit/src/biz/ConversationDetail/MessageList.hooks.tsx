@@ -11,8 +11,10 @@ import emoji from 'twemoji';
 import { FACE_ASSETS } from '../../assets';
 import {
   DataModel,
+  gCustomMessageAddedContactTip,
   gCustomMessageCardEventType,
   gCustomMessageCreateThreadTip,
+  gCustomMessageRecallEventType,
   gMessageAttributeQuote,
   gMessageAttributeTranslate,
   gMessageAttributeVoiceReadFlag,
@@ -77,6 +79,7 @@ import { gRequestMaxMessageCount, gRequestMaxThreadCount } from './const';
 import { MessageListItemMemo } from './MessageListItem';
 import { MessagePin } from './MessagePin';
 import type {
+  ConversationDetailModelType,
   MessageAddPosition,
   MessageHistoryModel,
   MessageListItemComponentType,
@@ -141,6 +144,7 @@ export function useMessageList(
     onClickedHistoryDetail,
     onChangeUnreadCount,
     MessageCustomLongPressMenu,
+    onClicked,
   } = props;
   const inverted = React.useRef(
     comType === 'chat' || comType === 'search' ? true : false
@@ -176,6 +180,7 @@ export function useMessageList(
     enableThread,
     enableMessagePin,
     messageMenuStyle,
+    enableRoamMessage,
   } = useConfigContext();
   // const [refreshing, setRefreshing] = React.useState(false);
   const preBottomDataRef = React.useRef<MessageListItemProps>();
@@ -247,22 +252,23 @@ export function useMessageList(
   const pinMsgListRef = React.useRef<MessagePin>();
 
   const setIsTop = React.useCallback((isTop: boolean) => {
-    // uilog.log('test:zuoyu:setIsTop:', isTop, comType);
     isTopRef.current = isTop;
   }, []);
   const setIsBottom = React.useCallback((isBottom: boolean) => {
-    // uilog.log('test:zuoyu:setIsBottom:', isBottom, comType);
     isBottomRef.current = isBottom;
   }, []);
 
   const setNoNewMsg = React.useCallback((noNewMsg: boolean) => {
-    // uilog.log('test:zuoyu:setNoNewMsg:', noNewMsg);
     hasNoNewMsgRef.current = noNewMsg;
   }, []);
   const setNoOldMsg = React.useCallback((noOldMsg: boolean) => {
-    // uilog.log('test:zuoyu:setNoOldMsg:', noOldMsg);
     hasNoOldMsgRef.current = noOldMsg;
   }, []);
+
+  const onClickMessageList = React.useCallback(() => {
+    onClicked?.();
+    closeMenu();
+  }, [closeMenu, onClicked]);
 
   const MessageLongPressMenu = React.useMemo(() => {
     if (messageMenuStyle === 'bottom-sheet') {
@@ -296,9 +302,12 @@ export function useMessageList(
     }): ChatMessage => {
       const { convId, convType, event } = params;
       const tipMsg = ChatMessage.createCustomMessage(convId, event, convType, {
-        params: {},
+        params: {
+          type: 'system',
+        },
         isChatThread: comType === 'thread',
       });
+      tipMsg.status = ChatMessageStatus.SUCCESS;
       const s = im.user(im.userId);
       setUserInfoToMessage({ msg: tipMsg, user: s });
       return tipMsg;
@@ -354,7 +363,6 @@ export function useMessageList(
     (info: ListRenderItemInfo<MessageListItemProps>) => {
       for (const d of dataRef.current) {
         if (d.id === info.item.id) {
-          // uilog.log('test:zuoyu:onRenderItem', d.id, info.item.index);
           d.index = info.index;
           break;
         }
@@ -470,12 +478,10 @@ export function useMessageList(
   );
 
   const onLayout = React.useCallback((event: LayoutChangeEvent) => {
-    // uilog.log('dev:onLayout:', event.nativeEvent.layout.height);
     heightRef.current = event.nativeEvent.layout.height;
   }, []);
 
   const onContainerLayout = React.useCallback((event: LayoutChangeEvent) => {
-    // uilog.log('dev:onContainerLayout:', event.nativeEvent.layout.height);
     containerHeightRef.current = event.nativeEvent.layout.height;
   }, []);
 
@@ -523,7 +529,6 @@ export function useMessageList(
       }
 
       currentVoicePlayingRef.current = msgModel;
-      const tmp = currentVoicePlayingRef.current;
       updateMessageVoiceUIState(msgModel);
       const body = msgModel.msg.body as ChatVoiceMessageBody;
       const localPath = body.localPath;
@@ -546,17 +551,26 @@ export function useMessageList(
         }
 
         await Services.ms.playAudio({
-          url: LocalPath.playVoice(localPath),
-          onPlay({ currentPosition, duration }) {
-            if (currentPosition === duration) {
-              tmp.isVoicePlaying = true;
+          url: LocalPath.getFilePath(localPath),
+          onPlay({ currentPosition, duration, isFinished }) {
+            if (currentVoicePlayingRef.current === undefined) {
+              return;
+            }
+            if (isFinished === true) {
               currentVoicePlayingRef.current = undefined;
               updateMessageVoiceUIState(msgModel);
+            } else {
+              if (
+                Math.abs(currentPosition - duration) < 0.1 &&
+                currentVoicePlayingRef.current !== undefined
+              ) {
+                currentVoicePlayingRef.current = undefined;
+                updateMessageVoiceUIState(msgModel);
+              }
             }
           },
         });
       } catch (error) {
-        tmp.isVoicePlaying = true;
         currentVoicePlayingRef.current = undefined;
         updateMessageVoiceUIState(msgModel);
       }
@@ -733,7 +747,16 @@ export function useMessageList(
         const body = msg.body as ChatCustomMessageBody;
         if (body.event === gCustomMessageCardEventType) {
           modelType = 'message';
+        } else if (body.event === gCustomMessageRecallEventType) {
+          modelType = 'system';
+        } else if (body.event === gCustomMessageCreateThreadTip) {
+          modelType = 'system';
+        } else if (body.event === gCustomMessageAddedContactTip) {
+          modelType = 'system';
         } else {
+          modelType = 'message';
+        }
+        if (body.params?.type === 'system') {
           modelType = 'system';
         }
       }
@@ -1798,12 +1821,12 @@ export function useMessageList(
     isGettingRef.current = value;
   }, []);
   const requestBeforeMessages = React.useCallback(
-    async (startId: string, includeStartId?: boolean) => {
-      // uilog.log(
-      //   'test:zuoyu:requestBeforeMessages',
-      //   hasNoOldMsgRef.current,
-      //   isGettingRef.current
-      // );
+    async (params: {
+      startId: string;
+      includeStartId?: boolean;
+      enableRoamMessage?: boolean;
+    }) => {
+      const { startId, includeStartId, enableRoamMessage } = params;
       if (hasNoOldMsgRef.current === true) {
         onNoMoreMessage?.();
         return;
@@ -1816,7 +1839,7 @@ export function useMessageList(
 
       try {
         do {
-          const msgs = await im.messageManager.loadHistoryMessage({
+          let msgs = await im.messageManager.loadHistoryMessage({
             convId,
             convType,
             startMsgId: startId,
@@ -1824,19 +1847,33 @@ export function useMessageList(
             direction: ChatSearchDirection.UP,
           });
           if (msgs.length < gRequestMaxMessageCount) {
-            setNoOldMsg(true);
+            if (enableRoamMessage === true) {
+              const result = await im.fetchHistoryMessages({
+                convId,
+                convType,
+                startMsgId: startId,
+                direction: ChatSearchDirection.UP,
+                pageSize: gRequestMaxMessageCount,
+              });
+              if (result.list === undefined || result.list.length === 0) {
+                setNoOldMsg(true);
+              } else {
+                msgs = result.list.sort((a, b) => a.serverTime - b.serverTime);
+              }
+            } else {
+              setNoOldMsg(true);
+            }
           }
           if (msgs.length > 0) {
             const newStartMsgId = msgs[0]!.msgId;
             if (newStartMsgId === beforeMsgIdRef.current) {
-              // uilog.log('test:zuoyu:ba:3', newStartMsgId);
               break;
             }
             beforeMsgIdRef.current = msgs[0]!.msgId;
             afterMsgIdRef.current =
               dataRef.current.length === 0
                 ? msgs[msgs.length - 1]!.msgId
-                : getDataMessage('last')?.msg.msgId ?? '';
+                : (getDataMessage('last')?.msg.msgId ?? '');
             // uilog.log(
             //   'test:zuoyu:ba:',
             //   dataRef.current.length,
@@ -1854,7 +1891,7 @@ export function useMessageList(
                 afterMsgIdRef.current =
                   dataRef.current.length === 0
                     ? startId
-                    : getDataMessage('last')?.msg.msgId ?? '';
+                    : (getDataMessage('last')?.msg.msgId ?? '');
               }
             }
 
@@ -1927,7 +1964,7 @@ export function useMessageList(
             beforeMsgIdRef.current =
               dataRef.current.length === 0
                 ? msgs[0]!.msgId
-                : getDataMessage('first')?.msg.msgId ?? '';
+                : (getDataMessage('first')?.msg.msgId ?? '');
             afterMsgIdRef.current = msgs[msgs.length - 1]!.msgId;
             // uilog.log(
             //   'test:zuoyu:ba:2',
@@ -2355,7 +2392,7 @@ export function useMessageList(
             beforeMsgIdRef.current =
               dataRef.current.length === 0
                 ? msgs[0]!.msgId
-                : getDataMessage('first')?.msg.msgId ?? '';
+                : (getDataMessage('first')?.msg.msgId ?? '');
             afterMsgIdRef.current = msgs[msgs.length - 1]!.msgId;
             // uilog.log(
             //   'test:zuoyu:ba:2',
@@ -2396,9 +2433,15 @@ export function useMessageList(
     ]
   );
 
-  const onRequestBeforeMessages = React.useCallback(() => {
-    requestBeforeMessages(beforeMsgIdRef.current);
-  }, [requestBeforeMessages]);
+  const onRequestBeforeMessages = React.useCallback(
+    (comType: ConversationDetailModelType) => {
+      requestBeforeMessages({
+        startId: beforeMsgIdRef.current,
+        enableRoamMessage: comType === 'chat' ? enableRoamMessage : false,
+      });
+    },
+    [enableRoamMessage, requestBeforeMessages]
+  );
 
   const onRequestAfterMessages = React.useCallback(() => {
     requestAfterMessages(afterMsgIdRef.current);
@@ -2464,7 +2507,7 @@ export function useMessageList(
       if (userScrollGestureRef.current === true) {
         if (isTopRef.current === true && deltY > 0) {
           if (comType === 'chat' || comType === 'search') {
-            onRequestBeforeMessages();
+            onRequestBeforeMessages(comType);
           }
         } else if (isBottomRef.current === true && deltY < 0) {
           if (comType === 'chat' || comType === 'search') {
@@ -2493,7 +2536,7 @@ export function useMessageList(
       (deltY: number) => {
         if (isTopRef.current === true && deltY > 0) {
           if (comType === 'chat' || comType === 'search') {
-            onRequestBeforeMessages();
+            onRequestBeforeMessages(comType);
           }
         } else if (isBottomRef.current === true && deltY < 0) {
           if (comType === 'chat' || comType === 'search') {
@@ -2653,7 +2696,10 @@ export function useMessageList(
   const onInit = React.useCallback(async () => {
     init();
     if (comType === 'chat') {
-      await requestBeforeMessages(beforeMsgIdRef.current);
+      await requestBeforeMessages({
+        startId: beforeMsgIdRef.current,
+        enableRoamMessage: enableRoamMessage,
+      });
     } else if (comType === 'create_thread') {
       await requestThreadHeaderMessage();
     } else if (comType === 'thread') {
@@ -2668,7 +2714,11 @@ export function useMessageList(
       }
     } else if (comType === 'search') {
       if (propsMsgId) {
-        await requestBeforeMessages(propsMsgId, true);
+        await requestBeforeMessages({
+          startId: propsMsgId,
+          includeStartId: true,
+          enableRoamMessage: false,
+        });
         await addHightMessage(propsMsgId);
         // await requestAfterMessages(propsMsgId, 1);
       }
@@ -2676,6 +2726,7 @@ export function useMessageList(
   }, [
     addHightMessage,
     comType,
+    enableRoamMessage,
     init,
     inverted,
     propsMsgId,
@@ -2686,188 +2737,184 @@ export function useMessageList(
     setIsTop,
   ]);
 
-  React.useImperativeHandle(
-    ref,
-    () => {
-      return {
-        addSendMessage: (value: SendMessageProps) => {
-          if (comType === 'create_thread') {
-            createThread((res) => {
-              if (res.isOk === true && res.value) {
-                onCreateThreadResult?.(res.value, value);
-              } else {
-                onCreateThreadResult?.();
-              }
-            });
-            return;
+  React.useImperativeHandle(ref, () => {
+    return {
+      addSendMessage: (value: SendMessageProps) => {
+        if (comType === 'create_thread') {
+          createThread((res) => {
+            if (res.isOk === true && res.value) {
+              onCreateThreadResult?.(res.value, value);
+            } else {
+              onCreateThreadResult?.();
+            }
+          });
+          return;
+        }
+        addSendMessageToUI({
+          value,
+          onFinished: (item) => {
+            if (item.model.modelType === 'message') {
+              const msgModel = item.model as MessageModel;
+              sendMessageToServer(msgModel.msg);
+            }
+          },
+          // onBeforeCallback: async () => {
+          //   if (comType === 'chat' || comType === 'search') {
+          //     return loadAllLatestMessage();
+          //   }
+          // },
+        });
+      },
+      addSendMessageToUI: (params: {
+        value: SendMessageProps;
+
+        onFinished?: (item: MessageListItemProps) => void;
+        onBeforeCallback?: () => void | Promise<void>;
+      }): Promise<void> => {
+        return addSendMessageToUI(params);
+      },
+      sendMessageToServer: (msg: ChatMessage) => {
+        return sendMessageToServer(msg);
+      },
+      saveMessage: (msg: ChatMessage) => {
+        saveMessage(msg);
+      },
+      removeMessage: (msg: ChatMessage) => {
+        deleteMessage(msg);
+      },
+      recallMessage: (msg: ChatMessage) => {
+        recallMessage(msg);
+      },
+      updateMessage: (updatedMsg: ChatMessage, fromType: 'send' | 'recv') => {
+        onUpdateMessageToUI(updatedMsg, fromType);
+      },
+      loadHistoryMessage: async (
+        msgs: ChatMessage[],
+        pos: MessageAddPosition
+      ) => {
+        if (pos === 'top') {
+          if (msgs.length > 0) {
+            if (startMsgIdRef.current === msgs[0]?.msgId) {
+              return;
+            }
+            startMsgIdRef.current = msgs[0]!.msgId.toString();
           }
-          addSendMessageToUI({
-            value,
-            onFinished: (item) => {
-              if (item.model.modelType === 'message') {
-                const msgModel = item.model as MessageModel;
-                sendMessageToServer(msgModel.msg);
+        }
+        const list = await onAddMessageListToUI(msgs, pos);
+        list.map((v) => {
+          if (v.model.modelType === 'message') {
+            const msgModel = v.model as MessageModel;
+            sendRecvMessageReadAck(msgModel.msg);
+          }
+        });
+      },
+      onInputHeightChange: (height: number) => {
+        if (inverted === false) {
+          if (height > 0) {
+            if (comType === 'thread' && inverted === false) {
+              // scrollToBottom();
+            }
+          }
+        }
+      },
+      editMessageFinished: (model) => {
+        editMessage(model.msg);
+      },
+      scrollToBottom: async () => {
+        await loadAllLatestMessage();
+        scrollToBottom();
+      },
+      startShowThreadMoreMenu: () => {
+        if (thread && thread.parentId) {
+          im.getGroupInfo({
+            groupId: thread.parentId,
+            onResult: (res) => {
+              if (res.isOk && res.value) {
+                const isOwner = res.value.owner === im.userId;
+                onShowMessageThreadListMoreActions({
+                  thread,
+                  onClickedEditThreadName: _onClickedEditThreadName,
+                  onClickedLeaveThread: _onClickedLeaveThread,
+                  onClickedDestroyThread: _onClickedDestroyThread,
+                  onClickedOpenThreadMemberList,
+                  isOwner: isOwner,
+                });
               }
             },
-            // onBeforeCallback: async () => {
-            //   if (comType === 'chat' || comType === 'search') {
-            //     return loadAllLatestMessage();
-            //   }
-            // },
           });
-        },
-        addSendMessageToUI: (params: {
-          value: SendMessageProps;
-
-          onFinished?: (item: MessageListItemProps) => void;
-          onBeforeCallback?: () => void | Promise<void>;
-        }): Promise<void> => {
-          return addSendMessageToUI(params);
-        },
-        sendMessageToServer: (msg: ChatMessage) => {
-          return sendMessageToServer(msg);
-        },
-        saveMessage: (msg: ChatMessage) => {
-          saveMessage(msg);
-        },
-        removeMessage: (msg: ChatMessage) => {
-          deleteMessage(msg);
-        },
-        recallMessage: (msg: ChatMessage) => {
-          recallMessage(msg);
-        },
-        updateMessage: (updatedMsg: ChatMessage, fromType: 'send' | 'recv') => {
-          onUpdateMessageToUI(updatedMsg, fromType);
-        },
-        loadHistoryMessage: async (
-          msgs: ChatMessage[],
-          pos: MessageAddPosition
-        ) => {
-          if (pos === 'top') {
-            if (msgs.length > 0) {
-              if (startMsgIdRef.current === msgs[0]?.msgId) {
-                return;
-              }
-              startMsgIdRef.current = msgs[0]!.msgId.toString();
-            }
-          }
-          const list = await onAddMessageListToUI(msgs, pos);
-          list.map((v) => {
-            if (v.model.modelType === 'message') {
-              const msgModel = v.model as MessageModel;
-              sendRecvMessageReadAck(msgModel.msg);
-            }
-          });
-        },
-        onInputHeightChange: (height: number) => {
-          if (inverted === false) {
-            if (height > 0) {
-              if (comType === 'thread' && inverted === false) {
-                // scrollToBottom();
-              }
-            }
-          }
-        },
-        editMessageFinished: (model) => {
-          editMessage(model.msg);
-        },
-        scrollToBottom: async () => {
-          await loadAllLatestMessage();
-          scrollToBottom();
-        },
-        startShowThreadMoreMenu: () => {
-          if (thread && thread.parentId) {
-            im.getGroupInfo({
-              groupId: thread.parentId,
-              onResult: (res) => {
-                if (res.isOk && res.value) {
-                  const isOwner = res.value.owner === im.userId;
-                  onShowMessageThreadListMoreActions({
-                    thread,
-                    onClickedEditThreadName: _onClickedEditThreadName,
-                    onClickedLeaveThread: _onClickedLeaveThread,
-                    onClickedDestroyThread: _onClickedDestroyThread,
-                    onClickedOpenThreadMemberList,
-                    isOwner: isOwner,
-                  });
-                }
+        } else {
+          // uilog.log('dev:startShowThreadMoreMenu');
+        }
+      },
+      cancelMultiSelected: () => {
+        cancelMultiSelected();
+      },
+      removeMultiSelected: (onResult: (confirmed: boolean) => void) => {
+        alertRef.current?.alertWithInit({
+          message: tr('_uikit_alert_remove_message'),
+          buttons: [
+            {
+              text: tr('cancel'),
+              onPress: () => {
+                alertRef.current?.close?.();
+                onResult(false);
               },
-            });
-          } else {
-            // uilog.log('dev:startShowThreadMoreMenu');
-          }
-        },
-        cancelMultiSelected: () => {
-          cancelMultiSelected();
-        },
-        removeMultiSelected: (onResult: (confirmed: boolean) => void) => {
-          alertRef.current?.alertWithInit({
-            message: tr('_uikit_alert_remove_message'),
-            buttons: [
-              {
-                text: tr('cancel'),
-                onPress: () => {
-                  alertRef.current?.close?.();
-                  onResult(false);
-                },
+            },
+            {
+              text: tr('confirm'),
+              isPreferred: true,
+              onPress: () => {
+                alertRef.current?.close?.();
+                deleteMessages(tmpMessageListRef.current.map((d) => d.msg));
+                onResult(true);
               },
-              {
-                text: tr('confirm'),
-                isPreferred: true,
-                onPress: () => {
-                  alertRef.current?.close?.();
-                  deleteMessages(tmpMessageListRef.current.map((d) => d.msg));
-                  onResult(true);
-                },
-              },
-            ],
-          });
-        },
-        getMultiSelectedMessages: () => {
-          return tmpMessageListRef.current.map((d) => d.msg);
-        },
-        showPinMessageComponent: () => {
-          showPinMessage();
-        },
-        hidePinMessageComponent: () => {
-          hidePinMessage();
-        },
-        requestShowPinMessageComponent: (onResult: (count: number) => void) => {
-          requestShowPinMessage(onResult);
-        },
-      };
-    },
-    [
-      _onClickedDestroyThread,
-      _onClickedEditThreadName,
-      _onClickedLeaveThread,
-      addSendMessageToUI,
-      cancelMultiSelected,
-      comType,
-      createThread,
-      deleteMessage,
-      deleteMessages,
-      editMessage,
-      hidePinMessage,
-      im,
-      inverted,
-      loadAllLatestMessage,
-      onAddMessageListToUI,
-      onClickedOpenThreadMemberList,
-      onCreateThreadResult,
-      onShowMessageThreadListMoreActions,
-      onUpdateMessageToUI,
-      recallMessage,
-      requestShowPinMessage,
-      saveMessage,
-      scrollToBottom,
-      sendMessageToServer,
-      sendRecvMessageReadAck,
-      showPinMessage,
-      thread,
-      tr,
-    ]
-  );
+            },
+          ],
+        });
+      },
+      getMultiSelectedMessages: () => {
+        return tmpMessageListRef.current.map((d) => d.msg);
+      },
+      showPinMessageComponent: () => {
+        showPinMessage();
+      },
+      hidePinMessageComponent: () => {
+        hidePinMessage();
+      },
+      requestShowPinMessageComponent: (onResult: (count: number) => void) => {
+        requestShowPinMessage(onResult);
+      },
+    };
+  }, [
+    _onClickedDestroyThread,
+    _onClickedEditThreadName,
+    _onClickedLeaveThread,
+    addSendMessageToUI,
+    cancelMultiSelected,
+    comType,
+    createThread,
+    deleteMessage,
+    deleteMessages,
+    editMessage,
+    hidePinMessage,
+    im,
+    inverted,
+    loadAllLatestMessage,
+    onAddMessageListToUI,
+    onClickedOpenThreadMemberList,
+    onCreateThreadResult,
+    onShowMessageThreadListMoreActions,
+    onUpdateMessageToUI,
+    recallMessage,
+    requestShowPinMessage,
+    saveMessage,
+    scrollToBottom,
+    sendMessageToServer,
+    sendRecvMessageReadAck,
+    showPinMessage,
+    thread,
+    tr,
+  ]);
 
   React.useEffect(() => {
     const listener = () => {};
@@ -3132,5 +3179,6 @@ export function useMessageList(
     maxListHeightRef,
     enableMessagePin,
     MessageLongPressMenu,
+    onClickMessageList,
   };
 }

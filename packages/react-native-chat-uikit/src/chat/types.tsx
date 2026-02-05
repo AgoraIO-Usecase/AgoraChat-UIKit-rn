@@ -1356,11 +1356,17 @@ export interface ChatService
 }
 
 type _ChatOptionsType = PartialUndefinable<ChatOptions>;
-export type ChatAppKeyOptionsType = _ChatOptionsType & {
+export type ChatAppKeyOptionsType = Omit<_ChatOptionsType, 'appId'> & {
   /**
    * App key. (required)
    */
   appKey: string;
+};
+export type ChatAppIdOptionsType = Omit<_ChatOptionsType, 'appKey'> & {
+  /**
+   * App ID. (required)
+   */
+  appId: string;
 };
 /**
  * ChatOptionsType is the initialization parameters of ChatService.
@@ -1370,7 +1376,7 @@ export type ChatAppKeyOptionsType = _ChatOptionsType & {
  * This parameter option is consistent with `Agora Chat SDK`.
  *
  */
-export type ChatOptionsType = ChatAppKeyOptionsType;
+export type ChatOptionsType = ChatAppKeyOptionsType | ChatAppIdOptionsType;
 
 /**
  * ChatServiceInit is the initialization parameters of ChatService.
@@ -1404,4 +1410,8 @@ export type ChatServiceInit = {
    * IM initialization is completed callback notification.
    */
   onInitialized?: (im: ChatService) => void;
+  /**
+   * Get the IM service.
+   */
+  onGetChatService?: () => ChatService;
 };

@@ -74,7 +74,7 @@ export abstract class RoomServiceImpl implements RoomService {
     result?: (params: { isOk: boolean; error?: UIKitError }) => void;
   }): Promise<void> {
     const { appKey, debugMode, autoLogin } = params;
-    const options = new ChatOptions({
+    const options = ChatOptions.withAppKey({
       appKey,
       debugModel: debugMode,
       autoLogin,
@@ -228,6 +228,7 @@ export abstract class RoomServiceImpl implements RoomService {
       params.result?.({ isOk: true });
       this._user = undefined;
     } catch (error) {
+      console.warn('logout:error:', error);
       params.result?.({
         isOk: false,
         error: new UIKitError({ code: ErrorCode.logout_error }),
@@ -246,6 +247,7 @@ export abstract class RoomServiceImpl implements RoomService {
       await this.client.renewAgoraToken(params.token);
       params?.result?.({ isOk: true });
     } catch (error) {
+      console.warn('refreshToken:error:', error);
       params.result?.({
         isOk: false,
         error: new UIKitError({ code: ErrorCode.refresh_token_error }),
@@ -945,24 +947,24 @@ export class RoomServicePrivateImpl extends RoomServiceImpl {
     const listeners = this._listeners;
     const roomId = this.roomId;
     this._messageListener = {
-      onMessagesRecalled(messages) {
-        listeners.forEach((v) => {
-          if (roomId) {
-            for (const message of messages) {
-              v.onMessageRecalled?.(roomId, message);
-            }
-          }
-        });
-      },
-      // onMessagesRecalledInfo(infos) {
-      //   listeners.forEach((v) => {
-      //     if (roomId) {
-      //       for (const info of infos) {
-      //         v.onMessageRecalled?.(roomId, info.recalledMessage!);
+      // onMessagesRecalled(messages) {
+      //   this._listeners.forEach((v) => {
+      //     if (this.roomId) {
+      //       for (const message of messages) {
+      //         v.onMessageRecalled?.(this.roomId, message);
       //       }
       //     }
       //   });
       // },
+      onMessagesRecalledInfo(infos) {
+        listeners.forEach((v) => {
+          if (roomId) {
+            for (const info of infos) {
+              v.onMessageRecalled?.(roomId, info.recalledMessage!);
+            }
+          }
+        });
+      },
       onMessagesReceived: (messages) => {
         listeners.forEach((v) => {
           if (roomId) {

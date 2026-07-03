@@ -10,7 +10,7 @@
 [bob repo](https://github.com/callstack/react-native-builder-bob)  
 [expo repo](https://github.com/expo/expo)  
 [react native repo](https://github.com/facebook/react-native)  
-[sdk repo](https://github.com/easemob/react-native-chat-sdk)
+[sdk repo](https://github.com/easemob/react-native-agora-chat)
 
 ## React Native Firebase
 

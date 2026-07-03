@@ -228,10 +228,10 @@ export function AVSelectGroupParticipantScreen(props: Props) {
 
 列表类组件:
 
-- ConversationList: `packages/react-native-chat-uikit/src/biz/ConversationList/ConversationList.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/ConversationList/ConversationList.tsx)
-- ContactList: `packages/react-native-chat-uikit/src/biz/ContactList/ContactList.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/ContactList/ContactList.tsx)
-- GroupList: `packages/react-native-chat-uikit/src/biz/GroupList/GroupList.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/GroupList/GroupList.tsx)
-- GroupParticipantList: `packages/react-native-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx)
+- ConversationList: `packages/react-native-agora-chat-uikit/src/biz/ConversationList/ConversationList.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/ConversationList/ConversationList.tsx)
+- ContactList: `packages/react-native-agora-chat-uikit/src/biz/ContactList/ContactList.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/ContactList/ContactList.tsx)
+- GroupList: `packages/react-native-agora-chat-uikit/src/biz/GroupList/GroupList.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/GroupList/GroupList.tsx)
+- GroupParticipantList: `packages/react-native-agora-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/GroupParticipantList/GroupParticipantList.tsx)
 
 其中，联系人列表组件是复用组件，可以根据需要进行使用。例如：正常显示联系人列表、也可以用在创建群组的选人页面。 例如：
 
@@ -239,7 +239,6 @@ export function AVSelectGroupParticipantScreen(props: Props) {
 // 联系人列表页面
 export type ContactListScreenProps = {};
 function ContactListScreen(props: ContactListScreenProps) {
-  const {} = props;
   const navi = useNativeStackRoute();
 
   return (
@@ -344,8 +343,8 @@ export function CreateGroupScreen(props: Props) {
 
 详情类组件包括:
 
-- ContactInfo: `packages/react-native-chat-uikit/src/biz/Info/ContactInfo.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/Info/ContactInfo.tsx)
-- GroupInfo: `packages/react-native-chat-uikit/src/biz/Info/GroupInfo.tsx` [源码](../../../packages/react-native-chat-uikit/src/biz/Info/GroupInfo.tsx)
+- ContactInfo: `packages/react-native-agora-chat-uikit/src/biz/Info/ContactInfo.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/Info/ContactInfo.tsx)
+- GroupInfo: `packages/react-native-agora-chat-uikit/src/biz/Info/GroupInfo.tsx` [源码](../../../packages/react-native-agora-chat-uikit/src/biz/Info/GroupInfo.tsx)
 
 该类组件由导航栏组件、头像组件、单项列表组件组成。 导航来可以显示、隐藏和自定义。 其它部分可以使用修改和显示。
 

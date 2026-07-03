@@ -19,6 +19,7 @@ import {
   ChatMultiDeviceEventListener,
   ChatPresence,
   ChatPresenceEventListener,
+  ChatRecalledMessageInfo,
 } from '../rename.chat';
 import { ChatServiceListener, DisconnectReasonType } from './types';
 import { UIListener, UIListenerType } from './types.ui';
@@ -240,16 +241,16 @@ export class ChatServiceListenerImpl {
       v.onMessagesDelivered?.(messages);
     });
   }
-  onMessagesRecalled(messages: Array<ChatMessage>) {
-    this._listeners.forEach((v) => {
-      v.onMessagesRecalled?.(messages);
-    });
-  }
-  // onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>) {
+  // onMessagesRecalled(messages: Array<ChatMessage>) {
   //   this._listeners.forEach((v) => {
-  //     v.onMessagesRecalledInfo?.(messages);
+  //     v.onMessagesRecalled?.(messages);
   //   });
   // }
+  onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>) {
+    this._listeners.forEach((v) => {
+      v.onMessagesRecalledInfo?.(messages);
+    });
+  }
   onConversationsUpdate() {
     this._listeners.forEach((v) => {
       v.onConversationsUpdate?.();
@@ -317,8 +318,8 @@ export class ChatServiceListenerImpl {
       onMessagesRead: this.onMessagesRead.bind(this),
       onGroupMessageRead: this.onGroupMessageRead.bind(this),
       onMessagesDelivered: this.onMessagesDelivered.bind(this),
-      onMessagesRecalled: this.onMessagesRecalled.bind(this),
-      // onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
+      // onMessagesRecalled: this.onMessagesRecalled.bind(this),
+      onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
       onConversationsUpdate: this.onConversationsUpdate.bind(this),
       onConversationRead: this.onConversationRead.bind(this),
       onMessageReactionDidChange: this.onMessageReactionDidChange.bind(this),

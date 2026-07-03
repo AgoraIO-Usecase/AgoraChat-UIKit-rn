@@ -4,5 +4,5 @@
 
 The main difference between the domestic and overseas versions is the UIKit/Callkit package name. Also, the overseas version has a longer release cycle than the domestic version.
 
-[Domestic Address](https://github.com/easemob/easemob-uikit-reactnative)  
+[Domestic Address](https://github.com/AgoraIO-Usecase/AgoraChat-UIKit-rn)  
 [International Address](https://github.com/AgoraIO-Usecase/AgoraChat-Callkit-rn)

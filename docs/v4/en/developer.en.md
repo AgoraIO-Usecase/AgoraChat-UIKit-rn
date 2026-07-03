@@ -2,7 +2,7 @@
 
 # Project Contributors
 
-[Download Link](https://github.com/AsteriskZuo/react-native-chat-library)
+[Download Link](https://github.com/AgoraIO-Usecase/AgoraChat-UIKit-rn)
 
 ## Branch Introduction
 

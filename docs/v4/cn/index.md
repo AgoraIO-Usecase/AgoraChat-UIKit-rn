@@ -35,9 +35,9 @@
 ├── node_modules
 ├── package.json
 ├── packages
-│   ├── react-native-chat-room
-│   ├── react-native-chat-callkit
-│   └── react-native-chat-uikit
+│   ├── react-native-agora-chat-room
+│   ├── react-native-agora-chat-callkit
+│   └── react-native-agora-chat-uikit
 ├── patches
 ├── res
 ├── scripts
@@ -59,9 +59,9 @@
 - node_modules: 项目依赖的包列表。有 `yarn` 工具管理。
 - package.json: 项目配置文件。是该仓库的核心配置。其它子文件夹下的 `package.json` 负责子项目管理。
 - packages:
-  - react-native-chat-room: `room` SDK。
-  - react-native-chat-callkit: `callkit` SDK。
-  - react-native-chat-uikit: `uikit` SDK。
+  - react-native-agora-chat-room: `room` SDK。
+  - react-native-agora-chat-callkit: `callkit` SDK。
+  - react-native-agora-chat-uikit: `uikit` SDK。
 - patches: 补丁。修复紧急问题。
 - res: 资源文件夹。
 - scripts: 脚本文件夹。
@@ -73,7 +73,7 @@
 
 在 `packages` 文件夹下，主要包括 `react-native-agora-chat-callkit` 和 `react-native-agora-chat-uikit` 包。后续可能根据需要会有更多的包。
 
-- `react-native-agora-chat-room`: 主要方便用户集成 `room` SDK 的功能。 
+- `react-native-agora-chat-room`: 主要方便用户集成 `room` SDK 的功能。
 - `react-native-agora-chat-callkit`: 主要方便用户集成音视频通话功能。
 - `react-native-agora-chat-uikit`: 主要方便用户集成 `react-native-agora-chat` 功能。 如果感兴趣可以在参考引用部分点击对应链接查看。
 

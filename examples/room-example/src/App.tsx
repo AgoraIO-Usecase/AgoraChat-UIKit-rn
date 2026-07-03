@@ -47,8 +47,8 @@ SplashScreen.preventAutoHideAsync();
 
 const opt =
   env.accountType === 'easemob' || env.accountType === 'agora'
-    ? new ChatOptions({ appKey: env.appKey, ...sandBoxConfig })
-    : new ChatOptions({ appKey: env.appKey, ...sandBoxConfig });
+    ? ChatOptions.withAppKey({ appKey: env.appKey, ...sandBoxConfig })
+    : ChatOptions.withAppId({ appId: env.appKey, ...sandBoxConfig });
 
 export function App() {
   const [initialRouteName] = React.useState('TopMenu' as RootParamsName);

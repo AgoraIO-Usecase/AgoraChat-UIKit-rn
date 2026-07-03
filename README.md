@@ -21,9 +21,9 @@ This is a multi-project workspace that contains corresponding example applicatio
 │   └── uikit-example
 ├── node_modules
 ├── packages
-│   ├── react-native-agora-chat-callkit
-│   ├── react-native-agora-chat-room
-│   └── react-native-agora-chat-uikit
+│   ├── react-native-chat-callkit
+│   ├── react-native-chat-room
+│   └── react-native-chat-uikit
 ├── patches
 ├── scripts
 └── templates

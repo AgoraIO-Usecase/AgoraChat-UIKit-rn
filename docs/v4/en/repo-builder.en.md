@@ -15,7 +15,7 @@ On MacOS system, proceed as follows:
 
 #### Download the Repository
 
-Repository address: `https://github.com/easemob/easemob-uikit-reactnative/`
+Repository address: `https://github.com/AgoraIO-Usecase/AgoraChat-UIKit-rn/`
 
 If you download it using a git command, you need to switch to the corresponding branch.
 

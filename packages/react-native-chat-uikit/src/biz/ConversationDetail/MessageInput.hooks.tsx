@@ -1,9 +1,9 @@
 import * as React from 'react';
-import type { TextInputKeyPressEventData } from 'react-native';
+import type { TextInputKeyPressEvent } from 'react-native';
 import {
   Keyboard,
   LayoutAnimation,
-  NativeSyntheticEvent,
+  // NativeSyntheticEvent,
   Platform,
   TextInput as RNTextInput,
 } from 'react-native';
@@ -20,7 +20,7 @@ import {
 import type { ChatTextMessageBody } from '../../rename.chat';
 import type { AlertRef } from '../../ui/Alert';
 import { timeoutTask } from '../../utils';
-import { BottomSheetNameMenu } from '../BottomSheetMenu';
+import { BottomSheetNameMenu } from '../BottomSheetMenu/BottomSheetNameMenu';
 import { FACE_ASSETS_UTF16 } from '../EmojiList';
 import { useMessageInputExtendActions } from '../hooks/useMessageInputExtendActions';
 import {
@@ -70,8 +70,13 @@ export function useMessageInput(
     multiSelectCount,
     onChangeValue: propsOnChangeValue,
   } = props;
-  const { keyboardHeight, keyboardCurrentHeight } = useKeyboardHeight();
-  const inputRef = React.useRef<RNTextInput>({} as any);
+  const { keyboardHeight, keyboardCurrentHeight, keyboardCompensationHeight } =
+    useKeyboardHeight();
+  const inputRef = React.useRef<React.ComponentRef<typeof RNTextInput>>(
+    {} as any
+  );
+  const containerHeightBeforeKeyboard = React.useRef<number>(0);
+  const containerHeightCurrent = React.useRef<number>(0);
   const [_value, _setValue] = React.useState('');
   const [emojiHeight, _setEmojiHeight] = React.useState(0);
   const isClosedEmoji = React.useRef(true);
@@ -101,16 +106,16 @@ export function useMessageInput(
   const hasLayoutAnimation = React.useRef(false);
   const voiceBarRef = React.useRef<BottomVoiceBarRef>({} as any);
   const voiceBarStateRef = React.useRef<VoiceBarState>('idle');
-  const menuRef = React.useRef<ContextNameMenuRef>(null);
+  const menuRef = React.useRef<ContextNameMenuRef>({} as any);
   const extensionHeightRef = React.useRef<number>(
     MESSAGE_INPUT_BAR_EXTENSION_NAME_MENU_HEIGHT
   );
   const quoteMessageRef = React.useRef<MessageModel | undefined>(undefined);
   const [showQuote, setShowQuote] = React.useState(false);
   const editRef = React.useRef<MessageInputEditMessageRef>({} as any);
-  const msgModelRef = React.useRef<MessageModel>();
+  const msgModelRef = React.useRef<MessageModel>({} as any);
   const mentionListRef = React.useRef<{ id: string; name: string }[]>([]);
-  const alertRef = React.useRef<AlertRef>(null);
+  const alertRef = React.useRef<AlertRef>({} as any);
   const emojiListRef = React.useRef<EmojiIconItem[] | undefined>(
     emojiList?.map((v) => {
       return { name: v, state: 'common' } as EmojiIconItem;
@@ -410,9 +415,15 @@ export function useMessageInput(
       setEmojiHeight(extensionHeightRef.current);
     } else {
       const tmp = keyboardHeight === 0 ? 300 : keyboardHeight;
-      setEmojiHeight(tmp - (bottom ?? 0));
+      const keyboardPanelHeight =
+        Platform.OS === 'android'
+          ? keyboardCompensationHeight > 0
+            ? keyboardCompensationHeight
+            : tmp
+          : tmp;
+      setEmojiHeight(keyboardPanelHeight - (bottom ?? 0));
     }
-  }, [bottom, keyboardHeight, setEmojiHeight]);
+  }, [bottom, keyboardCompensationHeight, keyboardHeight, setEmojiHeight]);
 
   const showVoiceBar = React.useCallback(() => {
     // setVoiceHeight(gVoiceBarHeight + (bottom ?? 0));
@@ -580,8 +591,8 @@ export function useMessageInput(
     [propsOnEditMessageFinished]
   );
 
-  const onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-    if (e.nativeEvent.key === 'Enter') {
+  const onKeyPress = (e: TextInputKeyPressEvent) => {
+    if ((e.nativeEvent as any)?.key === 'Enter') {
       // timeoutTask(100, onClickedSend);
     }
   };
@@ -604,6 +615,64 @@ export function useMessageInput(
       extensionHeightRef.current = height;
     });
   }, [setMessageInputExtendCallback]);
+
+  const androidKeyboardAvoidOffset = React.useMemo(() => {
+    if (Platform.OS !== 'android') {
+      return 0;
+    }
+    return keyboardCompensationHeight;
+  }, [keyboardCompensationHeight]);
+
+  const onAndroidContainerLayout = React.useCallback(
+    (height: number) => {
+      if (Platform.OS !== 'android') {
+        return;
+      }
+      if (keyboardCurrentHeight <= 0) {
+        containerHeightBeforeKeyboard.current = height;
+      }
+      containerHeightCurrent.current = height;
+      uilog.log(
+        '[KBAvoid] MessageInput container layout:',
+        'height:',
+        height,
+        'keyboardCurrentHeight:',
+        keyboardCurrentHeight,
+        'beforeKeyboardHeight:',
+        containerHeightBeforeKeyboard.current,
+        'deltaFromBeforeKeyboard:',
+        containerHeightBeforeKeyboard.current - height
+      );
+    },
+    [keyboardCurrentHeight]
+  );
+
+  React.useEffect(() => {
+    if (Platform.OS === 'android') {
+      uilog.log(
+        '[KBAvoid] MessageInput metrics:',
+        'bottom:',
+        bottom ?? 0,
+        'keyboardHeight:',
+        keyboardHeight,
+        'keyboardCurrentHeight:',
+        keyboardCurrentHeight,
+        'emojiHeight:',
+        emojiHeight,
+        'androidKeyboardAvoidOffset:',
+        androidKeyboardAvoidOffset,
+        'keyboardCompensationHeight:',
+        keyboardCompensationHeight
+      );
+    }
+  }, [
+    androidKeyboardAvoidOffset,
+    bottom,
+    emojiHeight,
+    keyboardCompensationHeight,
+    keyboardCurrentHeight,
+    keyboardHeight,
+  ]);
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -741,5 +810,6 @@ export function useMessageInput(
     msgPinHeightRef,
     MessageInputBarMenu,
     messageInputBarStyle,
+    androidKeyboardAvoidOffset,
   };
 }

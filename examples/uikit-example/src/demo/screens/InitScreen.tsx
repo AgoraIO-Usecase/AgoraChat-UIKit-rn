@@ -54,13 +54,13 @@ export function InitScreen(props: Props) {
     ChatClient.getInstance()
       .init(
         isAppKey
-          ? new ChatOptions({
+          ? ChatOptions.withAppKey({
               ...getOptions(),
               appKey: id,
             })
-          : new ChatOptions({
+          : ChatOptions.withAppId({
               ...getOptions(),
-              appKey: id,
+              appId: id,
             })
       )
       .then(() => {

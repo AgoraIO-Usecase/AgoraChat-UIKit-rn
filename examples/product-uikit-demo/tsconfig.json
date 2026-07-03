@@ -1,6 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.examples.json",
   "compilerOptions": {
-    "noUnusedLocals": false
-  }
+    "paths": {
+      "@/*": ["./*"],
+      "react-native-agora-chat-uikit": [
+        "../../packages/react-native-chat-uikit/src/index.tsx"
+      ],
+      "react-native-agora-chat-callkit": [
+        "../../packages/react-native-chat-callkit/src/index.tsx"
+      ]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

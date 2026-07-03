@@ -35,9 +35,9 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 ├── node_modules
 ├── package.json
 ├── packages
-│   ├── react-native-chat-room
-│   ├── react-native-chat-callkit
-│   └── react-native-chat-uikit
+│   ├── react-native-agora-chat-room
+│   ├── react-native-agora-chat-callkit
+│   └── react-native-agora-chat-uikit
 ├── patches
 ├── res
 ├── scripts
@@ -60,9 +60,9 @@ Currently, mainstream projects adopt this repository structure, for example, `re
 - node_modules: list of project dependencies managed by the `yarn` tool.
 - package.json: project configuration file. It is the core configuration of this repository. The `package.json` files in other subfolders are responsible for managing sub-projects.
 - packages:
-  - react-native-chat-room: `room` SDK。
-  - react-native-chat-callkit: `callkit` SDK.
-  - react-native-chat-uikit: `uikit` SDK.
+  - react-native-agora-chat-room: `room` SDK。
+  - react-native-agora-chat-callkit: `callkit` SDK.
+  - react-native-agora-chat-uikit: `uikit` SDK.
 - patches: Patches for fixing urgent issues.
 - res: Resource folder.
 - scripts: Script folder.

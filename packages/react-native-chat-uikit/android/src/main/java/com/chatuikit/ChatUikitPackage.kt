@@ -1,39 +1,35 @@
 package com.chatuikit
 
-import android.util.Log
+import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
-import com.facebook.react.TurboReactPackage;
-import java.util.HashMap
+import com.facebook.react.uimanager.ViewManager
 
-class ChatUikitPackage : TurboReactPackage() {
+class ChatUikitViewPackage : BaseReactPackage() {
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    return listOf(ChatUikitViewManager())
+  }
+
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    Log.d("ChatUikitPackage", "getModule: $name, ${ChatUikitModule.NAME}")
-    return if (name == ChatUikitModule.NAME) {
-      ChatUikitModule(reactContext)
-    } else {
-      null
+    return when (name) {
+      ChatUikitEnvironmentModule.NAME -> ChatUikitEnvironmentModule(reactContext)
+      else -> null
     }
   }
 
-  override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
-    return ReactModuleInfoProvider {
-      val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
-      Log.d("ChatUikitPackage", "isTurboModule: $isTurboModule")
-
-      // 使用辅助类创建ReactModuleInfo
-      moduleInfos[ChatUikitModule.NAME] = ReactModuleInfoHelper.createModuleInfo(
-        ChatUikitModule.NAME,
-        false,  // canOverrideExistingModule
-        false,  // needsEagerInit
-        false,  // isCxxModule
-        isTurboModule // isTurboModule
+  override fun getReactModuleInfoProvider() = ReactModuleInfoProvider {
+    mapOf(
+      ChatUikitEnvironmentModule.NAME to ReactModuleInfo(
+        ChatUikitEnvironmentModule.NAME,
+        ChatUikitEnvironmentModule::class.java.name,
+        false,
+        false,
+        true,
+        false,
+        false
       )
-
-      moduleInfos
-    }
+    )
   }
 }

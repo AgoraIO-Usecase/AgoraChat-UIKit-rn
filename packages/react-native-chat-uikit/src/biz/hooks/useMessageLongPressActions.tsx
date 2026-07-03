@@ -17,7 +17,7 @@ import {
 } from '../../rename.chat';
 import { Services } from '../../services';
 import type { BottomSheetEmojiListRef } from '../BottomSheetEmojiList';
-import { BottomSheetMenuHeader } from '../BottomSheetMenu';
+import { BottomSheetMenuHeader } from '../BottomSheetMenu/BottomSheetMenuHeader';
 import type {
   ConversationDetailModelType,
   MessageModel,
@@ -312,7 +312,8 @@ export function useMessageLongPressActions(
       ) {
         if (
           msgModel.msg.body.type === ChatMessageType.TXT &&
-          msgModel.msg.chatType === ChatMessageChatType.GroupChat
+          (msgModel.msg.chatType === ChatMessageChatType.GroupChat ||
+            msgModel.msg.chatType === ChatMessageChatType.PeerChat)
         ) {
           const textBody = msgModel.msg.body as ChatTextMessageBody;
           if (textBody.modifyCount === undefined || textBody.modifyCount <= 5) {

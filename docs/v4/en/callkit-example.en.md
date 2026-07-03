@@ -81,8 +81,8 @@ See `example/src/demo/App.tsx` for detailed usage.
 
 The pages are mainly divided into single chat audio and video pages and group chat audio and video pages.
 
-- SingleCall: `packages/react-native-chat-callkit/src/view/SingleCall.tsx` [source code](../../../packages/react-native-chat-callkit/src/view/SingleCall.tsx)
-- MultiCall: `packages/react-native-chat-callkit/src/view/MultiCall.tsx` [source code](../../../packages/react-native-chat-callkit/src/view/MultiCall.tsx)
+- SingleCall: `packages/react-native-agora-chat-callkit/src/view/SingleCall.tsx` [source code](../../../packages/react-native-agora-chat-callkit/src/view/SingleCall.tsx)
+- MultiCall: `packages/react-native-agora-chat-callkit/src/view/MultiCall.tsx` [source code](../../../packages/react-native-agora-chat-callkit/src/view/MultiCall.tsx)
 
 See `examples/callkit-example/src/screens/Home.tsx` [source code](../../../examples/callkit-example/src/screens/Home.tsx) for details.
 

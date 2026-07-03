@@ -12,6 +12,7 @@ import {
   ChatGroup,
   ChatGroupOptions,
   ChatGroupStyle,
+  chatlog,
   ChatMessage,
   ChatMessageReaction,
   type ChatMessageStatusCallback,
@@ -28,10 +29,8 @@ import { Services } from '../services';
 import { asyncTask, getCurTs, mergeObjects } from '../utils';
 import { ChatServiceListenerImpl } from './chat.listener';
 import { gGroupMemberMyRemark } from './const';
-import { DataProfileProvider } from './DataProfileProvider';
-import { MessageCacheManagerImpl } from './messageManager';
+import type { DataProfileProvider } from './DataProfileProvider';
 import type { MessageCacheManager } from './messageManager.types';
-import { RequestListImpl } from './requestList';
 import type { RequestList } from './requestList.types';
 import type {
   ChatEventType,
@@ -87,6 +86,7 @@ export class ChatServiceImpl
 
   constructor() {
     uilog.log('chat:constructor:');
+    chatlog.tag = '[chat]';
     super();
     this._userList = new Map();
     this._convList = new Map();
@@ -97,9 +97,12 @@ export class ChatServiceImpl
     this._modelState = new Map();
     this._silentModeList = new Map();
     this._pinMessageList = new Map();
-    this._request = new RequestListImpl(this);
-    this._messageManager = new MessageCacheManagerImpl(this);
-    this._dataFileProvider = new DataProfileProvider();
+    // ✅ 正确：使用 new 来实例化类
+    this._request = new (require('./requestList').RequestListImpl)(this);
+    this._messageManager =
+      new (require('./messageManager').MessageCacheManagerImpl)(this);
+    this._dataFileProvider =
+      new (require('./DataProfileProvider').DataProfileProvider)();
   }
 
   // !!! warning: no need
@@ -123,7 +126,11 @@ export class ChatServiceImpl
   id(): string {
     return this.client.options?.appKey && this.client.options?.appKey.length > 0
       ? this.client.options?.appKey
-      : '';
+      : (this.client.options?.appId ?? '');
+  }
+
+  get dataFileProvider(): DataProfileProvider {
+    return this._dataFileProvider;
   }
 
   async init(params: {
@@ -151,9 +158,9 @@ export class ChatServiceImpl
       const appKey = (options as any).appKey;
       const appId = (options as any).appId;
       if (isExistedAppKey === true && appKey && appKey.length > 0) {
-        await this.client.init(new ChatOptions({ ...(options as any) }));
+        await this.client.init(ChatOptions.withAppKey({ ...(options as any) }));
       } else if (isExistedAppId === true && appId && appId.length > 0) {
-        await this.client.init(new ChatOptions({ ...(options as any) }));
+        await this.client.init(ChatOptions.withAppId({ ...(options as any) }));
       } else {
         params.result?.({
           isOk: false,
@@ -1507,7 +1514,7 @@ export class ChatServiceImpl
       event: 'setContactRemark',
       onFinished: () => {
         this._updateDataList({
-          dataList: DataProfileProvider.toMap([
+          dataList: this._dataFileProvider.toMap([
             {
               id: params.userId,
               remark: params.remark,
@@ -1847,7 +1854,7 @@ export class ChatServiceImpl
       onFinished: async (value) => {
         if (value) {
           this._updateDataList({
-            dataList: DataProfileProvider.toMap([
+            dataList: this._dataFileProvider.toMap([
               {
                 id: value.groupId,
                 name: value.groupName,
@@ -1917,7 +1924,7 @@ export class ChatServiceImpl
       });
       if (ret2) {
         this._updateDataList({
-          dataList: DataProfileProvider.toMap([
+          dataList: this._dataFileProvider.toMap([
             {
               id: ret2.groupId,
               name: ret2.groupName,
@@ -1994,7 +2001,7 @@ export class ChatServiceImpl
       event: 'createGroup',
       onFinished: async (value) => {
         this._updateDataList({
-          dataList: DataProfileProvider.toMap([
+          dataList: this._dataFileProvider.toMap([
             {
               id: value.groupId,
               name: value.groupName,
@@ -2084,7 +2091,7 @@ export class ChatServiceImpl
         if (group) {
           group.groupName = params.groupNewName;
           this._updateDataList({
-            dataList: DataProfileProvider.toMap([
+            dataList: this._dataFileProvider.toMap([
               {
                 id: group.groupId,
                 name: group.groupName,
@@ -3388,13 +3395,4 @@ export class ChatServiceImpl
       },
     });
   }
-}
-
-let gIMService: ChatService;
-
-export function getChatServiceImpl(): ChatService {
-  if (gIMService === undefined) {
-    gIMService = new ChatServiceImpl();
-  }
-  return gIMService;
 }

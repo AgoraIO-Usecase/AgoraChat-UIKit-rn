@@ -1,6 +1,6 @@
 import { ImageBackground } from 'react-native';
 
-import { BottomSheetNameMenu } from '../BottomSheetMenu';
+import { BottomSheetNameMenu } from '../BottomSheetMenu/BottomSheetNameMenu';
 import { MessageContextProvider } from '../Context';
 import { useConversationDetail } from './ConversationDetail.hooks';
 import { ConversationDetailNavigationBar } from './ConversationDetail.navi';
@@ -30,10 +30,10 @@ export function ConversationDetail(props: ConversationDetailProps) {
   const {
     onClickedSend,
     _messageInputRef,
-    _MessageInput,
+    MessageInputWrapper,
     messageInputProps,
     _messageListRef,
-    _MessageList,
+    MessageListWrapper,
     messageListProps,
     onQuoteMessageForInput,
     onEditMessageForInput,
@@ -95,7 +95,7 @@ export function ConversationDetail(props: ConversationDetailProps) {
           messageTyping={messageTyping}
         />
       ) : null}
-      <_MessageList
+      <MessageListWrapper
         onClicked={() => {
           _messageInputRef?.current?.close?.();
         }}
@@ -111,7 +111,7 @@ export function ConversationDetail(props: ConversationDetailProps) {
         ref={_messageListRef}
         {...messageListProps}
       />
-      <_MessageInput
+      <MessageInputWrapper
         ref={_messageInputRef}
         onClickedSend={onClickedSend}
         onEditMessageFinished={onEditMessageFinished}

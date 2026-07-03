@@ -60,7 +60,7 @@ UIKit 组件库需要先初始化配置在使用。这里介绍核心内容，�
 
 ## 初始化
 
-初始化部分的参数非常多。必须填写 `appKey`，需要设置是否自动登录，其它参数可选。详见 `ContainerProps` 类型[详见这里](../../../packages/react-native-chat-uikit/src/container/types.tsx)。
+初始化部分的参数非常多。必须填写 `appKey`，需要设置是否自动登录，其它参数可选。详见 `ContainerProps` 类型[详见这里](../../../packages/react-native-agora-chat-uikit/src/container/types.tsx)。
 
 ```tsx
 export function App() {
@@ -295,7 +295,6 @@ customTheme.shadow.style.small = [
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
   const { tr } = useI18nContext();
 
@@ -331,7 +330,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -366,7 +364,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -428,8 +425,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
-
   return (
     <ConversationList
       onInitMenu={(initItems: InitMenuItemsType[]) => {
@@ -451,8 +446,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
-
   return (
     <ConversationList
       onClickedItem={(data: ConversationModel) => {
@@ -473,8 +466,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
-
   return (
     <ConversationList
       searchStyleVisible={true}
@@ -494,7 +485,6 @@ function MyConversationListScreen(props: MyConversationListScreenProps) {
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -827,7 +817,6 @@ export const MyMessageContextNameMenu = React.forwardRef<
   props: ContextNameMenuProps,
   ref?: React.ForwardedRef<ContextNameMenuRef>
 ) {
-  const {} = props;
   React.useImperativeHandle(ref, () => {
     return {
       startShow: () => {},
@@ -882,8 +871,6 @@ export function App() {
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -916,8 +903,6 @@ function MyContactListScreen(props: MyContactListScreenProps) {
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -935,8 +920,6 @@ function MyContactListScreen(props: MyContactListScreenProps) {
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -952,14 +935,11 @@ function MyContactListScreen(props: MyContactListScreenProps) {
 
 ```tsx
 export const MyCustomItemView = (props: ContactItemProps) => {
-  const {} = props;
   return <View style={{ width: 100, height: 44, backgroundColor: 'red' }} />;
 };
 
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -981,8 +961,6 @@ function MyContactListScreen(props: MyContactListScreenProps) {
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -1338,12 +1316,12 @@ export function MyConversationDetailScreen(props: Props) {
 
 基础组件包括 UI 基础组件、和辅助组件，UI 基础组件是业务组件组成的基石，可以快速构建业务组件，也推荐用户使用这些组件创建自定义组件，辅助组件主要完成媒体服务、类型检查、属性获取、持久化处理等。
 
-UI 基础组件在 `packages/react-native-chat-uikit/src/ui` [这里](../../../packages/react-native-chat-uikit/src/ui)。
-hooks 组件在 `packages/react-native-chat-uikit/src/hook` [这里](../../../packages/react-native-chat-uikit/src/hook)。
+UI 基础组件在 `packages/react-native-agora-chat-uikit/src/ui` [这里](../../../packages/react-native-agora-chat-uikit/src/ui)。
+hooks 组件在 `packages/react-native-agora-chat-uikit/src/hook` [这里](../../../packages/react-native-agora-chat-uikit/src/hook)。
 
 ## 事件分发
 
-当数据发生变化，UI 组件需要更新，这里使用事件分发通知对应关注的组件。这个工具在 `packages/react-native-chat-uikit/src/dispatch` 这里。
+当数据发生变化，UI 组件需要更新，这里使用事件分发通知对应关注的组件。这个工具在 `packages/react-native-agora-chat-uikit/src/dispatch` 这里。
 
 举例：当群修改名称之后，群列表、会话列表、聊天页面、群详情页面等需要处理该通知，同步名称。
 举例：当联系人修改备注之后，联系人列表、会话列表、聊天页面、联系人详情页面等需要处理该通知，同步名称。

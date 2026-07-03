@@ -56,7 +56,7 @@ Make sure you initialize the UIKit component library before using it. This secti
 
 ## Initialization
 
-There are many parameters to be set during initialization. You must pass in `appKey` and determine whether to log in automatically. Other parameters are optional. See the `ContainerProps` type for details [here](../../../packages/react-native-chat-uikit/src/container/types.tsx).
+There are many parameters to be set during initialization. You must pass in `appKey` and determine whether to log in automatically. Other parameters are optional. See the `ContainerProps` type for details [here](../../../packages/react-native-agora-chat-uikit/src/container/types.tsx).
 
 ```tsx
 export function App() {
@@ -195,7 +195,6 @@ The navigation bar component is a universal component with a layout that contain
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
   const { tr } = useI18nContext();
 
@@ -240,7 +239,6 @@ The `ListItemRender` attribute is provided to modify the style and layout of lis
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -275,7 +273,6 @@ Make the list items support swipe gestures. The `SlideListItem` component is pro
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -339,7 +336,6 @@ For example: Add a custom menu item.
 ```tsx
 type MyConversationListScreenProps = {};
 function MyConversationListScreen(props: MyConversationListScreenProps) {
-  const {} = props;
   const convRef = React.useRef<ConversationListRef>({} as any);
 
   return (
@@ -673,7 +669,6 @@ export const MyMessageContextNameMenu = React.forwardRef<
   props: ContextNameMenuProps,
   ref?: React.ForwardedRef<ContextNameMenuRef>
 ) {
-  const {} = props;
   React.useImperativeHandle(ref, () => {
     return {
       startShow: () => {},
@@ -732,8 +727,6 @@ The navigation bar component is a universal component. On the contact list page,
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -751,8 +744,6 @@ You can modify properties such as the style, layout, and color.
 ```tsx
 export type MyContactListScreenProps = {};
 function MyContactListScreen(props: MyContactListScreenProps) {
-  const {} = props;
-
   return (
     <ContactList
       contactType={'contact-list'}
@@ -1090,12 +1081,12 @@ export function ConversationDetailScreen(props: Props) {
 
 The basic components include basic UI components and auxiliary components. As the foundation of business components, the basic UI components can be used to quickly build business components. It is also recommended to use these components to create custom components. Auxiliary components mainly provide media services, type check, property retrieval, and persistence processing.
 
-Basic UI components are located in `packages/react-native-chat-uikit/src/ui` [here](../../../packages/react-native-chat-uikit/src/ui).
-Hooks components are located in `packages/react-native-chat-uikit/src/hook` [here](../../../packages/react-native-chat-uikit/src/hook).
+Basic UI components are located in `packages/react-native-agora-chat-uikit/src/ui` [here](../../../packages/react-native-agora-chat-uikit/src/ui).
+Hooks components are located in `packages/react-native-agora-chat-uikit/src/hook` [here](../../../packages/react-native-agora-chat-uikit/src/hook).
 
 ## Event Dispatch
 
-When UI components need to be updated with data changes, events are dispatched to notify the corresponding components. This tool is located in `packages/react-native-chat-uikit/src/dispatch`.
+When UI components need to be updated with data changes, events are dispatched to notify the corresponding components. This tool is located in `packages/react-native-agora-chat-uikit/src/dispatch`.
 
 For example, when a group's name is changed, the group list, conversation list, chat page, and group details page need to handle this notification to synchronize the name change.
 

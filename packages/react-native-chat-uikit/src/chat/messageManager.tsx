@@ -1,4 +1,4 @@
-import { UseUrlPreview } from '../biz/hooks';
+import { UseUrlPreview } from '../biz/hooks/useUrlPreview';
 import { uilog } from '../const';
 import { ErrorCode, UIKitError } from '../error';
 import {
@@ -12,10 +12,11 @@ import {
   ChatMessageStatus,
   ChatMessageStatusCallback,
   ChatMessageType,
+  ChatRecalledMessageInfo,
   ChatSearchDirection,
   ChatTextMessageBody,
 } from '../rename.chat';
-import { asyncTask, getCurTs } from '../utils';
+import { asyncTask, getCurTs } from '../utils/function';
 import {
   gCustomMessageRecallEventType,
   gMessageAttributeFileProgress,
@@ -60,8 +61,8 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       onMessagesRead: this.bindOnMessagesRead.bind(this),
       onGroupMessageRead: this.bindOnGroupMessageRead.bind(this),
       onMessagesDelivered: this.bindOnMessagesDelivered.bind(this),
-      onMessagesRecalled: this.bindOnMessagesRecalled.bind(this),
-      // onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
+      // onMessagesRecalled: this.bindOnMessagesRecalled.bind(this),
+      onMessagesRecalledInfo: this.onMessagesRecalledInfo.bind(this),
       onMessageContentChanged: this.bindOnMessageContentChanged.bind(this),
       onMessagePinChanged: this.bindOnMessagePinChanged.bind(this),
     };
@@ -181,32 +182,32 @@ export class MessageCacheManagerImpl implements MessageCacheManager {
       });
     });
   }
-  bindOnMessagesRecalled(messages: Array<ChatMessage>): void {
-    messages.forEach((msg) => {
-      const tipMsg = this.createRecallMessageTip(msg);
-      this._client.insertMessage({
-        message: tipMsg,
-        onResult: () => {
-          this._userListener.forEach((v) => {
-            v.onRecvRecallMessage?.(msg, tipMsg);
-          });
-        },
-      });
-    });
-  }
-  // onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>): void {
-  //   messages.forEach((info) => {
-  //     const tipMsg = this.createRecallMessageTip(info.recalledMessage!);
+  // bindOnMessagesRecalled(messages: Array<ChatMessage>): void {
+  //   messages.forEach((msg) => {
+  //     const tipMsg = this.createRecallMessageTip(msg);
   //     this._client.insertMessage({
   //       message: tipMsg,
   //       onResult: () => {
   //         this._userListener.forEach((v) => {
-  //           v.onRecvRecallMessage?.(info.recalledMessage!, tipMsg);
+  //           v.onRecvRecallMessage?.(msg, tipMsg);
   //         });
   //       },
   //     });
   //   });
   // }
+  onMessagesRecalledInfo(messages: Array<ChatRecalledMessageInfo>): void {
+    messages.forEach((info) => {
+      const tipMsg = this.createRecallMessageTip(info.recalledMessage!);
+      this._client.insertMessage({
+        message: tipMsg,
+        onResult: () => {
+          this._userListener.forEach((v) => {
+            v.onRecvRecallMessage?.(info.recalledMessage!, tipMsg);
+          });
+        },
+      });
+    });
+  }
   bindOnMessageContentChanged(
     message: ChatMessage,
     lastModifyOperatorId: string,

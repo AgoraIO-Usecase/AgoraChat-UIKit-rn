@@ -1,70 +1,33 @@
-_English | [中文](./README.zh.md)_
+# react-native-agora-chat-room
 
-# Introduction
-
-ChatroomUIKit is designed to address most users' chat room requirements specific to pan-entertainment scenarios. It delivers good user experience in the use of APIs (for user-side developers) by streamlining the SDK integration, facilitating customization, and offering comprehensive documentation.
-
-## Development environment requirements
-
-- MacOS 12 or higher
-- React-Native 0.71 or higher
-- NodeJs 20.18 or higher
-
-For iOS app:
-
-- Xcode 13 or higher and its related dependency tool.
-
-For the Android app:
-
-- Android Studio 2021 or higher and its related dependency tool.
+room
 
 ## Installation
 
 ```sh
 npm install react-native-agora-chat-room
-# or
-yarn add react-native-agora-chat-room
 ```
 
-## Dependencies
+## Usage
 
-```sh
-yarn add react-native-agora-chat \
-react-native-linear-gradient \
-react-native-safe-area-context
-```
+```js
+import { ChatRoomView } from 'react-native-agora-chat-room';
 
-## Quick Start
+// ...
 
-Initialization
-
-```typescript
-import { Container } from 'react-native-agora-chat-room';
-export function App() {
-  return (
-    <Container opt={{ appKey: '<your app key>' }}>
-      {/** sub component */}
-    </Container>
-  );
-}
-```
-
-Join a room
-
-```typescript
-export function ChatroomScreen() {
-  return (
-    <Chatroom roomId={'<room ID>'} ownerId={'<room owner ID>'}>
-      {/** sub component */}
-    </Chatroom>
-  );
-}
+<ChatRoomView color="tomato" />;
 ```
 
 ## Contributing
 
-See the [contributing guide](../../CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+- [Development workflow](CONTRIBUTING.md#development-workflow)
+- [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
+- [Code of conduct](CODE_OF_CONDUCT.md)
 
 ## License
 
 MIT
+
+---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
